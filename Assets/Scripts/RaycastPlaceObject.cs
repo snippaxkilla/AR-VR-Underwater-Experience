@@ -5,43 +5,58 @@ using UnityEngine.SceneManagement;
 
 public class RaycastPlaceObject : MonoBehaviour
 {
-
-    [SerializeField] private int rayLenght;
+    //standard offset is set on 0 but set the Y on a certain value to make the object hover above the ground
+    [SerializeField] private int rayLength = 10;
+    [SerializeField] private int rayThickness = 1;
+    [SerializeField] private bool rayVisible = true;
+    [SerializeField] private int maxObjects = 1;
+    [SerializeField] private float offsetX;
+    [SerializeField] private float offsetY;
+    [SerializeField] private float offsetZ;
 
     public OVRSceneManager _sceneManager;
-    bool _roomReady = false;
-    private bool isPlacing;
     public GameObject objectToPlace;
     public Transform _targetingIcon;
+    public LineRenderer _raycastLine;
     public LayerMask _sceneLayer;
 
-    void Awake()
+    void Start()
     {
-        _sceneManager.SceneModelLoadedSuccessfully += InitializeRoom;
+        _raycastLine.enabled = false;
     }
-
-    void InitializeRoom()
-    {
-        _roomReady = true;
-    }
-
+    
     void Update()
     {
-        Raycast();
+        OffsetCalculation();
+        MaxObjects();
     }
 
-    void RaycastCustom()
+    void OffsetCalculation()
     {
-        RaycastHit hit;
-
-        if (OVRInput.Get(OVRInput.Button.PrimaryIndexTrigger))
+        if ((offsetX == 0) && (offsetY == 0) && (offsetZ == 0))
         {
-            if (Physics.Raycast(transform.position, transform.forward, out hit, rayLenght))
-            {
-                isPlacing = true;
-                Instantiate(objectToPlace, transform.position, transform.rotation);
+            return;
+        }
+        else
+        {
+            Vector3 objectPos = objectToPlace.transform.position;
+            offsetX = objectPos.x;
+            offsetY = objectPos.y;
+            offsetZ = objectPos.z;
+        }
+    }
 
-            }
+    void MaxObjects()
+    {
+        //check if the max amount of objects is reached
+        if (GameObject.FindGameObjectsWithTag("PlaceableObject").Length >= maxObjects)
+        {
+            Debug.Log("Max amount of objects reached");
+            //add in ui element
+        }
+        else
+        {
+            Raycast();
         }
     }
 
@@ -61,12 +76,35 @@ public class RaycastPlaceObject : MonoBehaviour
         bool pressingButton = OVRInput.Get(OVRInput.RawButton.RIndexTrigger) || OVRInput.Get(OVRInput.RawButton.A);
         if (pressingButton)
         {
-            Instantiate(objectToPlace, transform.position, Quaternion.identity);
+            Vector3 position = hitInfo.point + new Vector3(offsetX, offsetY, offsetZ);
+            Instantiate(objectToPlace, position, Quaternion.identity);
         }
+
         _targetingIcon.localScale = Vector3.one * (pressingButton ? 0.6f : 0.5f);
     }
 
-    void CalculateObjectAndGiveOffset()
+    void UpdateRaycastLine(Vector3 origin, Vector3 direction)
     {
+        if (rayVisible)
+        {
+            _raycastLine.enabled = true;
+            _raycastLine.SetPosition(0, origin);
+            _raycastLine.SetPosition(1, origin + direction * rayLength);
+        }
+        else
+        {
+            _raycastLine.enabled = false;
+        }
+    }
+    
+    //debug function not used anywhere now
+    void ToggleRayVisibility()
+    {
+        rayVisible = !rayVisible;
+        UpdateRaycastLine(Vector3.zero, Vector3.zero);
     }
 }
+
+
+
+

@@ -657,10 +657,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93218dd24421a41449f164453520b752, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rayLenght: 20
+  rayLength: 20
+  rayThickness: 1
+  rayVisible: 1
+  maxObjects: 0
+  offsetX: 0
+  offsetY: 0
+  offsetZ: 0
   _sceneManager: {fileID: 1593833659}
   objectToPlace: {fileID: 4118514151192793854, guid: e7072a2c09c6a6240ad9279ff853e461, type: 3}
   _targetingIcon: {fileID: 565962632}
+  _raycastLine: {fileID: 0}
   _sceneLayer:
     serializedVersion: 2
     m_Bits: 512
