@@ -1,30 +1,29 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
 public class RaycastPlaceObject : MonoBehaviour
 {
     // standard offset is set on 0 but set the Y on a certain value to make the object hover above the ground
- 
+    // but we set it on 0.01f to avoid the object to be clipped in the ground
     [SerializeField] private bool rayVisible = true;
     [SerializeField] private int maxObjects = 1;
     [SerializeField] private float offsetX;
-    [SerializeField] private float offsetY;
+    [SerializeField] private float offsetY = 0.01f;
     [SerializeField] private float offsetZ;
 
     public GameObject objectToPlace;
     public Transform _targetingIcon;
     public LineRenderer _raycastLine;
     public LayerMask _sceneLayer;
-    private List<GameObject> placedObjects;
-    public int indexHelper;
+
+    Queue<GameObject> placedObjects = new();
 
     void Start()
     {
-        indexHelper = 0;
         _raycastLine.enabled = false;
-        placedObjects = new List<GameObject>();
     }
     
     void Update()
@@ -50,19 +49,13 @@ public class RaycastPlaceObject : MonoBehaviour
     // does the exact same as the raycast function, but it is to test it out on the computer
     void EditorTester()
     {
-        if (Input.GetMouseButtonDown(0) && indexHelper < maxObjects)
+        if (Input.GetMouseButtonDown(0))
         {
-            placedObjects.Add(Instantiate(objectToPlace, _targetingIcon.position, Quaternion.identity));
-            indexHelper++;
-            Debug.Log(indexHelper);
-        }
-        if (Input.GetMouseButtonDown(0) && indexHelper >= maxObjects)
-        {
-            Destroy(placedObjects[indexHelper -1]);
-            indexHelper++;
-            placedObjects.Add(Instantiate(objectToPlace, _targetingIcon.position, Quaternion.identity));
-            Debug.Log(indexHelper);
-
+            placedObjects.Enqueue(Instantiate(objectToPlace, _targetingIcon.position, Quaternion.identity));
+            if (maxObjects > 0 && placedObjects.Count > maxObjects)
+            {
+                Destroy(placedObjects.Dequeue());
+            }
         }
     }
 
@@ -80,18 +73,15 @@ public class RaycastPlaceObject : MonoBehaviour
         }
         bool pressingButton = OVRInput.Get(OVRInput.RawButton.RIndexTrigger) || OVRInput.Get(OVRInput.RawButton.A);
         Vector3 position = hitInfo.point + new Vector3(offsetX, offsetY, offsetZ);
-        if (pressingButton && indexHelper < maxObjects)
+        if (pressingButton)
         {
-            placedObjects.Add(Instantiate(objectToPlace, _targetingIcon.position, Quaternion.identity));
-            indexHelper++;
+            placedObjects.Enqueue(Instantiate(objectToPlace, _targetingIcon.position, Quaternion.identity));
+            if (maxObjects > 0 && placedObjects.Count > maxObjects)
+            {
+                Destroy(placedObjects.Dequeue());
+            }
+            _targetingIcon.localScale = Vector3.one * (pressingButton ? 0.6f : 0.5f);
         }
-        if (pressingButton && indexHelper >= maxObjects)
-        {
-            Destroy(placedObjects[indexHelper - 1]);
-            indexHelper++;
-            placedObjects.Add(Instantiate(objectToPlace, _targetingIcon.position, Quaternion.identity));
-        }
-        _targetingIcon.localScale = Vector3.one * (pressingButton ? 0.6f : 0.5f);
     }
 
     void UpdateRaycastLine(Vector3 origin, Vector3 direction)
