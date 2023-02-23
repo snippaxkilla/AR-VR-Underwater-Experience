@@ -49,17 +49,17 @@ MonoBehaviour:
   rayLength: 20
   rayThickness: 1
   rayVisible: 1
-  maxObjects: 0
+  maxObjects: 1
   offsetX: 0
   offsetY: 0
   offsetZ: 0
-  _sceneManager: {fileID: 0}
   objectToPlace: {fileID: 4118514151192793854, guid: e7072a2c09c6a6240ad9279ff853e461, type: 3}
   _targetingIcon: {fileID: 8805819440742792471}
   _raycastLine: {fileID: 8805819441240923319}
   _sceneLayer:
     serializedVersion: 2
     m_Bits: 512
+  indexHelper: 0
 --- !u!1001 &673309005307632448
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,12 +1,12 @@
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using UnityEditor;
 using UnityEngine;
 
 public class RaycastPlaceObject : MonoBehaviour
 {
     // standard offset is set on 0 but set the Y on a certain value to make the object hover above the ground
-    [SerializeField] private int rayLength = 10;
-    [SerializeField] private int rayThickness = 1;
+ 
     [SerializeField] private bool rayVisible = true;
     [SerializeField] private int maxObjects = 1;
     [SerializeField] private float offsetX;
@@ -14,15 +14,15 @@ public class RaycastPlaceObject : MonoBehaviour
     [SerializeField] private float offsetZ;
 
     public GameObject objectToPlace;
-    public GameObject clone;
     public Transform _targetingIcon;
     public LineRenderer _raycastLine;
     public LayerMask _sceneLayer;
     private List<GameObject> placedObjects;
-    public int indexHelper = 0;
+    public int indexHelper;
 
     void Start()
     {
+        indexHelper = 0;
         _raycastLine.enabled = false;
         placedObjects = new List<GameObject>();
     }
@@ -47,6 +47,7 @@ public class RaycastPlaceObject : MonoBehaviour
         }
     }
 
+    // does the exact same as the raycast function, but it is to test it out on the computer
     void EditorTester()
     {
         if (Input.GetMouseButtonDown(0) && indexHelper < maxObjects)
@@ -99,7 +100,7 @@ public class RaycastPlaceObject : MonoBehaviour
         {
             _raycastLine.enabled = true;
             _raycastLine.SetPosition(0, origin);
-            _raycastLine.SetPosition(1, origin + direction * rayLength);
+            _raycastLine.SetPosition(1, _targetingIcon.position);
         }
         else
         {
