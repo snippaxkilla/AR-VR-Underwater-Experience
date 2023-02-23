@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class RaycastPlaceObject : MonoBehaviour
 {
@@ -14,7 +11,6 @@ public class RaycastPlaceObject : MonoBehaviour
     [SerializeField] private float offsetY;
     [SerializeField] private float offsetZ;
 
-    public OVRSceneManager _sceneManager;
     public GameObject objectToPlace;
     public Transform _targetingIcon;
     public LineRenderer _raycastLine;
@@ -28,7 +24,7 @@ public class RaycastPlaceObject : MonoBehaviour
     void Update()
     {
         OffsetCalculation();
-        MaxObjects();
+        Raycast();
     }
 
     void OffsetCalculation()
@@ -40,23 +36,9 @@ public class RaycastPlaceObject : MonoBehaviour
         else
         {
             Vector3 objectPos = objectToPlace.transform.position;
-            offsetX = objectPos.x;
-            offsetY = objectPos.y;
-            offsetZ = objectPos.z;
-        }
-    }
-
-    void MaxObjects()
-    {
-        //check if the max amount of objects is reached
-        if (GameObject.FindGameObjectsWithTag("PlaceableObject").Length >= maxObjects)
-        {
-            Debug.Log("Max amount of objects reached");
-            //add in ui element
-        }
-        else
-        {
-            Raycast();
+            offsetX += objectPos.x;
+            offsetY += objectPos.y;
+            offsetZ += objectPos.z;
         }
     }
 
@@ -72,14 +54,17 @@ public class RaycastPlaceObject : MonoBehaviour
             // offset quad a bit so it doesn't z-flicker
             _targetingIcon.position = new Vector3(hitInfo.point.x, iconHeight + 0.01f, hitInfo.point.z);
         }
-
         bool pressingButton = OVRInput.Get(OVRInput.RawButton.RIndexTrigger) || OVRInput.Get(OVRInput.RawButton.A);
+        Vector3 position = hitInfo.point + new Vector3(offsetX, offsetY, offsetZ);
         if (pressingButton)
         {
-            Vector3 position = hitInfo.point + new Vector3(offsetX, offsetY, offsetZ);
             Instantiate(objectToPlace, position, Quaternion.identity);
         }
-
+        if (pressingButton && GameObject.FindGameObjectsWithTag("PlaceableObject").Length >= maxObjects && maxObjects == 1)
+        {
+            Destroy(GameObject.FindGameObjectsWithTag("PlaceableObject")[0]);
+            Instantiate(objectToPlace, position, Quaternion.identity);
+        }
         _targetingIcon.localScale = Vector3.one * (pressingButton ? 0.6f : 0.5f);
     }
 
