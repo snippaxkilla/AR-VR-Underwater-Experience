@@ -193,7 +193,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6678269571562373685, guid: 2f94427b8dd14ea498fd92aee3ec9f0f, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f94427b8dd14ea498fd92aee3ec9f0f, type: 3}
@@ -1384,17 +1384,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c813208e672e3074bbe118e1a9ee94fd, type: 3}
---- !u!114 &1593833659 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 747806495401477012, guid: c813208e672e3074bbe118e1a9ee94fd, type: 3}
-  m_PrefabInstance: {fileID: 1593833658}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2253d75e3ddc644b8153409c62dd74e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1613229267
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1673,21 +1662,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d9809c5e8418bb047bf2c8ba1d1a2cec, type: 3}
---- !u!1001 &8805819441251621535
+--- !u!1001 &4967413074152103234
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 8805819440833177920, guid: e8ef687cb7c273146b0fbf51fcf3ce51, type: 3}
-      propertyPath: maxObjects
+    - target: {fileID: 4967413073860071329, guid: e8ef687cb7c273146b0fbf51fcf3ce51, type: 3}
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[0].time
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4967413073860071329, guid: e8ef687cb7c273146b0fbf51fcf3ce51, type: 3}
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[0].value
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 8805819440833177920, guid: e8ef687cb7c273146b0fbf51fcf3ce51, type: 3}
-      propertyPath: _sceneManager
-      value: 
-      objectReference: {fileID: 1593833659}
     - target: {fileID: 8805819440833177921, guid: e8ef687cb7c273146b0fbf51fcf3ce51, type: 3}
       propertyPath: m_Name
       value: Spawner
