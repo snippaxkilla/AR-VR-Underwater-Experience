@@ -1,8 +1,10 @@
+using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class RaycastPlaceObject : MonoBehaviour
 {
-    //standard offset is set on 0 but set the Y on a certain value to make the object hover above the ground
+    // standard offset is set on 0 but set the Y on a certain value to make the object hover above the ground
     [SerializeField] private int rayLength = 10;
     [SerializeField] private int rayThickness = 1;
     [SerializeField] private bool rayVisible = true;
@@ -12,19 +14,24 @@ public class RaycastPlaceObject : MonoBehaviour
     [SerializeField] private float offsetZ;
 
     public GameObject objectToPlace;
+    public GameObject clone;
     public Transform _targetingIcon;
     public LineRenderer _raycastLine;
     public LayerMask _sceneLayer;
+    private List<GameObject> placedObjects;
+    public int indexHelper = 0;
 
     void Start()
     {
         _raycastLine.enabled = false;
+        placedObjects = new List<GameObject>();
     }
     
     void Update()
     {
         OffsetCalculation();
         Raycast();
+        //EditorTester();
     }
 
     void OffsetCalculation()
@@ -36,9 +43,25 @@ public class RaycastPlaceObject : MonoBehaviour
         else
         {
             Vector3 objectPos = objectToPlace.transform.position;
-            offsetX += objectPos.x;
-            offsetY += objectPos.y;
-            offsetZ += objectPos.z;
+            offsetX += objectPos.x; offsetY += objectPos.y; offsetZ += objectPos.z;
+        }
+    }
+
+    void EditorTester()
+    {
+        if (Input.GetMouseButtonDown(0) && indexHelper < maxObjects)
+        {
+            placedObjects.Add(Instantiate(objectToPlace, _targetingIcon.position, Quaternion.identity));
+            indexHelper++;
+            Debug.Log(indexHelper);
+        }
+        if (Input.GetMouseButtonDown(0) && indexHelper >= maxObjects)
+        {
+            Destroy(placedObjects[indexHelper -1]);
+            indexHelper++;
+            placedObjects.Add(Instantiate(objectToPlace, _targetingIcon.position, Quaternion.identity));
+            Debug.Log(indexHelper);
+
         }
     }
 
@@ -56,14 +79,16 @@ public class RaycastPlaceObject : MonoBehaviour
         }
         bool pressingButton = OVRInput.Get(OVRInput.RawButton.RIndexTrigger) || OVRInput.Get(OVRInput.RawButton.A);
         Vector3 position = hitInfo.point + new Vector3(offsetX, offsetY, offsetZ);
-        if (pressingButton)
+        if (pressingButton && indexHelper < maxObjects)
         {
-            Instantiate(objectToPlace, position, Quaternion.identity);
+            placedObjects.Add(Instantiate(objectToPlace, _targetingIcon.position, Quaternion.identity));
+            indexHelper++;
         }
-        if (pressingButton && GameObject.FindGameObjectsWithTag("PlaceableObject").Length >= maxObjects && maxObjects == 1)
+        if (pressingButton && indexHelper >= maxObjects)
         {
-            Destroy(GameObject.FindGameObjectsWithTag("PlaceableObject")[0]);
-            Instantiate(objectToPlace, position, Quaternion.identity);
+            Destroy(placedObjects[indexHelper - 1]);
+            indexHelper++;
+            placedObjects.Add(Instantiate(objectToPlace, _targetingIcon.position, Quaternion.identity));
         }
         _targetingIcon.localScale = Vector3.one * (pressingButton ? 0.6f : 0.5f);
     }
@@ -82,7 +107,7 @@ public class RaycastPlaceObject : MonoBehaviour
         }
     }
     
-    //debug function not used anywhere now
+    // debug function not used anywhere now
     void ToggleRayVisibility()
     {
         rayVisible = !rayVisible;
