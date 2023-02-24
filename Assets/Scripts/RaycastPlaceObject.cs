@@ -85,11 +85,9 @@ public class RaycastPlaceObject : MonoBehaviour
         var pressingButton = false;
         foreach (var button in buttons)
         {
-            if (OVRInput.GetDown(button, controller))
-            {
-                pressingButton = true;
-                break;
-            }
+            if (!OVRInput.GetDown(button, controller)) continue;
+            pressingButton = true;
+            break;
         }
         var position = hitInfo.point + offset;
         if (!pressingButton) return returnValue;
