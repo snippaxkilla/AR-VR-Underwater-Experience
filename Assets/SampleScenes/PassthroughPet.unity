@@ -1673,6 +1673,10 @@ PrefabInstance:
       propertyPath: offset.y
       value: 0.01
       objectReference: {fileID: 0}
+    - target: {fileID: 8805819440833177920, guid: e8ef687cb7c273146b0fbf51fcf3ce51, type: 3}
+      propertyPath: isAnchored
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8805819440833177921, guid: e8ef687cb7c273146b0fbf51fcf3ce51, type: 3}
       propertyPath: m_Name
       value: Spawner

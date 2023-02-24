@@ -33,7 +33,7 @@ public class RaycastPlaceObject : MonoBehaviour
         targetingIconRight.position = resultRight.position;
         targetingIconLeft.localScale = resultLeft.scale;
         targetingIconRight.localScale = resultRight.scale;
-        EditorTester();
+        //EditorTester();
     }
 
     // if there is no offset then we don't want to calculate the offset thus saving performance
@@ -51,13 +51,15 @@ public class RaycastPlaceObject : MonoBehaviour
     //does the exact same as the raycast function, but a tester function that is simplified
     //void EditorTester()
     //{
-    //    if (Input.GetMouseButtonDown(0))
+    //    if (!Input.GetMouseButtonDown(0)) return;
+    //    if (isAnchored == true && maxObjects == placedObjects.Count)
     //    {
-    //        placedObjects.Enqueue(Instantiate(objectToPlace, targetingIconLeft.position, Quaternion.identity));
-    //        if (maxObjects > 0 && placedObjects.Count > maxObjects)
-    //        {
-    //            Destroy(placedObjects.Dequeue());
-    //        }
+    //        return;
+    //    }
+    //    placedObjects.Enqueue(Instantiate(objectToPlace, targetingIconLeft.position, Quaternion.identity));
+    //    if (maxObjects > 0 && placedObjects.Count > maxObjects)
+    //    {
+    //        Destroy(placedObjects.Dequeue());
     //    }
     //}
 
@@ -76,6 +78,12 @@ public class RaycastPlaceObject : MonoBehaviour
         var pressingButton = buttons.Any(b => OVRInput.Get(b, controller));
         var position = hitInfo.point + offset;
         if (!pressingButton) return returnValue;
+
+        // anchor all the objects so we don't spawn any new objects, thus not being able to move the objects
+        if (isAnchored == true && maxObjects == placedObjects.Count)
+        {
+            return returnValue;
+        }
         placedObjects.Enqueue(Instantiate(objectToPlace, position, Quaternion.identity));
         if (maxObjects > 0 && placedObjects.Count > maxObjects)
         {
