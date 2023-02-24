@@ -33,7 +33,7 @@ public class RaycastPlaceObject : MonoBehaviour
         targetingIconRight.position = resultRight.position;
         targetingIconLeft.localScale = resultLeft.scale;
         targetingIconRight.localScale = resultRight.scale;
-        //EditorTester();
+        EditorTester();
     }
 
     // if there is no offset then we don't want to calculate the offset thus saving performance
@@ -49,19 +49,19 @@ public class RaycastPlaceObject : MonoBehaviour
     }
 
     //does the exact same as the raycast function, but a tester function that is simplified
-    //void EditorTester()
-    //{
-    //    if (!Input.GetMouseButtonDown(0)) return;
-    //    if (isAnchored == true && maxObjects == placedObjects.Count)
-    //    {
-    //        return;
-    //    }
-    //    placedObjects.Enqueue(Instantiate(objectToPlace, targetingIconLeft.position, Quaternion.identity));
-    //    if (maxObjects > 0 && placedObjects.Count > maxObjects)
-    //    {
-    //        Destroy(placedObjects.Dequeue());
-    //    }
-    //}
+    void EditorTester()
+    {
+        if (!Input.GetMouseButtonDown(0)) return;
+        if (isAnchored == true && maxObjects == placedObjects.Count)
+        {
+            return;
+        }
+        placedObjects.Enqueue(Instantiate(objectToPlace, targetingIconLeft.position, Quaternion.identity));
+        if (maxObjects > 0 && placedObjects.Count > maxObjects)
+        {
+            Destroy(placedObjects.Dequeue());
+        }
+    }
 
     RaycastResult Raycast(OVRInput.Controller controller, OVRInput.RawButton[] buttons)
     {
