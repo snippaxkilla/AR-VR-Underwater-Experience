@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -22,6 +23,11 @@ public class RaycastPlaceObject : MonoBehaviour
     public LayerMask sceneLayer;
 
     Queue<GameObject> placedObjects = new();
+
+    void Start()
+    {
+        ToggleRayVisibility();
+    }
 
     void Update()
     {
@@ -63,6 +69,7 @@ public class RaycastPlaceObject : MonoBehaviour
         }
     }
 
+    // make this into a OVRInput.GetDown and use a bool to instantiate the object
     RaycastResult Raycast(OVRInput.Controller controller, OVRInput.RawButton[] buttons)
     {
         var returnValue = new RaycastResult();
@@ -75,7 +82,15 @@ public class RaycastPlaceObject : MonoBehaviour
             // offset quad a bit so it doesn't z-flicker
             returnValue.position = new Vector3(hitInfo.point.x, iconHeight + 0.01f, hitInfo.point.z);
         }
-        var pressingButton = buttons.Any(b => OVRInput.Get(b, controller));
+        var pressingButton = false;
+        foreach (var button in buttons)
+        {
+            if (OVRInput.GetDown(button, controller))
+            {
+                pressingButton = true;
+                break;
+            }
+        }
         var position = hitInfo.point + offset;
         if (!pressingButton) return returnValue;
 
