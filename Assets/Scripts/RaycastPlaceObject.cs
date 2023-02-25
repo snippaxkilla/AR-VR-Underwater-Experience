@@ -33,13 +33,8 @@ public class RaycastPlaceObject : MonoBehaviour
     {
         OffsetCalculation();
         UpdateRaycastLine();
-        var resultLeft = Raycast(OVRInput.Controller.LTouch, leftButtons);
-        var resultRight = Raycast(OVRInput.Controller.RTouch, rightButtons);
-        targetingIconLeft.position = resultLeft.position;
-        targetingIconRight.position = resultRight.position;
-        targetingIconLeft.localScale = resultLeft.scale;
-        targetingIconRight.localScale = resultRight.scale;
-        EditorTester();
+        var resultLeft = Raycast(OVRInput.Controller.LTouch, leftButtons, targetingIconLeft);
+        var resultRight = Raycast(OVRInput.Controller.RTouch, rightButtons, targetingIconRight);
     }
 
     // if there is no offset then we don't want to calculate the offset thus saving performance
@@ -54,23 +49,9 @@ public class RaycastPlaceObject : MonoBehaviour
         objectToPlace.transform.position = objectPos;
     }
 
-    //does the exact same as the raycast function, but a tester function that is simplified
-    void EditorTester()
-    {
-        if (!Input.GetMouseButtonDown(0)) return;
-        if (isAnchored == true && maxObjects == placedObjects.Count)
-        {
-            return;
-        }
-        placedObjects.Enqueue(Instantiate(objectToPlace, targetingIconLeft.position, Quaternion.identity));
-        if (maxObjects > 0 && placedObjects.Count > maxObjects)
-        {
-            Destroy(placedObjects.Dequeue());
-        }
-    }
 
     // make this into a OVRInput.GetDown and use a bool to instantiate the object
-    RaycastResult Raycast(OVRInput.Controller controller, OVRInput.RawButton[] buttons)
+    RaycastResult Raycast(OVRInput.Controller controller, OVRInput.RawButton[] buttons, Transform targetIcon)
     {
         var returnValue = new RaycastResult();
         var rayPos = OVRInput.GetLocalControllerPosition(controller);
@@ -80,20 +61,14 @@ public class RaycastPlaceObject : MonoBehaviour
             // if hitting a vertical surface, drop quad to the floor
             var iconHeight = Mathf.Abs(Vector3.Dot(Vector3.up, hitInfo.normal)) < 0.5f ? 0 : hitInfo.point.y;
             // offset quad a bit so it doesn't z-flicker
-            returnValue.position = new Vector3(hitInfo.point.x, iconHeight + 0.01f, hitInfo.point.z);
+            targetIcon.position = new Vector3(hitInfo.point.x, iconHeight + 0.01f, hitInfo.point.z);
         }
-        var pressingButton = false;
-        foreach (var button in buttons)
-        {
-            if (!OVRInput.GetDown(button, controller)) continue;
-            pressingButton = true;
-            break;
-        }
+        var pressingButton = buttons.Any(button => OVRInput.GetDown(button, controller));
         var position = hitInfo.point + offset;
         if (!pressingButton) return returnValue;
 
         // anchor all the objects so we don't spawn any new objects, thus not being able to move the objects
-        if (isAnchored == true && maxObjects == placedObjects.Count)
+        if (isAnchored && maxObjects == placedObjects.Count)
         {
             return returnValue;
         }
@@ -102,7 +77,7 @@ public class RaycastPlaceObject : MonoBehaviour
         {
             Destroy(placedObjects.Dequeue());
         }
-        returnValue.scale = Vector3.one * 0.6f;
+        targetIcon.localScale = Vector3.one * 0.6f;
         return returnValue;
     }
 

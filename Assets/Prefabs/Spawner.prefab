@@ -476,14 +476,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rayVisible: 1
   maxObjects: 5
-  offset: {x: 0, y: 0, z: 0}
+  offset: {x: 0, y: 0.01, z: 0}
   leftButtons: 00000010
   rightButtons: 00000004
   objectToPlace: {fileID: 4118514151192793854, guid: e7072a2c09c6a6240ad9279ff853e461, type: 3}
-  targetingIconLeft: {fileID: 4967413073356878724}
-  targetingIconRight: {fileID: 4967413073179956419}
-  raycastLineLeft: {fileID: 4967413073860071329}
-  raycastLineRight: {fileID: 4967413072776755504}
-  sceneLayer:
+  _targetingIconLeft: {fileID: 4967413073356878724}
+  _targetingIconRight: {fileID: 4967413073179956419}
+  _raycastLineLeft: {fileID: 4967413073860071329}
+  _raycastLineRight: {fileID: 4967413072776755504}
+  _sceneLayer:
     serializedVersion: 2
     m_Bits: 512
