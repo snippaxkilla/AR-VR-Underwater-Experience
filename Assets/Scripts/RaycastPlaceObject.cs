@@ -104,7 +104,3 @@ public class RaycastPlaceObject : MonoBehaviour
         public Vector3 scale;
     }
 }
-
-
-
-
