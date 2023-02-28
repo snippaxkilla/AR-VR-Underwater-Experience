@@ -50,7 +50,7 @@ public class RaycastPlaceObject : MonoBehaviour
     }
 
 
-    // make this into a OVRInput.GetDown and use a bool to instantiate the object
+    // cast a ray and give the positions to instantiate a defined object
     RaycastResult Raycast(OVRInput.Controller controller, OVRInput.RawButton[] buttons, Transform targetIcon)
     {
         var returnValue = new RaycastResult();
