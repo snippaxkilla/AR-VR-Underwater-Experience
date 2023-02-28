@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Masking
+  m_Name: Mask
   m_Shader: {fileID: 4800000, guid: 2d99fad46c0acb949af7edda10d28c2f, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
