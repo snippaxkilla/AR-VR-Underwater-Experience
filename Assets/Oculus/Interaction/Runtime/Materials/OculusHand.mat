@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: OculusHand
-  m_Shader: {fileID: 4800000, guid: 96496359528875c4f87b57d6ee52723a, type: 3}
+  m_Shader: {fileID: 4800000, guid: b895d3431e75dc345a72e171f82bfbea, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords:
   - _COLORGRADIENT_ON

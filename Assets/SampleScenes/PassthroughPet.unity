@@ -1545,6 +1545,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 15193403}
     m_Modifications:
+    - target: {fileID: 2781004746544239580, guid: 885ecae56b16f13428a67de5ae482a72, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3282029262929392819, guid: 885ecae56b16f13428a67de5ae482a72, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3282029263655771826, guid: 885ecae56b16f13428a67de5ae482a72, type: 3}
       propertyPath: m_RootOrder
       value: 0
