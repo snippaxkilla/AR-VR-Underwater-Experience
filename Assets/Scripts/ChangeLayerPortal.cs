@@ -6,12 +6,11 @@ public class ChangeLayerPortal : MonoBehaviour
     [SerializeField] private string newLayerName = "default";
     [SerializeField] private string oldLayerName = "insidePortal";
     [Header("Change children in this object to corresponding new layer")]
-    [SerializeField] private GameObject targetObject; // The GameObject whose children layers need to be changed
+    [SerializeField] private GameObject targetObject;
 
     private Vector3 colliderNormal = Vector3.forward; // The normal direction of the collider surface
-
-    private int newLayer; // The integer value of the new layer
-    private int oldLayer; // The integer value of the old layer
+    private int newLayer; 
+    private int oldLayer; 
 
     private void Start()
     {
