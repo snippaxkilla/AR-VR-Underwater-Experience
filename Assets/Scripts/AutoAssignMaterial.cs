@@ -2,28 +2,14 @@ using UnityEngine;
 
 public class AutoAssignMaterial : MonoBehaviour
 {
-    public Material materialToAssign;
-
+    [Header("auto assign all children this material")]
+    [SerializeField] private Material materialToAssign;
     private void Start()
     {
-        AssignMaterialRecursively(transform);
-    }
-
-    private void AssignMaterialRecursively(Transform transform)
-    {
-        foreach (Transform childTransform in transform)
+        Renderer[] renderers = GetComponentsInChildren<Renderer>();
+        foreach (Renderer renderer in renderers)
         {
-            Renderer renderer = childTransform.GetComponent<Renderer>();
-
-            if (renderer != null)
-            {
-                renderer.material = materialToAssign;
-            }
-
-            if (childTransform.childCount > 0)
-            {
-                AssignMaterialRecursively(childTransform);
-            }
+            renderer.material = materialToAssign;
         }
     }
 }

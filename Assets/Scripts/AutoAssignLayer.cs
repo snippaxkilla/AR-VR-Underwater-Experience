@@ -9,10 +9,10 @@ public class AutoAssignLayer : MonoBehaviour
     {
         var layer = LayerMask.NameToLayer(layerName);
 
-        foreach (Transform child in transform)
+        Transform[] children = GetComponentsInChildren<Transform>();
+        foreach (Transform child in children)
         {
             child.gameObject.layer = layer;
         }
     }
 }
-
