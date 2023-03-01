@@ -1,18 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AutoAssignLayer : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [Header("auto assign all children this layer")]
+    [SerializeField] private string layerName = "InsidePortal";
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        var layer = LayerMask.NameToLayer(layerName);
+
+        foreach (Transform child in transform)
+        {
+            child.gameObject.layer = layer;
+        }
     }
 }
+
