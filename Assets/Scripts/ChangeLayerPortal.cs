@@ -26,22 +26,14 @@ public class ChangeLayerPortal : MonoBehaviour
         var direction = other.transform.position - transform.position;
         if (Vector3.Dot(direction.normalized, colliderNormal) > 0)
         {
+            Debug.Log("Enter");
             ChangeChildrenLayer(targetObjectTransform, newLayer);
         }
-        Debug.Log("Enter");
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (!other.CompareTag("Player")) return;
-        var direction = other.transform.position - transform.position;
-        if (!(Vector3.Dot(direction.normalized, colliderNormal) < 0)) return;
-        // Check if player exits from the opposite side
-        // Player exits on the other side, so change the layer to the new layer
-        ChangeChildrenLayer(targetObjectTransform,
-            // Player exits on the same side, so change the layer to the old layer
-            Vector3.Dot(-direction.normalized, colliderNormal) > 0 ? newLayer : oldLayer);
-        Debug.Log("Exit");
+        else
+        {
+            Debug.Log("Exit");
+            ChangeChildrenLayer(targetObjectTransform, oldLayer);
+        }
     }
 
     private static void ChangeChildrenLayer(Transform parent, int newLayer)
