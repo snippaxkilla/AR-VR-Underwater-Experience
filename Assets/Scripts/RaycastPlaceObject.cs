@@ -33,9 +33,9 @@ public class RaycastPlaceObject : MonoBehaviour
     void Update()
     {
         OffsetCalculation();
-        UpdateRaycastLine();
         var resultLeft = Raycast(OVRInput.Controller.LTouch, leftButtons, targetingIconLeft);
         var resultRight = Raycast(OVRInput.Controller.RTouch, rightButtons, targetingIconRight);
+        UpdateRaycastLine();
     }
 
     // if there is no offset then we don't want to calculate the offset thus saving performance
