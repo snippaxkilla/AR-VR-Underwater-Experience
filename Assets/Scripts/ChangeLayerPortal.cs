@@ -38,11 +38,7 @@ public class ChangeLayerPortal : MonoBehaviour
 
     private static void ChangeChildrenLayer(Transform parent, int newLayer)
     {
-        if (parent.gameObject.layer != newLayer)
-        {
-            parent.gameObject.layer = newLayer;
-        }
-
+        parent.gameObject.layer = newLayer;
         foreach (Transform child in parent)
         {
             ChangeChildrenLayer(child, newLayer);
