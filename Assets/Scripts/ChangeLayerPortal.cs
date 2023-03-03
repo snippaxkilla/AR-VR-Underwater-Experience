@@ -7,6 +7,7 @@ public class ChangeLayerPortal : MonoBehaviour
     [SerializeField] private string oldLayerName = "InsidePortal";
     [Header("Change children in this object to corresponding new layer")]
     [SerializeField] private GameObject targetObject;
+    [SerializeField] private string usedTag = "MainCamera";
 
     private int newLayer;
     private int oldLayer;
@@ -22,7 +23,7 @@ public class ChangeLayerPortal : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("Player")) return;
+        if (!other.CompareTag(usedTag)) return;
         var direction = other.transform.position - transform.position;
         if (Vector3.Dot(direction.normalized, colliderNormal) > 0)
         {

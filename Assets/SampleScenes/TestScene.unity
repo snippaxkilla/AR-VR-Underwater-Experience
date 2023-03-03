@@ -205,7 +205,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6119073500594496640, guid: 61b469ffb3005554f8631a46a0f0c28a, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6592438022187821652, guid: 61b469ffb3005554f8631a46a0f0c28a, type: 3}
       propertyPath: m_Convex
@@ -549,6 +549,10 @@ PrefabInstance:
     - target: {fileID: 234201343089247128, guid: 8b34841a8f75e3542b305fc7741cf1c9, type: 3}
       propertyPath: m_Name
       value: PortalCollider
+      objectReference: {fileID: 0}
+    - target: {fileID: 234201343089247128, guid: 8b34841a8f75e3542b305fc7741cf1c9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 234201343089247129, guid: 8b34841a8f75e3542b305fc7741cf1c9, type: 3}
       propertyPath: targetObject
