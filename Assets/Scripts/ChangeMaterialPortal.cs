@@ -29,7 +29,7 @@ public class ChangeMaterialPortal : MonoBehaviour
         {
             Debug.Log("Exit");
 
-            // Assign the new material to the children in the target object
+            // Assign the material in AutoAssigner back
             var autoAssignMaterial = targetObject.GetComponent<AutoAssignMaterial>();
             foreach (Renderer renderer in targetObject.GetComponentsInChildren<Renderer>())
             {

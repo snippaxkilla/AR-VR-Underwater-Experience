@@ -1594,6 +1594,7 @@ GameObject:
   - component: {fileID: 2869885451218485731}
   - component: {fileID: 4268295084943242974}
   - component: {fileID: 7356530658785200338}
+  - component: {fileID: 6883419800680929910}
   m_Layer: 0
   m_Name: PortalCollider
   m_TagString: Untagged
@@ -1652,7 +1653,21 @@ MonoBehaviour:
   newLayerName: Default
   oldLayerName: InsidePortal
   targetObject: {fileID: 978866778536601336}
-  usedTag: MainCamera
+  collisionWithThisTag: MainCamera
+--- !u!114 &6883419800680929910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1213269600831803700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45b0c2001795fbf44b77ada96c098fbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetObject: {fileID: 8880798243300816678}
+  collisionWithThisTag: MainCamera
 --- !u!1 &1218974605974322495
 GameObject:
   m_ObjectHideFlags: 0
@@ -4048,8 +4063,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3523148594977379318}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1033.1467, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_ConstrainProportionsScale: 1
   m_Children:

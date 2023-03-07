@@ -22,10 +22,4 @@ public class AutoAssignMaterial : MonoBehaviour
             renderer.material = materialToAssign;
         }
     }
-
-    // Example method to retrieve the old material for a specific GameObject
-    public Material GetOldMaterial(GameObject go)
-    {
-        return (from kvp in oldMaterials where kvp.Key == go select kvp.Value).FirstOrDefault();
-    }
 }
