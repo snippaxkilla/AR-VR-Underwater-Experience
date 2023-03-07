@@ -215,17 +215,40 @@ public class OVRSceneManager : MonoBehaviour
 
     internal static class Development
     {
-        [Conditional("DEVELOPMENT_BUILD")]
-        [Conditional("UNITY_EDITOR")]
-        public static void Log(string context, string message) => Debug.Log($"[{context}] {message}");
+        private static readonly HashSet<string> loggedMessages = new HashSet<string>();
 
         [Conditional("DEVELOPMENT_BUILD")]
         [Conditional("UNITY_EDITOR")]
-        public static void LogWarning(string context, string message) => Debug.LogWarning($"[{context}] {message}");
+        public static void Log(string context, string message)
+        {
+            var fullMessage = $"[{context}] {message}";
+
+            if (loggedMessages.Contains(fullMessage)) return;
+            Debug.Log(fullMessage);
+            loggedMessages.Add(fullMessage);
+        }
 
         [Conditional("DEVELOPMENT_BUILD")]
         [Conditional("UNITY_EDITOR")]
-        public static void LogError(string context, string message) => Debug.LogError($"[{context}] {message}");
+        public static void LogWarning(string context, string message)
+        {
+            var fullMessage = $"[{context}] {message}";
+
+            if (loggedMessages.Contains(fullMessage)) return;
+            Debug.LogWarning(fullMessage);
+            loggedMessages.Add(fullMessage);
+        }
+
+        [Conditional("DEVELOPMENT_BUILD")]
+        [Conditional("UNITY_EDITOR")]
+        public static void LogError(string context, string message)
+        {
+            var fullMessage = $"[{context}] {message}";
+
+            if (loggedMessages.Contains(fullMessage)) return;
+            Debug.LogError(fullMessage);
+            loggedMessages.Add(fullMessage);
+        }
     }
 
     void Awake()
