@@ -1,43 +1,51 @@
-using System.Collections;
 using UnityEngine;
 
 public class ObjectRiser : MonoBehaviour
 {
-    [SerializeField] private float riseSpeed = 1.0f; // The speed at which to rise out of the ground
-    [SerializeField] private float checkDistance = 1.0f; // The distance to check for the ground
-    [SerializeField] private LayerMask groundLayer; // The layer(s) that represent the ground
-
-    private bool isRising = false; // Whether or not the object is currently rising
-    private float floorHeight = 0.0f; // The height of the floor
-    private Vector3 targetPosition; // The position to rise to
-    private Vector3 initialPosition; // The initial position of the object
+    [SerializeField] private float riseSpeed = 1f;
+    [SerializeField] private float offset = 0f;
+    
+    private float maxHeight;
+    private float currentHeight;
+    private bool isRising = true;
 
     private void Start()
     {
-        // Store the initial position of the object
-        initialPosition = transform.position;
+        // Get the height of the collider and set maxHeight accordingly, with an offset
+        maxHeight = GetComponent<Collider>().bounds.size.y + offset;
+        currentHeight = 0f;
 
-        // Shoot a raycast down to find the ground
-        if (!Physics.Raycast(transform.position, Vector3.down, out var hit, checkDistance, groundLayer)) return;
-        floorHeight = hit.point.y;
-        targetPosition = new Vector3(initialPosition.x, floorHeight + transform.localScale.y / 2.0f, initialPosition.z);
-        StartCoroutine(WaitAndRise());
+        // Ignore collisions with all other colliders in the scene
+        Collider[] colliders = Physics.OverlapSphere(transform.position, maxHeight);
+        foreach (Collider collider in colliders)
+        {
+            if (collider != GetComponent<Collider>())
+            {
+                Physics.IgnoreCollision(GetComponent<Collider>(), collider, true);
+            }
+        }
     }
 
     private void Update()
     {
-        // If the object is rising, move it towards the target position
-        if (!isRising) return;
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, riseSpeed * Time.deltaTime);
-        if (transform.position == targetPosition)
+        if (currentHeight < maxHeight)
         {
+            currentHeight += riseSpeed * Time.deltaTime;
+            currentHeight = Mathf.Clamp(currentHeight, 0f, maxHeight);
+            transform.position = new Vector3(transform.position.x, currentHeight, transform.position.z);
+        }
+        else if (isRising)
+        {
+            // Enable collisions with all other colliders in the scene
+            Collider[] colliders = Physics.OverlapSphere(transform.position, maxHeight);
+            foreach (Collider collider in colliders)
+            {
+                if (collider != GetComponent<Collider>())
+                {
+                    Physics.IgnoreCollision(GetComponent<Collider>(), collider, false);
+                }
+            }
             isRising = false;
         }
-    }
-
-    IEnumerator WaitAndRise()
-    {
-        yield return new WaitForSeconds(2.0f);
-        isRising = true;
     }
 }
