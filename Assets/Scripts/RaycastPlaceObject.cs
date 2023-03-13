@@ -47,7 +47,6 @@ public class RaycastPlaceObject : MonoBehaviour
         objectToPlace.transform.position = objectPos;
     }
 
-
     // cast a ray and give the positions to instantiate a defined object
     private RaycastResult Raycast(OVRInput.Controller controller, OVRInput.RawButton[] buttons, Transform targetIcon)
     {

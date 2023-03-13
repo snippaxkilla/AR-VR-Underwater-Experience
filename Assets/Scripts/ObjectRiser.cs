@@ -5,6 +5,7 @@ public class ObjectRiser : MonoBehaviour
     [Header("Rise the object")]
     [SerializeField] private float riseSpeed = 1f;
     [SerializeField] private float offset = 0f;
+    [SerializeField] private float currentHeight;
 
     [Header("Object shaker modifiers")]
     [SerializeField] private bool canShake = false;
@@ -13,14 +14,13 @@ public class ObjectRiser : MonoBehaviour
 
     private Vector3 originalPosition;
     private float maxHeight;
-    private float currentHeight;
     private bool isRising = true;
 
     private void Start()
     {
         // Get the height of the collider and set maxHeight accordingly, with an offset
         maxHeight = GetComponent<Collider>().bounds.size.y + offset;
-        currentHeight = 0f;
+        currentHeight -= maxHeight;
 
         // Ignore collisions with all other colliders in the scene
         Collider[] colliders = Physics.OverlapSphere(transform.position, maxHeight);
