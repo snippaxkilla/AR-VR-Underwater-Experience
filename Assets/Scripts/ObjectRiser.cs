@@ -1,4 +1,5 @@
 using UnityEngine;
+using Cinemachine;
 
 public class ObjectRiser : MonoBehaviour
 {
@@ -12,12 +13,16 @@ public class ObjectRiser : MonoBehaviour
     [SerializeField] private float shakeIntensity = 1f;
     [SerializeField] private float shakeSpeed = 0.2f;
 
+    CinemachineImpulseSource impulseSource;
+
     private Vector3 originalPosition;
     private float objectHeight;
     private bool isRising = true;
 
     private void Start()
     {
+        impulseSource = GetComponent<CinemachineImpulseSource>();
+
         // Get the height of the collider and set objectHeight accordingly, with an offset
         objectHeight = GetComponent<Collider>().bounds.size.y + offset;
         currentHeight -= objectHeight;
@@ -43,6 +48,7 @@ public class ObjectRiser : MonoBehaviour
     {
         if (currentHeight < 0)
         {
+            Shake();
             currentHeight += riseSpeed * Time.deltaTime;
             currentHeight = Mathf.Clamp(currentHeight, currentHeight, 0);
             transform.position = new Vector3(transform.position.x, currentHeight, transform.position.z);
@@ -60,6 +66,11 @@ public class ObjectRiser : MonoBehaviour
             }
             isRising = false;
         }
+    }
+
+    private void Shake()
+    {
+        impulseSource.GenerateImpulse();
     }
 
     private void ObjectShaker()
