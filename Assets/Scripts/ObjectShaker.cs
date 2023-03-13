@@ -7,13 +7,14 @@ public class ObjectShaker : MonoBehaviour
     [SerializeField] private float shakeIntensity = 1f;
     [SerializeField] private float shakeSpeed = 0.2f;
 
+    [Header("Object riser reference")]
+    [SerializeField] private ObjectRiser objectRiser;
+
     private Vector3 originalPosition;
-    private ObjectRiser objectRiser;
 
     private void Start()
     {
         originalPosition = transform.localPosition;
-        objectRiser = GetComponent<ObjectRiser>();
     }
 
     private void Update()

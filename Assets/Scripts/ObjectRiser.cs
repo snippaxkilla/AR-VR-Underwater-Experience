@@ -10,7 +10,7 @@ public class ObjectRiser : MonoBehaviour
     private float objectHeight;
     private float maxHeight;
     public bool isRising = true;
-    
+
     private void Start()
     {
         // Get the height of the collider and set objectHeight accordingly, with an offset
@@ -19,6 +19,9 @@ public class ObjectRiser : MonoBehaviour
         currentHeight -= objectHeight;
         maxHeight = objectHeight/2;
 
+        // Spawn the object below the ground
+        transform.position = new Vector3(transform.position.x, currentHeight, transform.position.z);
+        
         // Ignore collisions with all other colliders in the scene
         Collider[] colliders = Physics.OverlapSphere(transform.position, objectHeight);
         foreach (Collider collider in colliders)
@@ -28,8 +31,6 @@ public class ObjectRiser : MonoBehaviour
                 Physics.IgnoreCollision(GetComponent<Collider>(), collider, true);
             }
         }
-        // Spawn the object below the ground
-        transform.position = new Vector3(transform.position.x, currentHeight, transform.position.z);
     }
 
     private void Update()
@@ -45,18 +46,16 @@ public class ObjectRiser : MonoBehaviour
             currentHeight = Mathf.Clamp(currentHeight, -objectHeight, maxHeight);
             transform.position = new Vector3(transform.position.x, currentHeight, transform.position.z);
         }
-        else
+        if (!(currentHeight >= maxHeight)) return;
+        isRising = false;
+        // Enable collisions with all other colliders in the scene
+        Collider[] colliders = Physics.OverlapSphere(transform.position, objectHeight);
+        foreach (Collider collider in colliders)
         {
-            // Enable collisions with all other colliders in the scene
-            Collider[] colliders = Physics.OverlapSphere(transform.position, objectHeight);
-            foreach (Collider collider in colliders)
+            if (collider != GetComponent<Collider>())
             {
-                if (collider != GetComponent<Collider>())
-                {
-                    Physics.IgnoreCollision(GetComponent<Collider>(), collider, false);
-                }
+                Physics.IgnoreCollision(GetComponent<Collider>(), collider, false);
             }
-            isRising = false;
         }
     }
 
