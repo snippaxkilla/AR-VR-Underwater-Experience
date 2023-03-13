@@ -1,5 +1,4 @@
 using UnityEngine;
-using Cinemachine;
 
 public class ObjectRiser : MonoBehaviour
 {
@@ -8,24 +7,17 @@ public class ObjectRiser : MonoBehaviour
     [SerializeField] private float offset = 0f;
     [SerializeField] private float currentHeight;
 
-    [Header("Object shaker modifiers")]
-    [SerializeField] private bool canShake = false;
-    [SerializeField] private float shakeIntensity = 1f;
-    [SerializeField] private float shakeSpeed = 0.2f;
-
-    CinemachineImpulseSource impulseSource;
-
-    private Vector3 originalPosition;
     private float objectHeight;
-    private bool isRising = true;
-
+    private float maxHeight;
+    public bool isRising = true;
+    
     private void Start()
     {
-        impulseSource = GetComponent<CinemachineImpulseSource>();
-
         // Get the height of the collider and set objectHeight accordingly, with an offset
-        objectHeight = GetComponent<Collider>().bounds.size.y + offset;
+        var bounds = GetHeightObject(gameObject);
+        objectHeight = bounds.size.y + offset;
         currentHeight -= objectHeight;
+        maxHeight = objectHeight/2;
 
         // Ignore collisions with all other colliders in the scene
         Collider[] colliders = Physics.OverlapSphere(transform.position, objectHeight);
@@ -36,24 +28,24 @@ public class ObjectRiser : MonoBehaviour
                 Physics.IgnoreCollision(GetComponent<Collider>(), collider, true);
             }
         }
+        // Spawn the object below the ground
+        transform.position = new Vector3(transform.position.x, currentHeight, transform.position.z);
     }
 
     private void Update()
     {
         ObjectMaxRiser();
-        if (canShake) ObjectShaker();
     }
 
     private void ObjectMaxRiser()
     {
-        if (currentHeight < 0)
+        if (currentHeight < maxHeight)
         {
-            Shake();
             currentHeight += riseSpeed * Time.deltaTime;
-            currentHeight = Mathf.Clamp(currentHeight, currentHeight, 0);
+            currentHeight = Mathf.Clamp(currentHeight, -objectHeight, maxHeight);
             transform.position = new Vector3(transform.position.x, currentHeight, transform.position.z);
         }
-        else if (isRising)
+        else
         {
             // Enable collisions with all other colliders in the scene
             Collider[] colliders = Physics.OverlapSphere(transform.position, objectHeight);
@@ -68,25 +60,13 @@ public class ObjectRiser : MonoBehaviour
         }
     }
 
-    private void Shake()
+    private Bounds GetHeightObject(GameObject parent)
     {
-        impulseSource.GenerateImpulse();
-    }
-
-    private void ObjectShaker()
-    {
-        if (isRising)
+        var totalHeight = new Bounds(parent.transform.position, Vector3.zero);
+        foreach (var children in parent.GetComponentsInChildren<Collider>())
         {
-            // Generate a random Perlin noise value based on the current time and speed
-            var noiseValue = Mathf.PerlinNoise(0f, Time.time * shakeSpeed);
-            // Map the noise value to a shake offset
-            var shakeOffset = Vector3.one * Mathf.Lerp(-1f, 1f, noiseValue) * shakeIntensity;
-            transform.localPosition = originalPosition + shakeOffset;
+            totalHeight.Encapsulate(children.bounds);
         }
-        else
-        {
-            // Reset the object's local position
-            transform.localPosition = originalPosition;
-        }
+        return totalHeight;
     }
 }
