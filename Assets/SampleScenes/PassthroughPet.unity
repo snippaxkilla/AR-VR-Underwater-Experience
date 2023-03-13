@@ -2952,6 +2952,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ParentRiser
       objectReference: {fileID: 0}
+    - target: {fileID: 5912289856857385645, guid: e0d5017950a2e634ea5820f7860c4fc5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5912289856857385647, guid: e0d5017950a2e634ea5820f7860c4fc5, type: 3}
       propertyPath: m_RootOrder
       value: 11
