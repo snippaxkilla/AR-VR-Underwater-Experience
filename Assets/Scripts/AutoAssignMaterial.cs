@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class AutoAssignMaterial : MonoBehaviour
@@ -8,7 +7,7 @@ public class AutoAssignMaterial : MonoBehaviour
     [SerializeField] public Material materialToAssign;
 
     // List to store all old materials and their corresponding GameObjects
-    public List<KeyValuePair<GameObject, Material>> oldMaterials = new List<KeyValuePair<GameObject, Material>>();
+    public readonly List<KeyValuePair<GameObject, Material>> oldMaterials = new List<KeyValuePair<GameObject, Material>>();
 
     private void Start()
     {

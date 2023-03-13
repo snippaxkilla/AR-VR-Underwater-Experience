@@ -13,32 +13,30 @@ public class RaycastPlaceObject : MonoBehaviour
     [SerializeField] private Vector3 offset;
     [SerializeField] private OVRInput.RawButton[] leftButtons;
     [SerializeField] private OVRInput.RawButton[] rightButtons;
-
-    // keep these items as public to assign them in the inspector
-    public GameObject objectToPlace;
-    public Transform targetingIconLeft;
-    public Transform targetingIconRight;
-    public LineRenderer raycastLineLeft;
-    public LineRenderer raycastLineRight;
-    public LayerMask sceneLayer;
+    [SerializeField] private GameObject objectToPlace;
+    [SerializeField] private Transform targetingIconLeft;
+    [SerializeField] private Transform targetingIconRight;
+    [SerializeField] private LineRenderer raycastLineLeft;
+    [SerializeField] private LineRenderer raycastLineRight;
+    [SerializeField] private LayerMask sceneLayer;
 
     Queue<GameObject> placedObjects = new();
 
-    void Start()
+    private void Start()
     {
         ToggleRayVisibility();
     }
 
-    void Update()
+    private void Update()
     {
         OffsetCalculation();
-        var resultLeft = Raycast(OVRInput.Controller.LTouch, leftButtons, targetingIconLeft);
-        var resultRight = Raycast(OVRInput.Controller.RTouch, rightButtons, targetingIconRight);
+        Raycast(OVRInput.Controller.LTouch, leftButtons, targetingIconLeft);
+        Raycast(OVRInput.Controller.RTouch, rightButtons, targetingIconRight);
         UpdateRaycastLine();
     }
 
     // if there is no offset then we don't want to calculate the offset thus saving performance
-    void OffsetCalculation()
+    private void OffsetCalculation()
     {
         if (offset == Vector3.zero)
         {
@@ -51,7 +49,7 @@ public class RaycastPlaceObject : MonoBehaviour
 
 
     // cast a ray and give the positions to instantiate a defined object
-    RaycastResult Raycast(OVRInput.Controller controller, OVRInput.RawButton[] buttons, Transform targetIcon)
+    private RaycastResult Raycast(OVRInput.Controller controller, OVRInput.RawButton[] buttons, Transform targetIcon)
     {
         var returnValue = new RaycastResult();
         var rayPos = OVRInput.GetLocalControllerPosition(controller);
@@ -82,7 +80,7 @@ public class RaycastPlaceObject : MonoBehaviour
     }
 
     // cast 2 separate rays from each controller to the point where you are aiming
-    void UpdateRaycastLine()
+    private void UpdateRaycastLine()
     {
         raycastLineLeft.SetPosition(0, OVRInput.GetLocalControllerPosition(OVRInput.Controller.LTouch));
         raycastLineRight.SetPosition(0, OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch));
@@ -91,14 +89,14 @@ public class RaycastPlaceObject : MonoBehaviour
     }
 
     // toggle on and off if you want the rays to be visible, but they will still be casted
-    void ToggleRayVisibility()
+    private void ToggleRayVisibility()
     {
         rayVisible = !rayVisible;
         raycastLineLeft.enabled = rayVisible;
         raycastLineRight.enabled = rayVisible;
     }
 
-    struct RaycastResult
+    private struct RaycastResult
     {
         public Vector3 position;
         public Vector3 scale;

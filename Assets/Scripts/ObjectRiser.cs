@@ -8,7 +8,6 @@ public class ObjectRiser : MonoBehaviour
 
     [Header("Object shaker modifiers")]
     [SerializeField] private bool canShake = false;
-    [SerializeField] private float shakeDuration = 5f;
     [SerializeField] private float shakeIntensity = 1f;
     [SerializeField] private float shakeSpeed = 0.2f;
 
@@ -69,7 +68,6 @@ public class ObjectRiser : MonoBehaviour
         {
             // Generate a random Perlin noise value based on the current time and speed
             var noiseValue = Mathf.PerlinNoise(0f, Time.time * shakeSpeed);
-
             // Map the noise value to a shake offset
             var shakeOffset = Vector3.one * Mathf.Lerp(-1f, 1f, noiseValue) * shakeIntensity;
             transform.localPosition = originalPosition + shakeOffset;
