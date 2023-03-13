@@ -114,7 +114,7 @@ MonoBehaviour:
   riseSpeed: 0.2
   offset: 0
   currentHeight: 0
-  canShake: 1
+  canShake: 0
   shakeIntensity: 10000
   shakeSpeed: 2000
 --- !u!114 &2632381297561688139

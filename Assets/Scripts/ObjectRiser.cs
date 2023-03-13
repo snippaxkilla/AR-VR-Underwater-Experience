@@ -13,17 +13,17 @@ public class ObjectRiser : MonoBehaviour
     [SerializeField] private float shakeSpeed = 0.2f;
 
     private Vector3 originalPosition;
-    private float maxHeight;
+    private float objectHeight;
     private bool isRising = true;
 
     private void Start()
     {
-        // Get the height of the collider and set maxHeight accordingly, with an offset
-        maxHeight = GetComponent<Collider>().bounds.size.y + offset;
-        currentHeight -= maxHeight;
+        // Get the height of the collider and set objectHeight accordingly, with an offset
+        objectHeight = GetComponent<Collider>().bounds.size.y + offset;
+        currentHeight -= objectHeight;
 
         // Ignore collisions with all other colliders in the scene
-        Collider[] colliders = Physics.OverlapSphere(transform.position, maxHeight);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, objectHeight);
         foreach (Collider collider in colliders)
         {
             if (collider != GetComponent<Collider>())
@@ -41,16 +41,16 @@ public class ObjectRiser : MonoBehaviour
 
     private void ObjectMaxRiser()
     {
-        if (currentHeight < maxHeight)
+        if (currentHeight < 0)
         {
             currentHeight += riseSpeed * Time.deltaTime;
-            currentHeight = Mathf.Clamp(currentHeight, 0f, maxHeight);
+            currentHeight = Mathf.Clamp(currentHeight, currentHeight, 0);
             transform.position = new Vector3(transform.position.x, currentHeight, transform.position.z);
         }
         else if (isRising)
         {
             // Enable collisions with all other colliders in the scene
-            Collider[] colliders = Physics.OverlapSphere(transform.position, maxHeight);
+            Collider[] colliders = Physics.OverlapSphere(transform.position, objectHeight);
             foreach (Collider collider in colliders)
             {
                 if (collider != GetComponent<Collider>())
