@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 5912289856265111694}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 8, y: 8, z: 8}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 5912289856857385647}
@@ -124,6 +124,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5912289856857385647}
   - component: {fileID: 5041244914582517242}
+  - component: {fileID: 2099159619}
   m_Layer: 0
   m_Name: ParentRiser
   m_TagString: Untagged
@@ -163,3 +164,17 @@ MonoBehaviour:
   offset: 0
   currentHeight: 0
   isRising: 1
+--- !u!114 &2099159619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5912289856857385645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 475a962c1c6e46347bad21cf6a8567b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  occludingPlane: {fileID: 2949839133267109295, guid: 21bbf2ca3114c8e43a670e8c6a02dd8a, type: 3}
+  objectRiser: {fileID: 5041244914582517242}
