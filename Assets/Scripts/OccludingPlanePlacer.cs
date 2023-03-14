@@ -21,7 +21,8 @@ public class OccludingPlanePlacer : MonoBehaviour
         // If the object is not rising, destroy the previously instantiated object
         if (occludingPlaneInstance != null)
         {
-            Destroy(occludingPlaneInstance, 0.1f);
+            // delay in accordance to the particle system duration
+            Destroy(occludingPlaneInstance, 5f);
         }
     }
 }

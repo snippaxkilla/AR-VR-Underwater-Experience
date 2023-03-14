@@ -111,8 +111,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canShake: 1
-  shakeIntensity: 0.1
-  shakeSpeed: 20
+  shakeIntensity: 0.025
+  shakeSpeed: 5
   objectRiser: {fileID: 5041244914582517242}
 --- !u!1 &5912289856857385645
 GameObject:

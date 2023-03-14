@@ -6,7 +6,7 @@ public class BuildHelper : MonoBehaviour
     [SerializeField] private List<GameObject> debugGameObjects;
     [SerializeField] private List<GameObject> buildGameObjects;
 
-#if UNITY_STANDALONE && !UNITY_EDITOR
+#if UNITY_ANDROID && !UNITY_EDITOR
     private void Awake()
     {
         foreach (GameObject gameObject in debugGameObjects)

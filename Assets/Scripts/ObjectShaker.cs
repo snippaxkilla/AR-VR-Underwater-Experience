@@ -30,7 +30,7 @@ public class ObjectShaker : MonoBehaviour
         else
         {
             // Reset the object's local position
-            transform.localPosition = originalPosition;
+            transform.localPosition = Vector3.Lerp(transform.localPosition, originalPosition, Time.deltaTime * 10f);
         }
     }
 }
