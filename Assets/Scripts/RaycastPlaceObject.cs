@@ -90,7 +90,6 @@ public class RaycastPlaceObject : MonoBehaviour
     // toggle on and off if you want the rays to be visible, but they will still be casted
     private void ToggleRayVisibility()
     {
-        rayVisible = !rayVisible;
         raycastLineLeft.enabled = rayVisible;
         raycastLineRight.enabled = rayVisible;
     }
