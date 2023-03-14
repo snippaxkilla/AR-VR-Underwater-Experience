@@ -4,8 +4,8 @@ public class ObjectShaker : MonoBehaviour
 {
     [Header("Object shaker modifiers")]
     [SerializeField] private bool canShake = false;
-    [SerializeField] private float shakeIntensity = 1f;
-    [SerializeField] private float shakeSpeed = 0.2f;
+    [SerializeField] private float shakeIntensity = 0.025f;
+    [SerializeField] private float shakeSpeed = 5f;
 
     [Header("Object riser reference")]
     [SerializeField] private ObjectRiser objectRiser;
