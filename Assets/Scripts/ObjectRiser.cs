@@ -26,9 +26,9 @@ public class ObjectRiser : MonoBehaviour
         Collider[] colliders = Physics.OverlapSphere(transform.position, objectHeight);
         foreach (Collider collider in colliders)
         {
-            if (collider != GetComponent<Collider>())
+            if (collider != GetComponentInChildren<Collider>())
             {
-                Physics.IgnoreCollision(GetComponent<Collider>(), collider, true);
+                Physics.IgnoreCollision(GetComponentInChildren<Collider>(), collider, true);
             }
         }
     }
@@ -52,9 +52,9 @@ public class ObjectRiser : MonoBehaviour
         Collider[] colliders = Physics.OverlapSphere(transform.position, objectHeight);
         foreach (Collider collider in colliders)
         {
-            if (collider != GetComponent<Collider>())
+            if (collider != GetComponentInChildren<Collider>())
             {
-                Physics.IgnoreCollision(GetComponent<Collider>(), collider, false);
+                Physics.IgnoreCollision(GetComponentInChildren<Collider>(), collider, false);
             }
         }
     }
