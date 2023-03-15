@@ -11,7 +11,8 @@ public class OccludingPlanePlacer : MonoBehaviour
 
     private void Start()
     {
-        var spawnPosition = new Vector3(transform.position.x, 0, transform.position.z);
+        // Prevent z flicker by placing the plane slightly above the ground
+        var spawnPosition = new Vector3(transform.position.x, 0.1f, transform.position.z);
         occludingPlaneInstance = Instantiate(occludingPlane, spawnPosition, Quaternion.identity); // Store reference to instantiated object
     }
 

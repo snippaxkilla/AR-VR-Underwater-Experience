@@ -1881,6 +1881,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
+      propertyPath: resetTrackerOnLoad
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
       propertyPath: _trackingOriginType
       value: 2
       objectReference: {fileID: 0}
@@ -2127,7 +2131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b2e012a3ddd28d47b1ba61e9a726d01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectToPlace: {fileID: 5912289856857385645, guid: e0d5017950a2e634ea5820f7860c4fc5, type: 3}
+  objectToPlace: {fileID: 8966620956792184508, guid: 1fcca0919ea80fb419bef19f1643ce6a, type: 3}
 --- !u!114 &1698809314 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1054376643923719174, guid: ea16c3c8c1688234fa81a4f39339bf1b, type: 3}
@@ -2640,7 +2644,7 @@ PrefabInstance:
     - target: {fileID: 249790294128899652, guid: 3d5396f867dd61b42897e6dca3a6c943, type: 3}
       propertyPath: objectToPlace
       value: 
-      objectReference: {fileID: 5912289856857385645, guid: e0d5017950a2e634ea5820f7860c4fc5, type: 3}
+      objectReference: {fileID: 8966620956792184508, guid: 1fcca0919ea80fb419bef19f1643ce6a, type: 3}
     - target: {fileID: 249790294128899653, guid: 3d5396f867dd61b42897e6dca3a6c943, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -2986,6 +2990,10 @@ PrefabInstance:
     - target: {fileID: 8991035118354445454, guid: d821c3f79c8e0614e8a9d3347eb8851e, type: 3}
       propertyPath: m_Name
       value: Build helper
+      objectReference: {fileID: 0}
+    - target: {fileID: 8991035118354445454, guid: d821c3f79c8e0614e8a9d3347eb8851e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8991035118354445455, guid: d821c3f79c8e0614e8a9d3347eb8851e, type: 3}
       propertyPath: buildGameObjects.Array.data[0]

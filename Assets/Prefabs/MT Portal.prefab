@@ -1270,8 +1270,11 @@ Transform:
   - {fileID: 6204817112962020674}
   - {fileID: 1750181843709078969}
   - {fileID: 3672414825757127239}
+  - {fileID: 2524229085549124459}
+  - {fileID: 4850968927019376458}
+  - {fileID: 5084329786543105810}
   m_Father: {fileID: 4300775292566980940}
-  m_RootOrder: 13
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6119073500594496640
 MonoBehaviour:
@@ -4081,8 +4084,8 @@ Transform:
   - {fileID: 5793707793815342068}
   - {fileID: 3810403260612894700}
   - {fileID: 4996238453668860686}
-  - {fileID: 7102043287359021282}
   - {fileID: 8544840599111011235}
+  - {fileID: 7102043287359021282}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5703,8 +5706,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4078501503917585845}
-  m_Father: {fileID: 8544840599111011235}
-  m_RootOrder: 2
+  m_Father: {fileID: 7102043287359021282}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5416444658450192477
 GameObject:
@@ -7445,8 +7448,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6841424720750496303}
-  m_Father: {fileID: 8544840599111011235}
-  m_RootOrder: 0
+  m_Father: {fileID: 7102043287359021282}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6752375903626610642
 GameObject:
@@ -9450,16 +9453,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8880798243300816678}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 2524229085549124459}
-  - {fileID: 4850968927019376458}
-  - {fileID: 5084329786543105810}
+  m_Children: []
   m_Father: {fileID: 4300775292566980940}
-  m_RootOrder: 14
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7817811643641844140
 MonoBehaviour:
@@ -9468,7 +9468,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8880798243300816678}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04ec17716b706f049b973b62fd7d5650, type: 3}
   m_Name: 
@@ -9586,8 +9586,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 974288719492073851}
-  m_Father: {fileID: 8544840599111011235}
-  m_RootOrder: 1
+  m_Father: {fileID: 7102043287359021282}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &6946660554451414985
 PrefabInstance:

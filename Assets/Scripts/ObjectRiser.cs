@@ -17,7 +17,6 @@ public class ObjectRiser : MonoBehaviour
         var bounds = GetHeightObject(gameObject);
         objectHeight = bounds.size.y + offset;
         currentHeight -= objectHeight;
-        maxHeight = objectHeight/2;
 
         // Spawn the object below the ground
         transform.position = new Vector3(transform.position.x, currentHeight, transform.position.z);
