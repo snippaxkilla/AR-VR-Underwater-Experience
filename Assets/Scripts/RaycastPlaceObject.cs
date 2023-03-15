@@ -22,17 +22,13 @@ public class RaycastPlaceObject : MonoBehaviour
 
     Queue<GameObject> placedObjects = new();
 
-    private void Start()
-    {
-        ToggleRayVisibility();
-    }
-
     private void Update()
     {
         OffsetCalculation();
         Raycast(OVRInput.Controller.LTouch, leftButtons, targetingIconLeft);
         Raycast(OVRInput.Controller.RTouch, rightButtons, targetingIconRight);
         UpdateRaycastLine();
+        ToggleRayVisibility();
     }
 
     // if there is no offset then we don't want to calculate the offset thus saving performance
@@ -92,6 +88,24 @@ public class RaycastPlaceObject : MonoBehaviour
     {
         raycastLineLeft.enabled = rayVisible;
         raycastLineRight.enabled = rayVisible;
+        if (rayVisible)
+        {
+            DisableLineOnHands();
+        }
+    }
+
+    private void DisableLineOnHands()
+    {
+        if (OVRInput.IsControllerConnected(OVRInput.Controller.Hands))
+        {
+            raycastLineLeft.enabled = false;
+            raycastLineRight.enabled = false;
+        }
+        else
+        {
+            raycastLineLeft.enabled = true;
+            raycastLineRight.enabled = true;
+        }
     }
 
     private struct RaycastResult

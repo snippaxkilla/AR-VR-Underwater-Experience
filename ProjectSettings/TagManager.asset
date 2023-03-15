@@ -24,9 +24,9 @@ TagManager:
   - Balls
   - BallDebris
   - NavMeshCollision
-  - Mask
+  - PortalRendererMask
   - InsidePortal
-  - 
+  - GroundMask
   - 
   - 
   - 
