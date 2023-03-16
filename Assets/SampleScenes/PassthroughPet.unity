@@ -3181,7 +3181,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8991035118354445454, guid: d821c3f79c8e0614e8a9d3347eb8851e, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8991035118354445455, guid: d821c3f79c8e0614e8a9d3347eb8851e, type: 3}
       propertyPath: buildGameObjects.Array.data[0]
