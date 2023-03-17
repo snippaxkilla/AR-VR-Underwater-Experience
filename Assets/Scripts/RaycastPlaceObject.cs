@@ -6,7 +6,7 @@ public class RaycastPlaceObject : MonoBehaviour
 {
     // standard offset is set on 0 but set the Y on a certain value to make the object hover above the ground
     // but we set it on 0.01f to avoid the object to be clipped in the ground
-    [SerializeField] private bool rayVisible = false;
+    [SerializeField] private bool rayVisible;
     [Header("You won't be able to move the spawned object if set to true")]
     [SerializeField] private bool isAnchored = false;
     [SerializeField] private int maxObjects = 1;
@@ -101,7 +101,7 @@ public class RaycastPlaceObject : MonoBehaviour
             raycastLineLeft.enabled = false;
             raycastLineRight.enabled = false;
         }
-        else
+        if (OVRInput.IsControllerConnected(OVRInput.Controller.Touch))
         {
             raycastLineLeft.enabled = true;
             raycastLineRight.enabled = true;
