@@ -27,12 +27,10 @@ public class ChangeLayerPortal : MonoBehaviour
         var direction = other.transform.position - transform.position;
         if (Vector3.Dot(direction.normalized, colliderNormal) > 0)
         {
-            Debug.Log("Enter");
             ChangeChildrenLayer(targetObjectTransform, newLayer);
         }
         else
         {
-            Debug.Log("Exit");
             ChangeChildrenLayer(targetObjectTransform, oldLayer);
         }
     }

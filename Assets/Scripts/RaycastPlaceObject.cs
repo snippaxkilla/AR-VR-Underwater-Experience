@@ -16,8 +16,8 @@ public class RaycastPlaceObject : MonoBehaviour
     [SerializeField] private GameObject objectToPlace;
     [SerializeField] private Transform targetingIconLeft;
     [SerializeField] private Transform targetingIconRight;
-    [SerializeField] private LineRenderer raycastLineLeft;
-    [SerializeField] private LineRenderer raycastLineRight;
+    [SerializeField] private LineRenderer rayCastLineLeft;
+    [SerializeField] private LineRenderer rayCastLineRight;
     [SerializeField] private LayerMask sceneLayer;
 
     Queue<GameObject> placedObjects = new();
@@ -25,9 +25,9 @@ public class RaycastPlaceObject : MonoBehaviour
     private void Update()
     {
         OffsetCalculation();
-        Raycast(OVRInput.Controller.LTouch, leftButtons, targetingIconLeft);
-        Raycast(OVRInput.Controller.RTouch, rightButtons, targetingIconRight);
-        UpdateRaycastLine();
+        RayCast(OVRInput.Controller.LTouch, leftButtons, targetingIconLeft);
+        RayCast(OVRInput.Controller.RTouch, rightButtons, targetingIconRight);
+        UpdateRayCastLine();
         ToggleRayVisibility();
     }
 
@@ -44,9 +44,9 @@ public class RaycastPlaceObject : MonoBehaviour
     }
 
     // cast a ray and give the positions to instantiate a defined object
-    private RaycastResult Raycast(OVRInput.Controller controller, OVRInput.RawButton[] buttons, Transform targetIcon)
+    private RayCastResult RayCast(OVRInput.Controller controller, OVRInput.RawButton[] buttons, Transform targetIcon)
     {
-        var returnValue = new RaycastResult();
+        var returnValue = new RayCastResult();
         var rayPos = OVRInput.GetLocalControllerPosition(controller);
         var rayFwd = OVRInput.GetLocalControllerRotation(controller) * Vector3.forward;
         if (Physics.Raycast(rayPos, rayFwd, out var hitInfo, 1000.0f, sceneLayer))
@@ -75,40 +75,55 @@ public class RaycastPlaceObject : MonoBehaviour
     }
 
     // cast 2 separate rays from each controller to the point where you are aiming
-    private void UpdateRaycastLine()
+    private void UpdateRayCastLine()
     {
-        raycastLineLeft.SetPosition(0, OVRInput.GetLocalControllerPosition(OVRInput.Controller.LTouch));
-        raycastLineRight.SetPosition(0, OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch));
-        raycastLineLeft.SetPosition(1, targetingIconLeft.position);
-        raycastLineRight.SetPosition(1, targetingIconRight.position);
+        rayCastLineLeft.SetPosition(0, OVRInput.GetLocalControllerPosition(OVRInput.Controller.LTouch));
+        rayCastLineRight.SetPosition(0, OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch));
+        rayCastLineLeft.SetPosition(1, targetingIconLeft.position);
+        rayCastLineRight.SetPosition(1, targetingIconRight.position);
     }
 
     // toggle on and off if you want the rays to be visible, but they will still be casted
     private void ToggleRayVisibility()
     {
-        raycastLineLeft.enabled = rayVisible;
-        raycastLineRight.enabled = rayVisible;
+        rayCastLineLeft.enabled = rayVisible;
+        rayCastLineRight.enabled = rayVisible;
         if (rayVisible)
         {
             DisableLineOnHands();
         }
     }
 
+    private OVRInput.Controller lastKnownController = OVRInput.Controller.None;
+
     private void DisableLineOnHands()
     {
-        if (OVRInput.IsControllerConnected(OVRInput.Controller.Hands))
+        OVRInput.Controller activeController = OVRInput.GetActiveController();
+
+        // Use last known controller if current is neither hands nor a controller
+        if (activeController == OVRInput.Controller.None && lastKnownController != OVRInput.Controller.None)
         {
-            raycastLineLeft.enabled = false;
-            raycastLineRight.enabled = false;
+            activeController = lastKnownController;
         }
-        if (OVRInput.IsControllerConnected(OVRInput.Controller.Touch))
+
+        // Disable line renderers for hand tracking
+        if (activeController == OVRInput.Controller.Hands)
         {
-            raycastLineLeft.enabled = true;
-            raycastLineRight.enabled = true;
+            rayCastLineLeft.enabled = false;
+            rayCastLineRight.enabled = false;
         }
+        // Enable line renderers for controllers
+        else if (activeController == OVRInput.Controller.Touch)
+        {
+            rayCastLineLeft.enabled = true;
+            rayCastLineRight.enabled = true;
+        }
+
+        lastKnownController = activeController;
     }
 
-    private struct RaycastResult
+
+    private struct RayCastResult
     {
         public Vector3 position;
         public Vector3 scale;
