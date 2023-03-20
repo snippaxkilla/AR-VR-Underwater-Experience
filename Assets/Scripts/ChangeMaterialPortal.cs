@@ -16,8 +16,6 @@ public class ChangeMaterialPortal : MonoBehaviour
         var direction = other.transform.position - transform.position;
         if (Vector3.Dot(direction.normalized, colliderNormal) > 0)
         {
-            Debug.Log("Enter");
-
             // Change the children in the target object back to their original materials
             var autoAssignMaterial = targetObject.GetComponent<AutoAssignMaterial>();
             foreach (KeyValuePair<GameObject, Material> kvp in autoAssignMaterial.oldMaterials)
@@ -27,8 +25,6 @@ public class ChangeMaterialPortal : MonoBehaviour
         }
         else
         {
-            Debug.Log("Exit");
-
             // Assign the material in AutoAssigner back
             var autoAssignMaterial = targetObject.GetComponent<AutoAssignMaterial>();
             foreach (Renderer renderer in targetObject.GetComponentsInChildren<Renderer>())

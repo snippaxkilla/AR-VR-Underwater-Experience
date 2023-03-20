@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-7096020853184136695
+--- !u!114 &-5269342016508607405
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
-  m_Name: GroundMaskFrame
+  m_Name: GroundMaskPortalRenderer
   m_EditorClassIdentifier: 
   m_Active: 1
   settings:
-    passTag: GroundMaskFrame
+    passTag: GroundMaskPortalRenderer
     Event: 250
     filterSettings:
       RenderQueueType: 0
@@ -22,15 +22,15 @@ MonoBehaviour:
         serializedVersion: 2
         m_Bits: 524288
       PassNames: []
-    overrideMaterial: {fileID: 0}
-    overrideMaterialPassIndex: 0
+    overrideMaterial: {fileID: 2100000, guid: 1877267bd8047d547b2c6783ce29c53d, type: 2}
+    overrideMaterialPassIndex: 1
     overrideDepthState: 0
-    depthCompareFunction: 2
+    depthCompareFunction: 4
     enableWrite: 1
     stencilSettings:
-      overrideStencilState: 1
+      overrideStencilState: 0
       stencilReference: 2
-      stencilCompareFunction: 2
+      stencilCompareFunction: 4
       passOperation: 2
       failOperation: 0
       zFailOperation: 0
@@ -134,9 +134,9 @@ MonoBehaviour:
   m_RendererFeatures:
   - {fileID: -3538457706454449631}
   - {fileID: -5070796583297394417}
-  - {fileID: -7096020853184136695}
   - {fileID: 1812334276178579201}
-  m_RendererFeatureMap: 21020aaa76dfe4ce0f594bac5fe9a0b909fa315fa1de859d018fe3096cb42619
+  - {fileID: -5269342016508607405}
+  m_RendererFeatureMap: 21020aaa76dfe4ce0f594bac5fe9a0b9018fe3096cb4261953c4f6a95a89dfb6
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
@@ -184,11 +184,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
-  m_Name: GroundMaskPortal
+  m_Name: GroundMaskPortalFrame
   m_EditorClassIdentifier: 
   m_Active: 1
   settings:
-    passTag: GroundMaskPortal
+    passTag: GroundMaskPortalFrame
     Event: 250
     filterSettings:
       RenderQueueType: 0
@@ -198,13 +198,13 @@ MonoBehaviour:
       PassNames: []
     overrideMaterial: {fileID: 0}
     overrideMaterialPassIndex: 0
-    overrideDepthState: 0
+    overrideDepthState: 1
     depthCompareFunction: 4
     enableWrite: 1
     stencilSettings:
-      overrideStencilState: 1
-      stencilReference: 2
-      stencilCompareFunction: 2
+      overrideStencilState: 0
+      stencilReference: 1
+      stencilCompareFunction: 3
       passOperation: 2
       failOperation: 0
       zFailOperation: 0

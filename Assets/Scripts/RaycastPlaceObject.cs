@@ -94,17 +94,9 @@ public class RaycastPlaceObject : MonoBehaviour
         }
     }
 
-    private OVRInput.Controller lastKnownController = OVRInput.Controller.None;
-
     private void DisableLineOnHands()
     {
         OVRInput.Controller activeController = OVRInput.GetActiveController();
-
-        // Use last known controller if current is neither hands nor a controller
-        if (activeController == OVRInput.Controller.None && lastKnownController != OVRInput.Controller.None)
-        {
-            activeController = lastKnownController;
-        }
 
         // Disable line renderers for hand tracking
         if (activeController == OVRInput.Controller.Hands)
@@ -119,9 +111,7 @@ public class RaycastPlaceObject : MonoBehaviour
             rayCastLineRight.enabled = true;
         }
 
-        lastKnownController = activeController;
     }
-
 
     private struct RayCastResult
     {
