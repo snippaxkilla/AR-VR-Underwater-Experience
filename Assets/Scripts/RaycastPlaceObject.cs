@@ -82,6 +82,14 @@ public class RaycastPlaceObject : MonoBehaviour
     {
         // get the hand positions raycast?
         var handPosition = OVRInput.GetLocalControllerPosition(OVRInput.Controller.Hands);
+        var handForward = OVRInput.GetLocalControllerRotation(OVRInput.Controller.Hands) * Vector3.forward;
+        if (Physics.Raycast(handPosition, handForward, out var hitInfo, 1000.0f, sceneLayer))
+        {
+            // if hitting a vertical surface, drop quad to the floor
+            var iconHeight = Mathf.Abs(Vector3.Dot(Vector3.up, hitInfo.normal)) < 0.5f ? 0 : hitInfo.point.y;
+            // offset quad a bit so it doesn't z-flicker
+            handPosition = new Vector3(hitInfo.point.x, iconHeight + 0.01f, hitInfo.point.z);
+        }
 
         var hand = GetComponent<OVRHand>();
         var isIndexFingerPinching = hand.GetFingerIsPinching(OVRHand.HandFinger.Index);
