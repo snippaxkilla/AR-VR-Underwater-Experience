@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -78,6 +79,11 @@ public class RaycastPlaceObject : MonoBehaviour
         return returnValue;
     }
 
+    private IEnumerator DelaySpawn()
+    {
+        yield return new WaitForSeconds(0.5f);
+    }
+
     private void HandRayCast()
     {
         // get the hand positions raycast?
@@ -93,6 +99,7 @@ public class RaycastPlaceObject : MonoBehaviour
 
         var hand = GetComponent<OVRHand>();
         var isIndexFingerPinching = hand.GetFingerIsPinching(OVRHand.HandFinger.Index);
+        StartCoroutine(DelaySpawn());
         if (isIndexFingerPinching)
         {
             placedObjects.Enqueue(Instantiate(objectToPlace, handPosition, Quaternion.identity));
