@@ -110,27 +110,36 @@ public class RaycastPlaceObject : MonoBehaviour
         rayCastLineRight.enabled = rayVisible;
         if (rayVisible)
         {
-            DisableLineOnHands();
+            DisableLineAndPointerOnHands();
         }
     }
 
-    private void DisableLineOnHands()
+    // Be aware that this works but it requires you to press a button to register for the start?
+    private void DisableLineAndPointerOnHands()
     {
         OVRInput.Controller activeController = OVRInput.GetActiveController();
 
-        // Disable line renderers for hand tracking
-        if (activeController == OVRInput.Controller.Hands)
+        switch (activeController)
         {
-            rayCastLineLeft.enabled = false;
-            rayCastLineRight.enabled = false;
-        }
-        // Enable line renderers for controllers
-        if (activeController == OVRInput.Controller.Touch)
-        {
-            rayCastLineLeft.enabled = true;
-            rayCastLineRight.enabled = true;
-        }
+            case OVRInput.Controller.Hands:
+            {
+                foreach (Transform child in transform)
+                {
+                    child.gameObject.SetActive(false);
+                }
 
+                break;
+            }
+            case OVRInput.Controller.Touch:
+            {
+                foreach (Transform child in transform)
+                {
+                    child.gameObject.SetActive(true);
+                }
+
+                break;
+            }
+        }
     }
 
     private struct RayCastResult
