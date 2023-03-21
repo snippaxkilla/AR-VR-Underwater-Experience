@@ -22,16 +22,16 @@ MonoBehaviour:
         serializedVersion: 2
         m_Bits: 524288
       PassNames: []
-    overrideMaterial: {fileID: 2100000, guid: 1877267bd8047d547b2c6783ce29c53d, type: 2}
+    overrideMaterial: {fileID: 0}
     overrideMaterialPassIndex: 1
     overrideDepthState: 0
     depthCompareFunction: 4
     enableWrite: 1
     stencilSettings:
-      overrideStencilState: 0
-      stencilReference: 2
-      stencilCompareFunction: 4
-      passOperation: 2
+      overrideStencilState: 1
+      stencilReference: 1
+      stencilCompareFunction: 1
+      passOperation: 0
       failOperation: 0
       zFailOperation: 0
     cameraSettings:
