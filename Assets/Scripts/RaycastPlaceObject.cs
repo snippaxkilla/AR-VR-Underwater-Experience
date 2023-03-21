@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -106,8 +107,8 @@ public class RaycastPlaceObject : MonoBehaviour
     // toggle on and off if you want the rays to be visible, but they will still be casted
     private void ToggleRayVisibility()
     {
-        rayCastLineLeft.enabled = rayVisible;
-        rayCastLineRight.enabled = rayVisible;
+        rayCastLineLeft.gameObject.SetActive(rayVisible);
+        rayCastLineRight.gameObject.SetActive(rayVisible);
         if (rayVisible)
         {
             DisableLineAndPointerOnHands();
@@ -139,6 +140,12 @@ public class RaycastPlaceObject : MonoBehaviour
 
                 break;
             }
+            default:
+                foreach (Transform child in transform)
+                {
+                    child.gameObject.SetActive(true);
+                }
+                break;
         }
     }
 
