@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class RaycastPlaceObject : MonoBehaviour
 {
@@ -19,9 +20,10 @@ public class RaycastPlaceObject : MonoBehaviour
     [SerializeField] private LineRenderer rayCastLineLeft;
     [SerializeField] private LineRenderer rayCastLineRight;
     [SerializeField] private LayerMask sceneLayer;
+    [SerializeField] private Vector3 handOffset;
 
     Queue<GameObject> placedObjects = new();
-
+    
     private void Update()
     {
         OffsetCalculation();
@@ -29,6 +31,7 @@ public class RaycastPlaceObject : MonoBehaviour
         RayCast(OVRInput.Controller.RTouch, rightButtons, targetingIconRight);
         UpdateRayCastLine();
         ToggleRayVisibility();
+        HandRayCast();
     }
 
     // if there is no offset then we don't want to calculate the offset thus saving performance
@@ -74,6 +77,23 @@ public class RaycastPlaceObject : MonoBehaviour
         return returnValue;
     }
 
+    private void HandRayCast()
+    {
+        // get the hand positions raycast?
+        var handPosition = OVRInput.GetLocalControllerPosition(OVRInput.Controller.Hands);
+
+        var hand = GetComponent<OVRHand>();
+        var isIndexFingerPinching = hand.GetFingerIsPinching(OVRHand.HandFinger.Index);
+        if (isIndexFingerPinching)
+        {
+            placedObjects.Enqueue(Instantiate(objectToPlace, handPosition, Quaternion.identity));
+            if (maxObjects > 0 && placedObjects.Count > maxObjects)
+            {
+                Destroy(placedObjects.Dequeue());
+            }
+        }
+    }
+
     // cast 2 separate rays from each controller to the point where you are aiming
     private void UpdateRayCastLine()
     {
@@ -105,7 +125,7 @@ public class RaycastPlaceObject : MonoBehaviour
             rayCastLineRight.enabled = false;
         }
         // Enable line renderers for controllers
-        else if (activeController == OVRInput.Controller.Touch)
+        if (activeController == OVRInput.Controller.Touch)
         {
             rayCastLineLeft.enabled = true;
             rayCastLineRight.enabled = true;

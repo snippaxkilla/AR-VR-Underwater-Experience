@@ -152,12 +152,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5515619523383111724}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8679e75ff1abf3940976ed38fc4f3940, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canShake: 1
+  canShake: 0
   shakeIntensity: 0.025
   shakeSpeed: 5
   objectRiser: {fileID: 8966620956792184498}
