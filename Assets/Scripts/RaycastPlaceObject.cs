@@ -111,6 +111,13 @@ public class RaycastPlaceObject : MonoBehaviour
         var isIndexFingerPinching = hand.GetFingerIsPinching(OVRHand.HandFinger.Index);
         StartCoroutine(DelaySpawn());
         if (!isIndexFingerPinching) return;
+
+        // anchor all the objects so we don't spawn any new objects, thus not being able to move the objects
+        if (isAnchored && maxObjects == placedObjects.Count)
+        {
+            return;
+        }
+
         placedObjects.Enqueue(Instantiate(objectToPlace, handPosition, Quaternion.identity));
         if (maxObjects > 0 && placedObjects.Count > maxObjects)
         {
