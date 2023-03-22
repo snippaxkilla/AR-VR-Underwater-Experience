@@ -1,17 +1,17 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class RaycastPlaceObject : MonoBehaviour
 {
     // standard offset is set on 0 but set the Y on a certain value to make the object hover above the ground
     // but we set it on 0.01f to avoid the object to be clipped in the ground
     [SerializeField] private bool rayVisible;
-    [Header("You won't be able to move the spawned object if set to true")]
+
+    [Header("You won't be able to move the spawned object if set to true")] 
     [SerializeField] private bool isAnchored = false;
+
     [SerializeField] private int maxObjects = 1;
     [SerializeField] private Vector3 offset;
     [SerializeField] private OVRInput.RawButton[] leftButtons;
@@ -25,15 +25,22 @@ public class RaycastPlaceObject : MonoBehaviour
     [SerializeField] private Vector3 handOffset;
 
     Queue<GameObject> placedObjects = new();
-    
+
+    private void Start()
+    {
+        rayCastLineLeft.SetWidth(0.01f, 0.01f);
+        rayCastLineRight.SetWidth(0.01f, 0.01f);
+    }
+
     private void Update()
     {
         OffsetCalculation();
+        ToggleRayVisibility();
+        UpdateRayCastLine();
         RayCast(OVRInput.Controller.LTouch, leftButtons, targetingIconLeft);
         RayCast(OVRInput.Controller.RTouch, rightButtons, targetingIconRight);
-        UpdateRayCastLine();
-        ToggleRayVisibility();
-        HandRayCast();
+        HandRayCast(OVRInput.Controller.LHand);
+        HandRayCast(OVRInput.Controller.RHand);
     }
 
     // if there is no offset then we don't want to calculate the offset thus saving performance
@@ -43,6 +50,7 @@ public class RaycastPlaceObject : MonoBehaviour
         {
             return;
         }
+
         var objectPos = objectToPlace.transform.position;
         objectPos += offset;
         objectToPlace.transform.position = objectPos;
@@ -61,6 +69,7 @@ public class RaycastPlaceObject : MonoBehaviour
             // offset quad a bit so it doesn't z-flicker
             targetIcon.position = new Vector3(hitInfo.point.x, iconHeight + 0.01f, hitInfo.point.z);
         }
+
         var pressingButton = buttons.Any(button => OVRInput.GetDown(button, controller));
         var position = hitInfo.point + offset;
         if (!pressingButton) return returnValue;
@@ -70,11 +79,13 @@ public class RaycastPlaceObject : MonoBehaviour
         {
             return returnValue;
         }
+
         placedObjects.Enqueue(Instantiate(objectToPlace, position, Quaternion.identity));
         if (maxObjects > 0 && placedObjects.Count > maxObjects)
         {
             Destroy(placedObjects.Dequeue());
         }
+
         targetIcon.localScale = Vector3.one * 0.6f;
         return returnValue;
     }
@@ -84,9 +95,8 @@ public class RaycastPlaceObject : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
     }
 
-    private void HandRayCast()
+    private void HandRayCast(OVRInput.Controller controller)
     {
-        // get the hand positions raycast?
         var handPosition = OVRInput.GetLocalControllerPosition(OVRInput.Controller.Hands);
         var handForward = OVRInput.GetLocalControllerRotation(OVRInput.Controller.Hands) * Vector3.forward;
         if (Physics.Raycast(handPosition, handForward, out var hitInfo, 1000.0f, sceneLayer))
@@ -100,13 +110,11 @@ public class RaycastPlaceObject : MonoBehaviour
         var hand = GetComponent<OVRHand>();
         var isIndexFingerPinching = hand.GetFingerIsPinching(OVRHand.HandFinger.Index);
         StartCoroutine(DelaySpawn());
-        if (isIndexFingerPinching)
+        if (!isIndexFingerPinching) return;
+        placedObjects.Enqueue(Instantiate(objectToPlace, handPosition, Quaternion.identity));
+        if (maxObjects > 0 && placedObjects.Count > maxObjects)
         {
-            placedObjects.Enqueue(Instantiate(objectToPlace, handPosition, Quaternion.identity));
-            if (maxObjects > 0 && placedObjects.Count > maxObjects)
-            {
-                Destroy(placedObjects.Dequeue());
-            }
+            Destroy(placedObjects.Dequeue());
         }
     }
 
@@ -160,6 +168,7 @@ public class RaycastPlaceObject : MonoBehaviour
                 {
                     child.gameObject.SetActive(true);
                 }
+
                 break;
         }
     }
