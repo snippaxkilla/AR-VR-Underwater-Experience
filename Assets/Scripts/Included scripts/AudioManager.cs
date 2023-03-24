@@ -49,7 +49,9 @@ public class AudioManager : MonoBehaviour
     [NonSerialized] public SoundEntry CurrentSound;
     
     [Header("Snapshot Transitions")]
+#pragma warning disable CS0414
     private static int _currentPoolIndex = 0;  // Index of the currently playing AudioSource from the pool
+#pragma warning restore CS0414
     public AudioMixer _audioMixer;
     public AudioMixerGroup _defaultOutputMixerGroup;
     public int TransitionTimeToTitle = 1;

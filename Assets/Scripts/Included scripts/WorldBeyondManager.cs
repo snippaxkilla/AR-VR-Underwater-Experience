@@ -1053,7 +1053,6 @@ public class WorldBeyondManager : MonoBehaviour
         int sliceCount = 4;
         for (int i = 0; i <= sliceCount; i++)
         {
-            RaycastHit hitInfo;
             LayerMask oppySpawnLayer = LayerMask.GetMask("RoomBox", "Furniture");
             float closestRaycastHit = castDistance;
             Vector3 candidatePosition = randomPos;

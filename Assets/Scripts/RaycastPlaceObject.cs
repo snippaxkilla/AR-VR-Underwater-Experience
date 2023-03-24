@@ -27,6 +27,7 @@ public class RaycastPlaceObject : MonoBehaviour
     Queue<GameObject> placedObjects = new();
     OVRInput.Controller activeController = OVRInput.GetActiveController();
 
+    [System.Obsolete]
     private void Start()
     {
         rayCastLineLeft.SetWidth(0.01f, 0.01f);

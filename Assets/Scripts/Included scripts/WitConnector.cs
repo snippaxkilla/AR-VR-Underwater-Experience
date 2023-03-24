@@ -181,7 +181,6 @@ public class WitConnector : MonoBehaviour
                 case "hi":
                     pet.VoiceCommandHandler(actionString);
                     return;
-                    break;
             }
         }
     }

@@ -961,8 +961,6 @@ public class VirtualRoom : MonoBehaviour
         bool inRoom = false;
         float xMin = 0.0f;
         float xMax = 0.0f;
-        float yMin = 0.0f;
-        float yMax = 0.0f;
         float zMin = 0.0f;
         float zMax = 0.0f;
         int anyWall = 0;

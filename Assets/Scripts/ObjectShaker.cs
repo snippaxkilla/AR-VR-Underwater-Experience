@@ -3,7 +3,9 @@ using UnityEngine;
 public class ObjectShaker : MonoBehaviour
 {
     [Header("Object shaker modifiers")]
+#pragma warning disable CS0414
     [SerializeField] private bool canShake = false;
+#pragma warning restore CS0414
     [SerializeField] private float shakeIntensity = 0.025f;
     [SerializeField] private float shakeSpeed = 5f;
 
