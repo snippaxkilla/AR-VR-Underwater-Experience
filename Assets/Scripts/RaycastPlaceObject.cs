@@ -26,6 +26,7 @@ public class RaycastPlaceObject : MonoBehaviour
 
     Queue<GameObject> placedObjects = new();
     OVRInput.Controller activeController = OVRInput.GetActiveController();
+
     private void Start()
     {
         rayCastLineLeft.SetWidth(0.01f, 0.01f);
@@ -97,10 +98,7 @@ public class RaycastPlaceObject : MonoBehaviour
         return returnValue;
     }
 
-    private IEnumerator DelaySpawn()
-    {
-        yield return new WaitForSeconds(0.5f);
-    }
+    private bool isPinching = false;
 
     private void HandRayCast(OVRInput.Controller controller)
     {
@@ -119,19 +117,26 @@ public class RaycastPlaceObject : MonoBehaviour
 
         var position = hitInfo.point + offset;
 
-        StartCoroutine(DelaySpawn());
-        if (!isIndexFingerPinching) return;
-
-        // anchor all the objects so we don't spawn any new objects, thus not being able to move the objects
-        if (isAnchored && maxObjects == placedObjects.Count)
+        if (isIndexFingerPinching && !isPinching)
         {
-            return;
+            isPinching = true;
+
+            // anchor all the objects so we don't spawn any new objects, thus not being able to move the objects
+            if (isAnchored && maxObjects == placedObjects.Count)
+            {
+                return;
+            }
+
+            placedObjects.Enqueue(Instantiate(objectToPlace, position, Quaternion.identity));
+            if (maxObjects > 0 && placedObjects.Count > maxObjects)
+            {
+                Destroy(placedObjects.Dequeue());
+            }
         }
-
-        placedObjects.Enqueue(Instantiate(objectToPlace, position, Quaternion.identity));
-        if (maxObjects > 0 && placedObjects.Count > maxObjects)
+        // Only allow pinching to spawn objects once per pinch
+        else if (!isIndexFingerPinching && isPinching)
         {
-            Destroy(placedObjects.Dequeue());
+            isPinching = false;
         }
     }
 
