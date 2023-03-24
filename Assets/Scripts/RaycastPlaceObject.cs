@@ -122,8 +122,7 @@ public class RaycastPlaceObject : MonoBehaviour
 
         var position = hitInfo.point + offset;
 
-        //debuggerRayCastHand.SetPosition(0, indexFingerTipPosition);
-        debuggerRayCastHand.SetPosition(0, OVRInput.GetLocalControllerPosition(OVRInput.Controller.LTouch));
+        debuggerRayCastHand.SetPosition(0, indexFingerTipPosition);
         debuggerRayCastHand.SetPosition(1, position);
 
         if (isIndexFingerPinching && !isPinching)
