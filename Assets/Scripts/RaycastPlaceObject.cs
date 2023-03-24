@@ -27,7 +27,6 @@ public class RaycastPlaceObject : MonoBehaviour
     Queue<GameObject> placedObjects = new();
     OVRInput.Controller activeController = OVRInput.GetActiveController();
 
-    [System.Obsolete]
     private void Start()
     {
         rayCastLineLeft.SetWidth(0.01f, 0.01f);
@@ -106,7 +105,7 @@ public class RaycastPlaceObject : MonoBehaviour
         var hand = GetComponent<OVRHand>();
         var isIndexFingerPinching = hand.GetFingerIsPinching(OVRHand.HandFinger.Index);
         var indexFingerTipPosition = hand.PointerPose.position;
-        var indexFingerDirection = hand.PointerPose.forward;
+        var indexFingerDirection = hand.PointerPose.rotation * Vector3.forward;
 
         if (Physics.Raycast(indexFingerTipPosition, indexFingerDirection, out var hitInfo, 1000.0f, sceneLayer))
         {
