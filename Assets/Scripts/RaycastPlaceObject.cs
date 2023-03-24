@@ -21,6 +21,7 @@ public class RaycastPlaceObject : MonoBehaviour
     [SerializeField] private Transform targetingIconRight;
     [SerializeField] private LineRenderer rayCastLineLeft;
     [SerializeField] private LineRenderer rayCastLineRight;
+    [SerializeField] private LineRenderer debuggerRayCastHand;
     [SerializeField] private LayerMask sceneLayer;
     [SerializeField] private Vector3 handOffset;
 
@@ -29,8 +30,11 @@ public class RaycastPlaceObject : MonoBehaviour
 
     private void Start()
     {
+#pragma warning disable CS0618
         rayCastLineLeft.SetWidth(0.01f, 0.01f);
         rayCastLineRight.SetWidth(0.01f, 0.01f);
+        debuggerRayCastHand.SetWidth(0.01f, 0.01f);
+#pragma warning restore CS0618
     }
 
     private void Update()
@@ -38,7 +42,7 @@ public class RaycastPlaceObject : MonoBehaviour
         activeController = OVRInput.GetActiveController();
         OffsetCalculation();
         ToggleRayVisibility();
-        UpdateRayCastLine();
+        UpdateRayCastLineController();
         if (activeController == OVRInput.Controller.Hands)
         {
             HandRayCast(OVRInput.Controller.LHand);
@@ -104,8 +108,9 @@ public class RaycastPlaceObject : MonoBehaviour
     {
         var hand = GetComponent<OVRHand>();
         var isIndexFingerPinching = hand.GetFingerIsPinching(OVRHand.HandFinger.Index);
-        var indexFingerTipPosition = hand.PointerPose.position;
-        var indexFingerDirection = hand.PointerPose.rotation * Vector3.forward;
+        var indexFingerTipPosition = hand.PointerPose.localPosition;
+        var indexFingerDirection = hand.PointerPose.localRotation * Vector3.forward;
+
 
         if (Physics.Raycast(indexFingerTipPosition, indexFingerDirection, out var hitInfo, 1000.0f, sceneLayer))
         {
@@ -116,6 +121,10 @@ public class RaycastPlaceObject : MonoBehaviour
         }
 
         var position = hitInfo.point + offset;
+
+        //debuggerRayCastHand.SetPosition(0, indexFingerTipPosition);
+        debuggerRayCastHand.SetPosition(0, OVRInput.GetLocalControllerPosition(OVRInput.Controller.LTouch));
+        debuggerRayCastHand.SetPosition(1, position);
 
         if (isIndexFingerPinching && !isPinching)
         {
@@ -141,7 +150,7 @@ public class RaycastPlaceObject : MonoBehaviour
     }
 
     // cast 2 separate rays from each controller to the point where you are aiming
-    private void UpdateRayCastLine()
+    private void UpdateRayCastLineController()
     {
         rayCastLineLeft.SetPosition(0, OVRInput.GetLocalControllerPosition(OVRInput.Controller.LTouch));
         rayCastLineRight.SetPosition(0, OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch));
