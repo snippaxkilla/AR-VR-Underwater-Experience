@@ -25,7 +25,7 @@ public class RaycastPlaceObject : MonoBehaviour
     [SerializeField] private Vector3 handOffset;
 
     Queue<GameObject> placedObjects = new();
-
+    OVRInput.Controller activeController = OVRInput.GetActiveController();
     private void Start()
     {
         rayCastLineLeft.SetWidth(0.01f, 0.01f);
@@ -34,13 +34,20 @@ public class RaycastPlaceObject : MonoBehaviour
 
     private void Update()
     {
+        activeController = OVRInput.GetActiveController();
         OffsetCalculation();
         ToggleRayVisibility();
         UpdateRayCastLine();
-        RayCast(OVRInput.Controller.LTouch, leftButtons, targetingIconLeft);
-        RayCast(OVRInput.Controller.RTouch, rightButtons, targetingIconRight);
-        HandRayCast(OVRInput.Controller.LHand);
-        HandRayCast(OVRInput.Controller.RHand);
+        if (activeController == OVRInput.Controller.Hands)
+        {
+            HandRayCast(OVRInput.Controller.LHand);
+            HandRayCast(OVRInput.Controller.RHand);
+        }
+        else
+        {
+            RayCast(OVRInput.Controller.LTouch, leftButtons, targetingIconLeft);
+            RayCast(OVRInput.Controller.RTouch, rightButtons, targetingIconRight);
+        }
     }
 
     // if there is no offset then we don't want to calculate the offset thus saving performance
@@ -97,18 +104,21 @@ public class RaycastPlaceObject : MonoBehaviour
 
     private void HandRayCast(OVRInput.Controller controller)
     {
-        var handPosition = OVRInput.GetLocalControllerPosition(OVRInput.Controller.Hands);
-        var handForward = OVRInput.GetLocalControllerRotation(OVRInput.Controller.Hands) * Vector3.forward;
-        if (Physics.Raycast(handPosition, handForward, out var hitInfo, 1000.0f, sceneLayer))
+        var hand = GetComponent<OVRHand>();
+        var isIndexFingerPinching = hand.GetFingerIsPinching(OVRHand.HandFinger.Index);
+        var indexFingerTipPosition = hand.PointerPose.position;
+        var indexFingerDirection = hand.PointerPose.forward;
+
+        if (Physics.Raycast(indexFingerTipPosition, indexFingerDirection, out var hitInfo, 1000.0f, sceneLayer))
         {
             // if hitting a vertical surface, drop quad to the floor
             var iconHeight = Mathf.Abs(Vector3.Dot(Vector3.up, hitInfo.normal)) < 0.5f ? 0 : hitInfo.point.y;
             // offset quad a bit so it doesn't z-flicker
-            handPosition = new Vector3(hitInfo.point.x, iconHeight + 0.01f, hitInfo.point.z);
+            indexFingerTipPosition = new Vector3(hitInfo.point.x, iconHeight + 0.01f, hitInfo.point.z);
         }
 
-        var hand = GetComponent<OVRHand>();
-        var isIndexFingerPinching = hand.GetFingerIsPinching(OVRHand.HandFinger.Index);
+        var position = hitInfo.point + offset;
+
         StartCoroutine(DelaySpawn());
         if (!isIndexFingerPinching) return;
 
@@ -118,7 +128,7 @@ public class RaycastPlaceObject : MonoBehaviour
             return;
         }
 
-        placedObjects.Enqueue(Instantiate(objectToPlace, handPosition, Quaternion.identity));
+        placedObjects.Enqueue(Instantiate(objectToPlace, position, Quaternion.identity));
         if (maxObjects > 0 && placedObjects.Count > maxObjects)
         {
             Destroy(placedObjects.Dequeue());
@@ -148,8 +158,6 @@ public class RaycastPlaceObject : MonoBehaviour
     // Be aware that this works but it requires you to press a button to register for the start?
     private void DisableLineAndPointerOnHands()
     {
-        OVRInput.Controller activeController = OVRInput.GetActiveController();
-
         switch (activeController)
         {
             case OVRInput.Controller.Hands:
