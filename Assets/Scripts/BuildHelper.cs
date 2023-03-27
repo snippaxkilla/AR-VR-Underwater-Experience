@@ -6,6 +6,7 @@ public class BuildHelper : MonoBehaviour
     [SerializeField] private List<GameObject> debugGameObjects;
     [SerializeField] private List<GameObject> buildGameObjects;
 
+    // Disable the debuggers since they mess up the build
 #if UNITY_ANDROID && !UNITY_EDITOR
     private void Awake()
     {
@@ -21,6 +22,7 @@ public class BuildHelper : MonoBehaviour
     }
 #endif
 
+    // Enable debuggers so we can make faster changes in the editor
 #if UNITY_EDITOR
     private void Awake()
     {

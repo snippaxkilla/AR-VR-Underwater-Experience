@@ -5,6 +5,7 @@ public class ChangeLayerPortal : MonoBehaviour
     [Header("Put in the layer you want to change to in new layer vice versa")]
     [SerializeField] private string newLayerName = "Default";
     [SerializeField] private string oldLayerName = "InsidePortal";
+
     [Header("Change children in this object to corresponding new layer")]
     [SerializeField] private GameObject targetObject;
     [SerializeField] private string collisionWithThisTag = "MainCamera";
@@ -21,6 +22,7 @@ public class ChangeLayerPortal : MonoBehaviour
         targetObjectTransform = targetObject.transform;
     }
 
+    // Only when entering the portal from the frontal direction we go into the if statement
     private void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag(collisionWithThisTag)) return;

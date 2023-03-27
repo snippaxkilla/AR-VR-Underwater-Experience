@@ -5,7 +5,6 @@ public class ObjectDebugger : MonoBehaviour
     [SerializeField] private GameObject objectToPlace;
     private Transform spawnPos;
 
-    // Update is called once per frame
     private void Update()
     {
         SpawnObject();

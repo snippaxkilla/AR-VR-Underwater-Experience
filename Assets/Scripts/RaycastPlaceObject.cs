@@ -38,6 +38,7 @@ public class RaycastPlaceObject : MonoBehaviour
     private void Start()
     {
 #pragma warning disable CS0618
+        // Obsolete method but preferred over newer method
         rayCastLineLeft.SetWidth(lineWidth, lineWidth);
         rayCastLineRight.SetWidth(lineWidth, lineWidth);
 #pragma warning restore CS0618
@@ -53,6 +54,7 @@ public class RaycastPlaceObject : MonoBehaviour
 
     private void UpdateRayCastLine()
     {
+        // Target icon is independent from controller type
         rayCastLineLeft.SetPosition(1, targetingIconLeft.position);
         rayCastLineRight.SetPosition(1, targetingIconRight.position);
 
@@ -86,14 +88,15 @@ public class RaycastPlaceObject : MonoBehaviour
         }
     }
 
+    // Delayer to prevent flickering when switching between controllers
     private IEnumerator SwitchDelayCoroutine()
     {
-        isSwitching = true; // set flag to switch state
-        yield return new WaitForSeconds(switchDelay); // wait for delay time
-        isSwitching = false; // reset flag to not switch state
+        isSwitching = true; 
+        yield return new WaitForSeconds(switchDelay);
+        isSwitching = false; 
     }
 
-    // if there is no offset then we don't want to calculate the offset thus saving performance
+    // If there is no offset then we don't want to calculate the offset thus saving performance
     private void OffsetCalculation()
     {
         if (offset == Vector3.zero)
@@ -106,7 +109,7 @@ public class RaycastPlaceObject : MonoBehaviour
         objectToPlace.transform.position = objectPos;
     }
 
-    // cast a ray and give the positions to instantiate a defined object
+    // Cast a ray and give the positions to instantiate a defined object
     private ControllerRayCastResult ControllerRayCast(OVRInput.Controller controller, OVRInput.RawButton[] buttons, Transform targetIcon)
     {
         var returnValue = new ControllerRayCastResult();
@@ -114,9 +117,9 @@ public class RaycastPlaceObject : MonoBehaviour
         var rayFwd = OVRInput.GetLocalControllerRotation(controller) * Vector3.forward;
         if (Physics.Raycast(rayPos, rayFwd, out var hitInfo, 1000.0f, sceneLayer))
         {
-            // if hitting a vertical surface, drop quad to the floor this only works when we use targeting icon instead of cursor icon
+            // If hitting a vertical surface, drop quad to the floor this only works when we use targeting icon instead of cursor icon
             var iconHeight = Mathf.Abs(Vector3.Dot(Vector3.up, hitInfo.normal)) < 0.5f ? 0 : hitInfo.point.y;
-            // offset quad a bit so it doesn't z-flicker
+            // Offset quad a bit so it doesn't z-flicker
             targetIcon.position = new Vector3(hitInfo.point.x, iconHeight + 0.01f, hitInfo.point.z);
         }
 
@@ -124,7 +127,7 @@ public class RaycastPlaceObject : MonoBehaviour
         var position = hitInfo.point + offset;
         if (!pressingButton) return returnValue;
 
-        // anchor all the objects so we don't spawn any new objects, thus not being able to move the objects
+        // If enabled anchor all the objects so we don't spawn any new objects, thus not being able to move the objects
         if (isAnchored && maxObjects == placedObjects.Count)
         {
             return returnValue;
@@ -153,9 +156,9 @@ public class RaycastPlaceObject : MonoBehaviour
 
         if (Physics.Raycast(indexFingerTipPosition, indexFingerDirection, out var hitInfo, 1000.0f, sceneLayer))
         {
-            // if hitting a vertical surface, drop quad to the floor this only works when we use targeting icon instead of cursor icon
+            // If hitting a vertical surface, drop quad to the floor this only works when we use targeting icon instead of cursor icon
             var iconHeight = Mathf.Abs(Vector3.Dot(Vector3.up, hitInfo.normal)) < 0.5f ? 0 : hitInfo.point.y;
-            // offset quad a bit so it doesn't z-flicker
+            // Offset quad a bit so it doesn't z-flicker
             targetIcon.position = new Vector3(hitInfo.point.x, iconHeight + 0.01f, hitInfo.point.z);
         }
 
@@ -165,7 +168,7 @@ public class RaycastPlaceObject : MonoBehaviour
         {
             isPinching = true;
 
-            // anchor all the objects so we don't spawn any new objects, thus not being able to move the objects
+            //  If enabled anchor all the objects so we don't spawn any new objects, thus not being able to move the objects
             if (isAnchored && maxObjects == placedObjects.Count)
             {
                 return (returnValue, position);
