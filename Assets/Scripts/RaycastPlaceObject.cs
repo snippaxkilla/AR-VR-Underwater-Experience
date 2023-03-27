@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -10,22 +11,26 @@ public class RaycastPlaceObject : MonoBehaviour
 
     [Header("You won't be able to move the spawned object if set to true")] 
     [SerializeField] private bool isAnchored = false;
-
+    [SerializeField] private GameObject objectToPlace;
     [SerializeField] private int maxObjects = 1;
     [SerializeField] private Vector3 offset;
-    [SerializeField] private float lineWidth = 0.01f;
 
     [Header("Specify the buttons we want to use to spawn objects")]
     [SerializeField] private OVRInput.RawButton[] leftButtons;
     [SerializeField] private OVRInput.RawButton[] rightButtons;
 
-    [SerializeField] private GameObject objectToPlace;
     [SerializeField] private Transform targetingIconLeft;
     [SerializeField] private Transform targetingIconRight;
+
     [SerializeField] private LineRenderer rayCastLineLeft;
     [SerializeField] private LineRenderer rayCastLineRight;
+    [SerializeField] private float lineWidth = 0.01f;
+
     [SerializeField] private LayerMask sceneLayer;
     [SerializeField] private Vector3 handOffset;
+
+    private float switchDelay = 0.1f; 
+    private bool isSwitching = false;
 
     Queue<GameObject> placedObjects = new();
     OVRInput.Controller activeController = OVRInput.GetActiveController();
@@ -48,32 +53,44 @@ public class RaycastPlaceObject : MonoBehaviour
 
     private void UpdateRayCastLine()
     {
-        var hand = GetComponent<OVRHand>();
-        var (result, position) = HandRayCast(OVRInput.Controller.Hands);
+        rayCastLineLeft.SetPosition(1, targetingIconLeft.position);
+        rayCastLineRight.SetPosition(1, targetingIconRight.position);
 
         if (activeController == OVRInput.Controller.Hands)
         {
-            HandRayCast(OVRInput.Controller.LHand);
-            HandRayCast(OVRInput.Controller.RHand);
+            var hand = GetComponentInChildren<OVRHand>();
+          
+            var (leftResult, leftPosition) = HandRayCast(OVRInput.Controller.LHand, targetingIconLeft);
+            var (rightResult, rightPosition) = HandRayCast(OVRInput.Controller.RHand, targetingIconRight);
 
-            targetingIconLeft.position = position;
-            targetingIconRight.position = position;
+            if (!isSwitching)
+            {
+                StartCoroutine(SwitchDelayCoroutine()); 
+            }
 
             rayCastLineLeft.SetPosition(0, hand.PointerPose.localPosition);
             rayCastLineRight.SetPosition(0, hand.PointerPose.localPosition);
-            rayCastLineLeft.SetPosition(1, targetingIconLeft.position);
-            rayCastLineRight.SetPosition(1, targetingIconRight.position);
         }
         if (activeController == OVRInput.Controller.Touch)
         {
             ControllerRayCast(OVRInput.Controller.LTouch, leftButtons, targetingIconLeft);
             ControllerRayCast(OVRInput.Controller.RTouch, rightButtons, targetingIconRight);
 
+            if (!isSwitching) 
+            {
+                StartCoroutine(SwitchDelayCoroutine()); 
+            }
+
             rayCastLineLeft.SetPosition(0, OVRInput.GetLocalControllerPosition(OVRInput.Controller.LTouch));
             rayCastLineRight.SetPosition(0, OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch));
-            rayCastLineLeft.SetPosition(1, targetingIconLeft.position);
-            rayCastLineRight.SetPosition(1, targetingIconRight.position);
         }
+    }
+
+    IEnumerator SwitchDelayCoroutine()
+    {
+        isSwitching = true; // set flag to switch state
+        yield return new WaitForSeconds(switchDelay); // wait for delay time
+        isSwitching = false; // reset flag to not switch state
     }
 
     // if there is no offset then we don't want to calculate the offset thus saving performance
@@ -126,10 +143,10 @@ public class RaycastPlaceObject : MonoBehaviour
 
     private bool isPinching;
 
-    private (HandRayCastResult, Vector3) HandRayCast(OVRInput.Controller controller)
+    private (HandRayCastResult, Vector3) HandRayCast(OVRInput.Controller controller, Transform targetIcon)
     {
         var returnValue = new HandRayCastResult();
-        var hand = GetComponent<OVRHand>();
+        var hand = GetComponentInChildren<OVRHand>();
         var isIndexFingerPinching = hand.GetFingerIsPinching(OVRHand.HandFinger.Index);
         var indexFingerTipPosition = hand.PointerPose.localPosition;
         var indexFingerDirection = hand.PointerPose.localRotation * Vector3.forward;
@@ -139,7 +156,7 @@ public class RaycastPlaceObject : MonoBehaviour
             // if hitting a vertical surface, drop quad to the floor this only works when we use targeting icon instead of cursor icon
             var iconHeight = Mathf.Abs(Vector3.Dot(Vector3.up, hitInfo.normal)) < 0.5f ? 0 : hitInfo.point.y;
             // offset quad a bit so it doesn't z-flicker
-            indexFingerTipPosition = new Vector3(hitInfo.point.x, iconHeight + 0.01f, hitInfo.point.z);
+            targetIcon.position = new Vector3(hitInfo.point.x, iconHeight + 0.01f, hitInfo.point.z);
         }
 
         var position = hitInfo.point + offset;
@@ -167,6 +184,8 @@ public class RaycastPlaceObject : MonoBehaviour
         {
             isPinching = false;
         }
+
+        targetIcon.localScale = Vector3.one * 0.6f;
         return (returnValue, position);
     }
 
@@ -185,5 +204,6 @@ public class RaycastPlaceObject : MonoBehaviour
     private struct HandRayCastResult
     { 
         public Vector3 position;
+        public Vector3 scale;
     }
 }
