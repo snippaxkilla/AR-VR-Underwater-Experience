@@ -14,8 +14,11 @@ public class RaycastPlaceObject : MonoBehaviour
     [SerializeField] private int maxObjects = 1;
     [SerializeField] private Vector3 offset;
     [SerializeField] private float lineWidth = 0.01f;
+
+    [Header("Specify the buttons we want to use to spawn objects")]
     [SerializeField] private OVRInput.RawButton[] leftButtons;
     [SerializeField] private OVRInput.RawButton[] rightButtons;
+
     [SerializeField] private GameObject objectToPlace;
     [SerializeField] private Transform targetingIconLeft;
     [SerializeField] private Transform targetingIconRight;
@@ -53,10 +56,13 @@ public class RaycastPlaceObject : MonoBehaviour
             HandRayCast(OVRInput.Controller.LHand);
             HandRayCast(OVRInput.Controller.RHand);
 
+            targetingIconLeft.position = position;
+            targetingIconRight.position = position;
+
             rayCastLineLeft.SetPosition(0, hand.PointerPose.localPosition);
             rayCastLineRight.SetPosition(0, hand.PointerPose.localPosition);
-            rayCastLineLeft.SetPosition(1, position);
-            rayCastLineRight.SetPosition(1, position);
+            rayCastLineLeft.SetPosition(1, targetingIconLeft.position);
+            rayCastLineRight.SetPosition(1, targetingIconRight.position);
         }
         if (activeController == OVRInput.Controller.Touch)
         {
@@ -91,7 +97,7 @@ public class RaycastPlaceObject : MonoBehaviour
         var rayFwd = OVRInput.GetLocalControllerRotation(controller) * Vector3.forward;
         if (Physics.Raycast(rayPos, rayFwd, out var hitInfo, 1000.0f, sceneLayer))
         {
-            // if hitting a vertical surface, drop quad to the floor
+            // if hitting a vertical surface, drop quad to the floor this only works when we use targeting icon instead of cursor icon
             var iconHeight = Mathf.Abs(Vector3.Dot(Vector3.up, hitInfo.normal)) < 0.5f ? 0 : hitInfo.point.y;
             // offset quad a bit so it doesn't z-flicker
             targetIcon.position = new Vector3(hitInfo.point.x, iconHeight + 0.01f, hitInfo.point.z);
@@ -130,7 +136,7 @@ public class RaycastPlaceObject : MonoBehaviour
 
         if (Physics.Raycast(indexFingerTipPosition, indexFingerDirection, out var hitInfo, 1000.0f, sceneLayer))
         {
-            // if hitting a vertical surface, drop quad to the floor
+            // if hitting a vertical surface, drop quad to the floor this only works when we use targeting icon instead of cursor icon
             var iconHeight = Mathf.Abs(Vector3.Dot(Vector3.up, hitInfo.normal)) < 0.5f ? 0 : hitInfo.point.y;
             // offset quad a bit so it doesn't z-flicker
             indexFingerTipPosition = new Vector3(hitInfo.point.x, iconHeight + 0.01f, hitInfo.point.z);
@@ -161,7 +167,7 @@ public class RaycastPlaceObject : MonoBehaviour
         {
             isPinching = false;
         }
-        return (returnValue, position); ;
+        return (returnValue, position);
     }
 
     private void ToggleRayVisibility()
