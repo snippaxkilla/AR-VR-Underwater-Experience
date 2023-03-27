@@ -32,8 +32,5 @@ public class ChangeMaterialPortal : MonoBehaviour
                 renderer.material = autoAssignMaterial.materialToAssign;
             }
         }
-
     }
 }
-
-

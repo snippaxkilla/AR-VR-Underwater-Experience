@@ -30,7 +30,7 @@ public class RaycastPlaceObject : MonoBehaviour
     [SerializeField] private Vector3 handOffset;
 
     private float switchDelay = 0.1f; 
-    private bool isSwitching = false;
+    private bool isSwitching;
 
     Queue<GameObject> placedObjects = new();
     OVRInput.Controller activeController = OVRInput.GetActiveController();
@@ -86,7 +86,7 @@ public class RaycastPlaceObject : MonoBehaviour
         }
     }
 
-    IEnumerator SwitchDelayCoroutine()
+    private IEnumerator SwitchDelayCoroutine()
     {
         isSwitching = true; // set flag to switch state
         yield return new WaitForSeconds(switchDelay); // wait for delay time
