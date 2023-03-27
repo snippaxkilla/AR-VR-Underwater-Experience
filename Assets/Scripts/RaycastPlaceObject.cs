@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -14,6 +13,7 @@ public class RaycastPlaceObject : MonoBehaviour
 
     [SerializeField] private int maxObjects = 1;
     [SerializeField] private Vector3 offset;
+    [SerializeField] private float lineWidth = 0.01f;
     [SerializeField] private OVRInput.RawButton[] leftButtons;
     [SerializeField] private OVRInput.RawButton[] rightButtons;
     [SerializeField] private GameObject objectToPlace;
@@ -21,7 +21,6 @@ public class RaycastPlaceObject : MonoBehaviour
     [SerializeField] private Transform targetingIconRight;
     [SerializeField] private LineRenderer rayCastLineLeft;
     [SerializeField] private LineRenderer rayCastLineRight;
-    [SerializeField] private LineRenderer debuggerRayCastHand;
     [SerializeField] private LayerMask sceneLayer;
     [SerializeField] private Vector3 handOffset;
 
@@ -31,9 +30,8 @@ public class RaycastPlaceObject : MonoBehaviour
     private void Start()
     {
 #pragma warning disable CS0618
-        rayCastLineLeft.SetWidth(0.01f, 0.01f);
-        rayCastLineRight.SetWidth(0.01f, 0.01f);
-        debuggerRayCastHand.SetWidth(0.01f, 0.01f);
+        rayCastLineLeft.SetWidth(lineWidth, lineWidth);
+        rayCastLineRight.SetWidth(lineWidth, lineWidth);
 #pragma warning restore CS0618
     }
 
@@ -42,16 +40,33 @@ public class RaycastPlaceObject : MonoBehaviour
         activeController = OVRInput.GetActiveController();
         OffsetCalculation();
         ToggleRayVisibility();
-        UpdateRayCastLineController();
+        UpdateRayCastLine();
+    }
+
+    private void UpdateRayCastLine()
+    {
+        var hand = GetComponent<OVRHand>();
+        var (result, position) = HandRayCast(OVRInput.Controller.Hands);
+
         if (activeController == OVRInput.Controller.Hands)
         {
             HandRayCast(OVRInput.Controller.LHand);
             HandRayCast(OVRInput.Controller.RHand);
+
+            rayCastLineLeft.SetPosition(0, hand.PointerPose.localPosition);
+            rayCastLineRight.SetPosition(0, hand.PointerPose.localPosition);
+            rayCastLineLeft.SetPosition(1, position);
+            rayCastLineRight.SetPosition(1, position);
         }
-        else
+        if (activeController == OVRInput.Controller.Touch)
         {
-            RayCast(OVRInput.Controller.LTouch, leftButtons, targetingIconLeft);
-            RayCast(OVRInput.Controller.RTouch, rightButtons, targetingIconRight);
+            ControllerRayCast(OVRInput.Controller.LTouch, leftButtons, targetingIconLeft);
+            ControllerRayCast(OVRInput.Controller.RTouch, rightButtons, targetingIconRight);
+
+            rayCastLineLeft.SetPosition(0, OVRInput.GetLocalControllerPosition(OVRInput.Controller.LTouch));
+            rayCastLineRight.SetPosition(0, OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch));
+            rayCastLineLeft.SetPosition(1, targetingIconLeft.position);
+            rayCastLineRight.SetPosition(1, targetingIconRight.position);
         }
     }
 
@@ -69,9 +84,9 @@ public class RaycastPlaceObject : MonoBehaviour
     }
 
     // cast a ray and give the positions to instantiate a defined object
-    private RayCastResult RayCast(OVRInput.Controller controller, OVRInput.RawButton[] buttons, Transform targetIcon)
+    private ControllerRayCastResult ControllerRayCast(OVRInput.Controller controller, OVRInput.RawButton[] buttons, Transform targetIcon)
     {
-        var returnValue = new RayCastResult();
+        var returnValue = new ControllerRayCastResult();
         var rayPos = OVRInput.GetLocalControllerPosition(controller);
         var rayFwd = OVRInput.GetLocalControllerRotation(controller) * Vector3.forward;
         if (Physics.Raycast(rayPos, rayFwd, out var hitInfo, 1000.0f, sceneLayer))
@@ -92,6 +107,7 @@ public class RaycastPlaceObject : MonoBehaviour
             return returnValue;
         }
 
+        // Not necessary for the object to have the right rotation since that happens in another script
         placedObjects.Enqueue(Instantiate(objectToPlace, position, Quaternion.identity));
         if (maxObjects > 0 && placedObjects.Count > maxObjects)
         {
@@ -102,10 +118,11 @@ public class RaycastPlaceObject : MonoBehaviour
         return returnValue;
     }
 
-    private bool isPinching = false;
+    private bool isPinching;
 
-    private void HandRayCast(OVRInput.Controller controller)
+    private (HandRayCastResult, Vector3) HandRayCast(OVRInput.Controller controller)
     {
+        var returnValue = new HandRayCastResult();
         var hand = GetComponent<OVRHand>();
         var isIndexFingerPinching = hand.GetFingerIsPinching(OVRHand.HandFinger.Index);
         var indexFingerTipPosition = hand.PointerPose.localPosition;
@@ -122,9 +139,6 @@ public class RaycastPlaceObject : MonoBehaviour
 
         var position = hitInfo.point + offset;
 
-        debuggerRayCastHand.SetPosition(0, indexFingerTipPosition);
-        debuggerRayCastHand.SetPosition(1, position);
-
         if (isIndexFingerPinching && !isPinching)
         {
             isPinching = true;
@@ -132,78 +146,39 @@ public class RaycastPlaceObject : MonoBehaviour
             // anchor all the objects so we don't spawn any new objects, thus not being able to move the objects
             if (isAnchored && maxObjects == placedObjects.Count)
             {
-                return;
+                return (returnValue, position);
             }
 
+            // Not necessary for the object to have the right rotation since that happens in another script
             placedObjects.Enqueue(Instantiate(objectToPlace, position, Quaternion.identity));
             if (maxObjects > 0 && placedObjects.Count > maxObjects)
             {
                 Destroy(placedObjects.Dequeue());
             }
+            return (returnValue, position);
         }
         // Only allow pinching to spawn objects once per pinch
-        else if (!isIndexFingerPinching && isPinching)
+        if (!isIndexFingerPinching && isPinching)
         {
             isPinching = false;
         }
+        return (returnValue, position); ;
     }
 
-    // cast 2 separate rays from each controller to the point where you are aiming
-    private void UpdateRayCastLineController()
-    {
-        rayCastLineLeft.SetPosition(0, OVRInput.GetLocalControllerPosition(OVRInput.Controller.LTouch));
-        rayCastLineRight.SetPosition(0, OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch));
-        rayCastLineLeft.SetPosition(1, targetingIconLeft.position);
-        rayCastLineRight.SetPosition(1, targetingIconRight.position);
-    }
-
-    // toggle on and off if you want the rays to be visible, but they will still be casted
     private void ToggleRayVisibility()
     {
         rayCastLineLeft.gameObject.SetActive(rayVisible);
         rayCastLineRight.gameObject.SetActive(rayVisible);
-        if (rayVisible)
-        {
-            DisableLineAndPointerOnHands();
-        }
     }
 
-    // Be aware that this works but it requires you to press a button to register for the start?
-    private void DisableLineAndPointerOnHands()
-    {
-        switch (activeController)
-        {
-            case OVRInput.Controller.Hands:
-            {
-                foreach (Transform child in transform)
-                {
-                    child.gameObject.SetActive(false);
-                }
-
-                break;
-            }
-            case OVRInput.Controller.Touch:
-            {
-                foreach (Transform child in transform)
-                {
-                    child.gameObject.SetActive(true);
-                }
-
-                break;
-            }
-            default:
-                foreach (Transform child in transform)
-                {
-                    child.gameObject.SetActive(true);
-                }
-
-                break;
-        }
-    }
-
-    private struct RayCastResult
+    private struct ControllerRayCastResult
     {
         public Vector3 position;
         public Vector3 scale;
+    }
+
+    private struct HandRayCastResult
+    { 
+        public Vector3 position;
     }
 }
