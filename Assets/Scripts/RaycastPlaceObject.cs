@@ -128,7 +128,6 @@ public class RaycastPlaceObject : MonoBehaviour
         var indexFingerTipPosition = hand.PointerPose.localPosition;
         var indexFingerDirection = hand.PointerPose.localRotation * Vector3.forward;
 
-
         if (Physics.Raycast(indexFingerTipPosition, indexFingerDirection, out var hitInfo, 1000.0f, sceneLayer))
         {
             // if hitting a vertical surface, drop quad to the floor
