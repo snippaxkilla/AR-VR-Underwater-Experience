@@ -19,6 +19,9 @@ public class RaycastPlaceObject : MonoBehaviour
     [SerializeField] private OVRInput.RawButton[] leftButtons;
     [SerializeField] private OVRInput.RawButton[] rightButtons;
 
+    [Header("The amount of time we want haptic feedback")]
+    [SerializeField] private float hapticFeedbackDuration = 0.5f;
+
     [SerializeField] private Transform targetingIconLeft;
     [SerializeField] private Transform targetingIconRight;
 
@@ -96,6 +99,12 @@ public class RaycastPlaceObject : MonoBehaviour
         isSwitching = false; 
     }
 
+    private IEnumerator StopHapticFeedback()
+    {
+        yield return new WaitForSeconds(hapticFeedbackDuration);
+        OVRInput.SetControllerVibration(0, 0, activeController);
+    }
+
     // If there is no offset then we don't want to calculate the offset thus saving performance
     private void OffsetCalculation()
     {
@@ -139,6 +148,10 @@ public class RaycastPlaceObject : MonoBehaviour
         {
             Destroy(placedObjects.Dequeue());
         }
+
+        // Testing out vibration on the controller, can be removed afterwards
+        OVRInput.SetControllerVibration(0.5f, 0.5f, controller);
+        StartCoroutine(StopHapticFeedback());
 
         targetIcon.localScale = Vector3.one * 0.6f;
         return returnValue;
