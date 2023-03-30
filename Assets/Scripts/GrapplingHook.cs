@@ -1,46 +1,40 @@
-using System.Collections;
-using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GrapplingHook : MonoBehaviour
 {
+    [SerializeField] private GameObject claw;
+    [SerializeField] private float MaxDistance = 10f;
+    [SerializeField] private float PullSpeed = 5f;
 
-    [SerializeField] private int clawLength = 100;
-    [SerializeField] private LineRenderer clawLine;
+    [Header("Specify the buttons we want to use to shoot out hooks")]
+    [SerializeField] private OVRInput.RawButton[] leftButtons;
+    [SerializeField] private OVRInput.RawButton[] rightButtons;
 
-    // Start is called before the first frame update
-    void Start()
+    private float currentDistance = 0;
+
+    private void Start()
+    {
+
+    }
+
+    private void Update()
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
+    private void ShootHook(OVRInput.Controller controller, OVRInput.RawButton[] buttons)
     {
-        
-    }
+        Rigidbody claw = transform.GetChild(0).GetComponent<Rigidbody>();
 
-    private void HoldObject()
-    {
+        var rayPos = OVRInput.GetLocalControllerPosition(controller);
+        var rayFwd = OVRInput.GetLocalControllerRotation(controller) * Vector3.forward;
 
-    }
+        var pressingButton = buttons.Any(button => OVRInput.GetDown(button, controller));
 
-    private void PullObject()
-    {
-
-    }
-
-    private void ReleaseObject()
-    {
-
-    }
-
-    private void ShootHook()
-    {
-        Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, clawLength);
-        clawLine.SetPosition(0, transform.position);
-        clawLine.SetPosition(1, transform.position);
-
+        var forceDirection = new Vector3(0f, 0f, 1f);
+        var forceMagnitude = 10f;
+        claw.AddForce(forceDirection * forceMagnitude, ForceMode.Impulse);
     }
 
     private void RetractHook()
@@ -48,9 +42,10 @@ public class GrapplingHook : MonoBehaviour
 
     }
 
-    private void HitObject()
+    // Retract the hook on max distance if no target has been pulled
+    private void DistanceChecker()
     {
-
+        
+        RetractHook();
     }
-
 }
