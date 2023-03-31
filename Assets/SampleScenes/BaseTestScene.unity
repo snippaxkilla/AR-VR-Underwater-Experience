@@ -8437,6 +8437,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1695045799325819976, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1695045799325819976, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1695045799325819976, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 2750689206454579391, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
       propertyPath: Player
       value: 
@@ -8445,6 +8457,18 @@ PrefabInstance:
       propertyPath: GroupedGarbage
       value: 
       objectReference: {fileID: 937062272}
+    - target: {fileID: 3790811607187880039, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3790811607187880039, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3790811607187880039, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 7265665762759749328, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
       propertyPath: leftButtons.Array.data[0]
       value: 536870912

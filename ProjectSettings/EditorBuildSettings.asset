@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/SampleScenes/PassthroughPet.unity
+    path: Assets/SampleScenes/BaseTestScene.unity
     guid: 201e3e597f8b54264b2ba97ba45dd5c9
   - enabled: 0
     path: Assets/SampleScenes/PassthroughRoom.unity
