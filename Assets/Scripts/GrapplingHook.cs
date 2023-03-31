@@ -32,7 +32,6 @@ public class GrapplingHook : MonoBehaviour
     private void Update()
     {
         DistanceChecker();
-       
     }
 
     // In the hooks we are adding force that's why we need to use FixedUpdate
