@@ -7,6 +7,9 @@ public class ChangeMaterialPortal : MonoBehaviour
     [SerializeField] private GameObject targetObject;
     [SerializeField] private string collisionWithThisTag = "MainCamera";
 
+    [Header("Enable one way portal to close off the real world")]
+    [SerializeField] private bool oneWayPortal = false;
+
     private Transform targetObjectTransform;
     private Vector3 colliderNormal = Vector3.forward;
 

@@ -32,10 +32,8 @@ public class GrapplingHook : MonoBehaviour
     private void Update()
     {
         DistanceChecker();
-        ShootHook(OVRInput.Controller.LTouch, leftButtons, clawLeft, ref isLeftRetracting, ref leftLerpStartTime,
-            clawLeftInitialPosition, ref clawLeftCurrentDistance);
-        ShootHook(OVRInput.Controller.RTouch, rightButtons, clawRight, ref isRightRetracting, ref rightLerpStartTime,
-            clawRightInitialPosition, ref clawRightCurrentDistance);
+        ShootHook(OVRInput.Controller.LTouch, leftButtons, clawLeft, ref isLeftRetracting, ref leftLerpStartTime, clawLeftInitialPosition, ref clawLeftCurrentDistance);
+        ShootHook(OVRInput.Controller.RTouch, rightButtons, clawRight, ref isRightRetracting, ref rightLerpStartTime, clawRightInitialPosition, ref clawRightCurrentDistance);
     }
 
     // Add force to the claw to launch the claw forwards and keep track of it's current distance from claw to controller initial position

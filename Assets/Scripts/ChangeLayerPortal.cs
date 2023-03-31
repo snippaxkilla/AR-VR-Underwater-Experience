@@ -10,6 +10,9 @@ public class ChangeLayerPortal : MonoBehaviour
     [SerializeField] private GameObject targetObject;
     [SerializeField] private string collisionWithThisTag = "MainCamera";
 
+    [Header("Enable one way portal to close off the real world")]
+    [SerializeField] private bool oneWayPortal = false;
+
     private int newLayer;
     private int oldLayer;
     private Transform targetObjectTransform;

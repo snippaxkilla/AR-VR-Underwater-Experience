@@ -1504,7 +1504,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 837310688}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.5
   m_Height: 2
@@ -7544,7 +7544,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1967860907}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.5000001
   m_Height: 2
@@ -8449,6 +8449,18 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 1698912239411195153, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1698912239411195153, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
+      propertyPath: m_Constraints
+      value: 112
+      objectReference: {fileID: 0}
+    - target: {fileID: 1698912239411195153, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2750689206454579391, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
       propertyPath: Player
       value: 
@@ -8468,6 +8480,18 @@ PrefabInstance:
     - target: {fileID: 3790811607187880039, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
       propertyPath: m_LocalScale.z
       value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6906662718765571972, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6906662718765571972, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
+      propertyPath: m_Constraints
+      value: 112
+      objectReference: {fileID: 0}
+    - target: {fileID: 6906662718765571972, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7265665762759749328, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
       propertyPath: leftButtons.Array.data[0]
