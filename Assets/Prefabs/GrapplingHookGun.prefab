@@ -51,8 +51,8 @@ MonoBehaviour:
   maxDistance: 10
   pullSpeed: 5
   forceMagnitude: 15
-  leftButtons: 
-  rightButtons: 
+  leftButtons: 00000000
+  rightButtons: 00000000
 --- !u!1001 &374292984183712919
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Linq;
 using UnityEngine;
 
@@ -55,36 +54,33 @@ public class GrapplingHook : MonoBehaviour
         clawCurrentDistance = Vector3.Distance(transform.position, claw.transform.position);
     }
 
-    public IEnumerator RetractHook(GameObject claw, Vector3 clawInitialPosition)
+    public void RetractHook(GameObject claw, Vector3 clawInitialPosition)
     {
-        var isRetracting = true;
         var lerpStartTime = Time.time;
+        var timeElapsed = 0f;
 
-        while (isRetracting)
+        while (timeElapsed < pullSpeed)
         {
-            var lerpFactor = (Time.time - lerpStartTime) / pullSpeed;
+            var lerpFactor = timeElapsed / pullSpeed;
             lerpFactor = Mathf.Clamp01(lerpFactor);
             claw.transform.position = Vector3.Lerp(claw.transform.position, clawInitialPosition, lerpFactor);
 
-            if (lerpFactor >= 1)
-            {
-                isRetracting = false;
-            }
-
-            yield return null;
+            timeElapsed = Time.time - lerpStartTime;
         }
+
+        claw.transform.position = clawInitialPosition;
     }
 
     private void DistanceChecker()
     {
         if (clawLeftCurrentDistance >= maxDistance)
         {
-            StartCoroutine(RetractHook(clawLeft, clawLeftInitialPosition));
+            RetractHook(clawLeft, clawLeftInitialPosition);
         }
 
         if (clawRightCurrentDistance >= maxDistance)
         {
-            StartCoroutine(RetractHook(clawRight, clawRightInitialPosition));
+            RetractHook(clawRight, clawRightInitialPosition);
         }
     }
 }
