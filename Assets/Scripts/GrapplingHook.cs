@@ -22,6 +22,7 @@ public class GrapplingHook : MonoBehaviour
     private float leftLerpStartTime;
     private float rightLerpStartTime;
 
+    // Set the initial position of the claws to the controllers position
     private void Start()
     {
         clawLeftInitialPosition = OVRInput.GetLocalControllerPosition(OVRInput.Controller.LTouch);
@@ -37,6 +38,7 @@ public class GrapplingHook : MonoBehaviour
             clawRightInitialPosition, ref clawRightCurrentDistance);
     }
 
+    // Add force to the claw to launch the claw forwards and keep track of it's current distance from claw to controller initial position
     private void ShootHook(OVRInput.Controller controller, OVRInput.RawButton[] buttons, GameObject claw,
         ref bool isRetracting, ref float lerpStartTime, Vector3 clawInitialPosition, ref float clawCurrentDistance)
     {
@@ -54,6 +56,7 @@ public class GrapplingHook : MonoBehaviour
         clawCurrentDistance = Vector3.Distance(transform.position, claw.transform.position);
     }
 
+    // Retract the hook back to it's original position
     public void RetractHook(GameObject claw, Vector3 clawInitialPosition)
     {
         var lerpStartTime = Time.time;
@@ -71,6 +74,7 @@ public class GrapplingHook : MonoBehaviour
         claw.transform.position = clawInitialPosition;
     }
 
+    // Don't let the claw go past the max distance
     private void DistanceChecker()
     {
         if (clawLeftCurrentDistance >= maxDistance)

@@ -16,11 +16,13 @@ public class Claw : MonoBehaviour
         }
     }
 
+    // Retract the hook earlier because the claw hit an object and we want to pull it back
     private void StartPullback(GameObject objectToPull)
     {
         var grapplingHook = GrapplingHook.GetComponent<GrapplingHook>();
         grapplingHook.RetractHook(gameObject, transform.position);
 
+        // Pull the object back to the player first before destroying it
         Destroy(objectToPull);
     }
 }
