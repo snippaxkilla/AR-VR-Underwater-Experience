@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Linq;
 using UnityEngine;
 
@@ -9,8 +10,9 @@ public class GrapplingHook : MonoBehaviour
     [SerializeField] private float pullSpeed = 5f;
     [SerializeField] private float forceMagnitude = 15f;
 
-    [Header("Specify the buttons we want to use to shoot out hooks")]
-    [SerializeField] private OVRInput.RawButton[] leftButtons;
+    [Header("Specify the buttons we want to use to shoot out hooks")] [SerializeField]
+    private OVRInput.RawButton[] leftButtons;
+
     [SerializeField] private OVRInput.RawButton[] rightButtons;
 
     private Vector3 clawLeftInitialPosition;
@@ -19,8 +21,6 @@ public class GrapplingHook : MonoBehaviour
     private float clawRightCurrentDistance;
     private bool isLeftRetracting = false;
     private bool isRightRetracting = false;
-    private float leftLerpStartTime;
-    private float rightLerpStartTime;
 
     // Set the initial position of the claws to the controllers position
     private void Start()
@@ -29,21 +29,18 @@ public class GrapplingHook : MonoBehaviour
         clawRightInitialPosition = OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch);
     }
 
-    private void Update()
-    {
-        DistanceChecker();
-    }
-
     // In the hooks we are adding force that's why we need to use FixedUpdate
     private void FixedUpdate()
     {
-        ShootHook(OVRInput.Controller.LTouch, leftButtons, clawLeft, ref isLeftRetracting, ref leftLerpStartTime, clawLeftInitialPosition, ref clawLeftCurrentDistance);
-        ShootHook(OVRInput.Controller.RTouch, rightButtons, clawRight, ref isRightRetracting, ref rightLerpStartTime, clawRightInitialPosition, ref clawRightCurrentDistance);
+        ShootHook(OVRInput.Controller.LTouch, leftButtons, clawLeft, ref isLeftRetracting, clawLeftInitialPosition,
+            ref clawLeftCurrentDistance);
+        ShootHook(OVRInput.Controller.RTouch, rightButtons, clawRight, ref isRightRetracting, clawRightInitialPosition,
+            ref clawRightCurrentDistance);
     }
 
     // Add force to the claw to launch the claw forwards and keep track of it's current distance from claw to controller initial position
     private void ShootHook(OVRInput.Controller controller, OVRInput.RawButton[] buttons, GameObject claw,
-        ref bool isRetracting, ref float lerpStartTime, Vector3 clawInitialPosition, ref float clawCurrentDistance)
+        ref bool isRetracting, Vector3 clawInitialPosition, ref float clawCurrentDistance)
     {
         var clawRigidbody = claw.GetComponent<Rigidbody>();
 
@@ -51,43 +48,52 @@ public class GrapplingHook : MonoBehaviour
 
         var pressingButton = buttons.Any(button => OVRInput.GetDown(button, controller));
 
-        if (!pressingButton) return;
+        if (!pressingButton || isRetracting) return;
+
+        if (clawCurrentDistance >= maxDistance)
+        {
+            RetractHook(claw, clawInitialPosition);
+            return;
+        }
+
         claw.transform.position = clawInitialPosition;
         clawRigidbody.AddForce(rayFwd * forceMagnitude, ForceMode.Impulse);
 
-        isRetracting = false;
         clawCurrentDistance = Vector3.Distance(transform.position, claw.transform.position);
+
+        if (clawCurrentDistance >= maxDistance)
+        {
+            RetractHook(claw, clawInitialPosition);
+        }
     }
 
-    // Retract the hook back to it's original position
-    public void RetractHook(GameObject claw, Vector3 clawInitialPosition)
+    private IEnumerator RetractHook(GameObject claw, Vector3 clawInitialPosition)
     {
         var lerpStartTime = Time.time;
-        var timeElapsed = 0f;
 
-        while (timeElapsed < pullSpeed)
+        while (Vector3.Distance(claw.transform.position, clawInitialPosition) > 0.01f)
         {
-            var lerpFactor = timeElapsed / pullSpeed;
-            lerpFactor = Mathf.Clamp01(lerpFactor);
+            var lerpFactor = (Time.time - lerpStartTime) / pullSpeed;
             claw.transform.position = Vector3.Lerp(claw.transform.position, clawInitialPosition, lerpFactor);
-
-            timeElapsed = Time.time - lerpStartTime;
+            yield return null;
         }
 
         claw.transform.position = clawInitialPosition;
     }
 
-    // Don't let the claw go past the max distance
+    // Check if the hooks have gone beyond the maximum distance and retract them if necessary
     private void DistanceChecker()
     {
-        if (clawLeftCurrentDistance >= maxDistance)
+        if (Vector3.Distance(transform.position, clawLeft.transform.position) > maxDistance && !isLeftRetracting)
         {
-            RetractHook(clawLeft, clawLeftInitialPosition);
+            isLeftRetracting = true;
+            StartCoroutine(RetractHook(clawLeft, clawLeftInitialPosition));
         }
 
-        if (clawRightCurrentDistance >= maxDistance)
+        if (Vector3.Distance(transform.position, clawRight.transform.position) > maxDistance && !isRightRetracting)
         {
-            RetractHook(clawRight, clawRightInitialPosition);
+            isRightRetracting = true;
+            StartCoroutine(RetractHook(clawRight, clawRightInitialPosition));
         }
     }
 }
