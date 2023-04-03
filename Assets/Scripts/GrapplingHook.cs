@@ -52,7 +52,7 @@ public class GrapplingHook : MonoBehaviour
 
         if (clawCurrentDistance >= maxDistance)
         {
-            RetractHook(claw, clawInitialPosition);
+            DistanceChecker();
             return;
         }
 
@@ -63,11 +63,11 @@ public class GrapplingHook : MonoBehaviour
 
         if (clawCurrentDistance >= maxDistance)
         {
-            RetractHook(claw, clawInitialPosition);
+            DistanceChecker();
         }
     }
 
-    private IEnumerator RetractHook(GameObject claw, Vector3 clawInitialPosition)
+    public IEnumerator RetractHook(GameObject claw, Vector3 clawInitialPosition)
     {
         var lerpStartTime = Time.time;
 
