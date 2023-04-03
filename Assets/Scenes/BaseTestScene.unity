@@ -1317,6 +1317,11 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+--- !u!54 &811309700 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 6906662718765571972, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
+  m_PrefabInstance: {fileID: 7265665762277905122}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &829178643
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8037,7 +8042,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 239422733973337656, guid: 4a461f7912337f545b314d65c4ef5a68, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 239422733973337661, guid: 4a461f7912337f545b314d65c4ef5a68, type: 3}
       propertyPath: field of view
@@ -8499,6 +8504,30 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6906662718765571972, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
       propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7265665762759749328, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
+      propertyPath: pullSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7265665762759749328, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
+      propertyPath: rbClawLeft
+      value: 
+      objectReference: {fileID: 811309700}
+    - target: {fileID: 7265665762759749328, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
+      propertyPath: maxDistance
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7265665762759749328, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
+      propertyPath: rbClawRight
+      value: 
+      objectReference: {fileID: 811309700}
+    - target: {fileID: 7265665762759749328, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
+      propertyPath: clawOffset.x
+      value: 0.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7265665762759749328, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
+      propertyPath: clawOffset.z
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7265665762759749328, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
