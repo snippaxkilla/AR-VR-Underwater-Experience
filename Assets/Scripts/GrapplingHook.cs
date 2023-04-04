@@ -35,9 +35,12 @@ public class GrapplingHook : MonoBehaviour
     private void OriginUpdater(OVRInput.Controller controller, GameObject claw)
     {
         var controllerForward = OVRInput.GetLocalControllerRotation(controller) * Vector3.forward;
+        var controllerRotation = OVRInput.GetLocalControllerRotation(controller);
         var clawInitialPosition = OVRInput.GetLocalControllerPosition(controller) + controllerForward * clawOffset;
-        claw.transform.position = clawInitialPosition;
         var clawRigidbody = claw.GetComponent<Rigidbody>();
+
+        claw.transform.rotation = controllerRotation;
+        claw.transform.position = clawInitialPosition;
 
         if (!clawRigidbody.isKinematic && Vector3.Distance(claw.transform.position,clawInitialPosition) < 0.1f)
         {
