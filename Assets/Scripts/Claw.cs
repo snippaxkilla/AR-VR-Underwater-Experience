@@ -20,7 +20,7 @@ public class Claw : MonoBehaviour
     private void StartPullback(GameObject objectToPull)
     {
         var grapplingHook = GrapplingHook.GetComponent<GrapplingHook>();
-        grapplingHook.RetractClaw(gameObject, transform.position);
+        //grapplingHook.RetractClaw();
 
         // Pull the object back to the player first before destroying it
         Destroy(objectToPull);

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GrapplingHook : MonoBehaviour
 {
-    public enum ClawState
+    private enum ClawState
     {
         Idle,
         Launched,
@@ -13,6 +13,8 @@ public class GrapplingHook : MonoBehaviour
 
     [SerializeField] private GameObject clawLeft;
     [SerializeField] private GameObject clawRight;
+
+    [Header("How much space in front of the controller does my claw sit?")]
     [SerializeField] private float clawOffset;
 
     [SerializeField] private float maxDistance = 2f;
@@ -36,8 +38,8 @@ public class GrapplingHook : MonoBehaviour
 
     private void Update()
     {
-        DistanceChecker(clawLeft, ref clawLeftState, clawLeftInitialPosition);
-        DistanceChecker(clawRight, ref clawRightState, clawRightInitialPosition);
+        DistanceChecker(OVRInput.Controller.LTouch, clawLeft, ref clawLeftState, clawLeftInitialPosition);
+        DistanceChecker(OVRInput.Controller.RTouch, clawRight, ref clawRightState, clawRightInitialPosition);
     }
 
     // In the hooks we are adding force that's why we need to use FixedUpdate
@@ -90,6 +92,7 @@ public class GrapplingHook : MonoBehaviour
         var clawRigidbody = claw.GetComponent<Rigidbody>();
 
         var rayFwd = OVRInput.GetLocalControllerRotation(controller) * Vector3.forward;
+        clawInitialPosition = OVRInput.GetLocalControllerPosition(controller) + rayFwd * clawOffset;
 
         var pressingButton = buttons.Any(button => OVRInput.GetDown(button, controller));
 
@@ -107,14 +110,17 @@ public class GrapplingHook : MonoBehaviour
         if (clawCurrentDistance >= maxDistance)
         {
             state = ClawState.Retracting;
-            RetractClawCoroutine = RetractClaw(claw, clawInitialPosition);
+            RetractClawCoroutine = RetractClaw(controller, claw);
             StartCoroutine(RetractClawCoroutine);
         }
     }
 
     // Use an IEnumerator to lerp the claw back to it's initial position
-    public IEnumerator RetractClaw(GameObject claw, Vector3 clawInitialPosition)
+    public IEnumerator RetractClaw(OVRInput.Controller controller, GameObject claw)
     {
+        var rayFwd = OVRInput.GetLocalControllerRotation(controller) * Vector3.forward;
+        var clawInitialPosition = OVRInput.GetLocalControllerPosition(controller) + rayFwd * clawOffset;
+
         claw.GetComponent<Rigidbody>().isKinematic = true;
 
         var lerpStartTime = Time.time;
@@ -130,12 +136,12 @@ public class GrapplingHook : MonoBehaviour
     }
 
     // Check if the hooks have gone beyond the maximum distance and retract them separately if necessary
-    private void DistanceChecker(GameObject claw, ref ClawState state, Vector3 clawInitialPosition)
+    private void DistanceChecker(OVRInput.Controller controller, GameObject claw, ref ClawState state, Vector3 clawInitialPosition)
     {
-        if (Vector3.Distance(clawInitialPosition, claw.transform.position - claw.transform.forward * clawOffset) > maxDistance && state == ClawState.Launched)
+        if (Vector3.Distance(clawInitialPosition, claw.transform.position - claw.transform.forward * clawOffset) > maxDistance && (state == ClawState.Launched))
         {
             state = ClawState.Retracting;
-            StartCoroutine(RetractClaw(claw, clawInitialPosition));
+            StartCoroutine(RetractClaw(controller, claw));
             state = ClawState.Idle;
         }
     }
