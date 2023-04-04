@@ -1,6 +1,9 @@
+using System;
 using System.Collections;
 using System.Linq;
+using System.Numerics;
 using UnityEngine;
+using Vector3 = UnityEngine.Vector3;
 
 public class GrapplingHook : MonoBehaviour
 {
@@ -11,138 +14,122 @@ public class GrapplingHook : MonoBehaviour
         Retracting
     }
 
-    [SerializeField] private GameObject clawLeft;
-    [SerializeField] private GameObject clawRight;
+    [SerializeField] private Rigidbody clawLeft;
+    [SerializeField] private Rigidbody clawRight;
 
-    [Header("How much space in front of the controller does my claw sit?")]
+    [Header("How much offset in front of the controller does my claw sit?")]
     [SerializeField] private float clawOffset;
 
     [SerializeField] private float maxDistance = 2f;
-    [SerializeField] private float pullSpeed = 0.2f;
+    [SerializeField] private float retractTime = 0.2f;
     [SerializeField] private float forceMagnitude = 15f;
 
     [Header("Specify the buttons we want to use to shoot out hooks")] 
     [SerializeField] private OVRInput.RawButton[] leftButtons;
     [SerializeField] private OVRInput.RawButton[] rightButtons;
 
-    private Vector3 clawLeftInitialPosition;
-    private Vector3 clawRightInitialPosition;
+    private Vector3 leftRayFwd => OVRInput.GetLocalControllerRotation(OVRInput.Controller.LTouch) * Vector3.forward;
+    private Vector3 rightRayFwd => OVRInput.GetLocalControllerRotation(OVRInput.Controller.RTouch) * Vector3.forward;
 
-    // Ref values
-    private float clawLeftCurrentDistance;
-    private float clawRightCurrentDistance;
+    private Vector3 clawLeftInitialPosition => OVRInput.GetLocalControllerPosition(OVRInput.Controller.LTouch) + leftRayFwd * clawOffset;
+    private Vector3 clawRightInitialPosition => OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch) + rightRayFwd * clawOffset;
 
     // Start with the claws on idle
     private ClawState clawLeftState = ClawState.Idle;
     private ClawState clawRightState = ClawState.Idle;
 
+    private Vector3 leftClawRetractOrigin;
+    private Vector3 rightClawRetractOrigin;
+
+    private float leftClawRetractTime;
+    private float rightClawRetractTime;
+
     private void Update()
     {
-        DistanceChecker(OVRInput.Controller.LTouch, clawLeft, ref clawLeftState, clawLeftInitialPosition);
-        DistanceChecker(OVRInput.Controller.RTouch, clawRight, ref clawRightState, clawRightInitialPosition);
+        DistanceChecker(clawLeft, ref clawLeftState, ref leftClawRetractOrigin, clawLeftInitialPosition);
+        DistanceChecker(clawRight, ref clawRightState, ref rightClawRetractOrigin, clawRightInitialPosition);
+
+        if (clawLeftState == ClawState.Retracting)
+        {
+            leftClawRetractTime += Time.deltaTime;
+            clawLeft.transform.position = Vector3.Lerp(leftClawRetractOrigin, clawLeftInitialPosition, leftClawRetractTime / retractTime);
+            if (leftClawRetractTime >= retractTime)
+            {
+                clawLeftState = ClawState.Idle;
+                leftClawRetractTime = 0;
+                clawLeft.isKinematic = true;
+            }
+        }
+        
+        if (clawRightState == ClawState.Retracting)
+        {
+            rightClawRetractTime += Time.deltaTime;
+            clawRight.transform.position = Vector3.Lerp(rightClawRetractOrigin, clawRightInitialPosition, rightClawRetractTime / retractTime);
+            if (rightClawRetractTime >= retractTime)
+            {
+                clawRightState = ClawState.Idle;
+                rightClawRetractTime = 0;
+                clawRight.isKinematic = true;
+            }
+        }
     }
 
     // In the hooks we are adding force that's why we need to use FixedUpdate
     private void FixedUpdate()
     {
-        ShootClaw(OVRInput.Controller.LTouch, leftButtons, clawLeft, ref clawLeftState, clawLeftInitialPosition,
-            ref clawLeftCurrentDistance);
-        ShootClaw(OVRInput.Controller.RTouch, rightButtons, clawRight, ref clawRightState, clawRightInitialPosition,
-            ref clawRightCurrentDistance);
+        ShootClaw(OVRInput.Controller.LTouch, leftButtons, clawLeft, leftRayFwd, clawLeftInitialPosition, ref clawLeftState);
+        ShootClaw(OVRInput.Controller.RTouch, rightButtons, clawRight, rightRayFwd, clawRightInitialPosition, ref clawRightState);
     }
 
     // Make sure that Origin happens after shooting
     private void LateUpdate()
     {
-        OriginUpdater(OVRInput.Controller.LTouch, clawLeft, ref clawLeftState);
-        OriginUpdater(OVRInput.Controller.RTouch, clawRight, ref clawRightState);
+        OriginUpdater(OVRInput.Controller.LTouch, clawLeft.transform, clawLeftState, clawLeftInitialPosition);
+        OriginUpdater(OVRInput.Controller.RTouch, clawRight.transform, clawRightState, clawRightInitialPosition);
     }
 
     // Update the claw position in front of the controller and keep it there unless the claw is out
-    private void OriginUpdater(OVRInput.Controller controller, GameObject claw, ref ClawState state)
+    private void OriginUpdater(OVRInput.Controller controller, Transform claw, ClawState state, Vector3 clawInitialPosition)
     {
-        var controllerForward = OVRInput.GetLocalControllerRotation(controller) * Vector3.forward;
         var controllerRotation = OVRInput.GetLocalControllerRotation(controller);
-        var clawInitialPosition = OVRInput.GetLocalControllerPosition(controller) + controllerForward * clawOffset;
-        var clawRigidbody = claw.GetComponent<Rigidbody>();
 
-        claw.transform.rotation = controllerRotation;
-
-        switch (state)
+        if (state == ClawState.Idle)
         {
-            case ClawState.Idle:
-                clawRigidbody.isKinematic = true;
-                claw.transform.position = clawInitialPosition;
-                break;
-            case ClawState.Launched:
-                clawRigidbody.isKinematic = false;
-                break;
-            case ClawState.Retracting:
-                clawRigidbody.isKinematic = true;
-                break;
+            claw.position = clawInitialPosition;
+            claw.rotation = controllerRotation;
         }
     }
 
     // Add force to the claw to launch the claw forwards and keep track of it's current distance from claw to controller initial position
-    private IEnumerator RetractClawCoroutine;
-
-    private void ShootClaw(OVRInput.Controller controller, OVRInput.RawButton[] buttons, GameObject claw,
-        ref ClawState state, Vector3 clawInitialPosition, ref float clawCurrentDistance)
+    private void ShootClaw(OVRInput.Controller controller, OVRInput.RawButton[] buttons, Rigidbody claw, Vector3 rayFwd, Vector3 clawInitialPosition,
+        ref ClawState state)
     {
-        var clawRigidbody = claw.GetComponent<Rigidbody>();
-
-        var rayFwd = OVRInput.GetLocalControllerRotation(controller) * Vector3.forward;
-        clawInitialPosition = OVRInput.GetLocalControllerPosition(controller) + rayFwd * clawOffset;
-
         var pressingButton = buttons.Any(button => OVRInput.GetDown(button, controller));
 
-        if (!pressingButton || state == ClawState.Retracting || RetractClawCoroutine != null) return;
+        if (!pressingButton || state == ClawState.Retracting) return;
 
         claw.transform.position = clawInitialPosition;
+        claw.isKinematic = false;
+        claw.velocity = Vector3.zero;
+
+        claw.AddForce(rayFwd * forceMagnitude, ForceMode.Impulse);
 
         state = ClawState.Launched;
-
-        clawRigidbody.AddForce(rayFwd * forceMagnitude, ForceMode.Impulse);
-
-        clawCurrentDistance = Vector3.Distance(clawInitialPosition, claw.transform.position);
-
-        // Start retracting the claw if it goes beyond the maximum distance
-        if (clawCurrentDistance >= maxDistance)
-        {
-            state = ClawState.Retracting;
-            RetractClawCoroutine = RetractClaw(controller, claw);
-            StartCoroutine(RetractClawCoroutine);
-        }
     }
 
-    // Use an IEnumerator to lerp the claw back to it's initial position
-    public IEnumerator RetractClaw(OVRInput.Controller controller, GameObject claw)
+    private void RetractClaw(Rigidbody claw, ref ClawState state, ref Vector3 retractOrigin)
     {
-        var rayFwd = OVRInput.GetLocalControllerRotation(controller) * Vector3.forward;
-        var clawInitialPosition = OVRInput.GetLocalControllerPosition(controller) + rayFwd * clawOffset;
-
-        claw.GetComponent<Rigidbody>().isKinematic = true;
-
-        var lerpStartTime = Time.time;
-
-        while (Vector3.Distance(claw.transform.position, clawInitialPosition) > 0.1f)
-        {
-            var lerpFactor = (Time.time - lerpStartTime) / pullSpeed;
-            claw.transform.position = Vector3.Lerp(claw.transform.position, clawInitialPosition, lerpFactor);
-            yield return null;
-        }
-        claw.transform.position = clawInitialPosition;
-        RetractClawCoroutine = null;
+        retractOrigin = claw.transform.position;
+        claw.isKinematic = true;
+        state = ClawState.Retracting;
     }
 
     // Check if the hooks have gone beyond the maximum distance and retract them separately if necessary
-    private void DistanceChecker(OVRInput.Controller controller, GameObject claw, ref ClawState state, Vector3 clawInitialPosition)
+    private void DistanceChecker(Rigidbody claw, ref ClawState state, ref Vector3 retractOrigin, Vector3 clawInitialPosition)
     {
-        if (Vector3.Distance(clawInitialPosition, claw.transform.position - claw.transform.forward * clawOffset) > maxDistance && (state == ClawState.Launched))
+        if (Vector3.Distance(clawInitialPosition, claw.transform.position - claw.transform.forward * clawOffset) > maxDistance && state == ClawState.Launched)
         {
-            state = ClawState.Retracting;
-            StartCoroutine(RetractClaw(controller, claw));
-            state = ClawState.Idle;
+            RetractClaw(claw, ref state, ref retractOrigin);
         }
     }
 }

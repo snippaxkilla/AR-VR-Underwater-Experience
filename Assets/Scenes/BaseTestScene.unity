@@ -8507,6 +8507,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7265665762759749328, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
+      propertyPath: clawLeft
+      value: 
+      objectReference: {fileID: 7265665762277905123}
+    - target: {fileID: 7265665762759749328, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
+      propertyPath: clawRight
+      value: 
+      objectReference: {fileID: 811309700}
+    - target: {fileID: 7265665762759749328, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
       propertyPath: pullSpeed
       value: 0.2
       objectReference: {fileID: 0}
@@ -8526,6 +8534,10 @@ PrefabInstance:
       propertyPath: rbClawRight
       value: 
       objectReference: {fileID: 811309700}
+    - target: {fileID: 7265665762759749328, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
+      propertyPath: retractTime
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7265665762759749328, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
       propertyPath: clawOffset.x
       value: 0.12
@@ -8600,6 +8612,11 @@ PrefabInstance:
       objectReference: {fileID: 937062272}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
+--- !u!54 &7265665762277905123 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 1698912239411195153, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
+  m_PrefabInstance: {fileID: 7265665762277905122}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7947443326735936681
 PrefabInstance:
   m_ObjectHideFlags: 0
