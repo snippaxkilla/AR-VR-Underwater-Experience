@@ -6,10 +6,10 @@ public class GrapplingHook : MonoBehaviour
 {
     [SerializeField] private GameObject clawLeft;
     [SerializeField] private GameObject clawRight;
-    [SerializeField] private Vector3 clawOffset;
+    [SerializeField] private float clawOffset;
 
     [SerializeField] private float maxDistance = 2f;
-    [SerializeField] private float pullSpeed = 1f;
+    [SerializeField] private float pullSpeed = 0.2f;
     [SerializeField] private float forceMagnitude = 15f;
 
     [Header("Specify the buttons we want to use to shoot out hooks")] 
@@ -25,28 +25,27 @@ public class GrapplingHook : MonoBehaviour
 
     private void Update()
     {
-        OriginUpdater();
+        OriginUpdater(OVRInput.Controller.LTouch, clawLeft);
+        OriginUpdater(OVRInput.Controller.RTouch, clawRight);
+
         DistanceChecker();
     }
 
-    private void OriginUpdater()
+    // When the claw is in front of the controller we don't want it to be able to be moved with physics so we set it's kinematic to true
+    private void OriginUpdater(OVRInput.Controller controller, GameObject claw)
     {
-        clawLeftInitialPosition = OVRInput.GetLocalControllerPosition(OVRInput.Controller.LTouch) + clawOffset;
-        clawRightInitialPosition = OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch) + clawOffset;
+        var controllerForward = OVRInput.GetLocalControllerRotation(controller) * Vector3.forward;
+        var clawInitialPosition = OVRInput.GetLocalControllerPosition(controller) + controllerForward * clawOffset;
+        claw.transform.position = clawInitialPosition;
+        var clawRigidbody = claw.GetComponent<Rigidbody>();
 
-        clawLeftInitialPosition = clawLeft.transform.position;
-        clawRightInitialPosition = clawRight.transform.position;
-
-        if (!isLeftRetracting)
+        if (!clawRigidbody.isKinematic && Vector3.Distance(claw.transform.position,clawInitialPosition) < 0.1f)
         {
-            clawLeft.transform.position = clawLeftInitialPosition;
-            clawLeft.GetComponent<Rigidbody>().isKinematic = true;
+            clawRigidbody.isKinematic = true;
         }
-
-        if (!isRightRetracting)
+        else if (clawRigidbody.isKinematic && Vector3.Distance(claw.transform.position, clawInitialPosition) >= 0.1f)
         {
-            clawRight.transform.position = clawRightInitialPosition;
-            clawRight.GetComponent<Rigidbody>().isKinematic = true;
+            clawRigidbody.isKinematic = false;
         }
     }
 
@@ -57,10 +56,11 @@ public class GrapplingHook : MonoBehaviour
             ref clawLeftCurrentDistance, false);
         ShootClaw(OVRInput.Controller.RTouch, rightButtons, clawRight, ref isRightRetracting, clawRightInitialPosition,
             ref clawRightCurrentDistance, false);
-
     }
 
     // Add force to the claw to launch the claw forwards and keep track of it's current distance from claw to controller initial position
+    private IEnumerator RetractClawCoroutine;
+
     private void ShootClaw(OVRInput.Controller controller, OVRInput.RawButton[] buttons, GameObject claw,
         ref bool isRetracting, Vector3 clawInitialPosition, ref float clawCurrentDistance, bool isLaunching)
     {
@@ -70,43 +70,51 @@ public class GrapplingHook : MonoBehaviour
 
         var pressingButton = buttons.Any(button => OVRInput.GetDown(button, controller));
 
-        if (!pressingButton || isRetracting) return;
+        if (!pressingButton || isRetracting || RetractClawCoroutine != null) return;
 
         claw.transform.position = clawInitialPosition;
-        clawRigidbody.isKinematic = isRetracting;
+        clawRigidbody.isKinematic = false;
         clawRigidbody.AddForce(rayFwd * forceMagnitude, ForceMode.Impulse);
 
-        clawCurrentDistance = Vector3.Distance(transform.position, claw.transform.position);
+        clawCurrentDistance = Vector3.Distance(clawInitialPosition, claw.transform.position);
+
+        // Start retracting the claw if it goes beyond the maximum distance
+        if (clawCurrentDistance >= maxDistance)
+        {
+            isRetracting = true;
+            RetractClawCoroutine = RetractClaw(claw, clawInitialPosition);
+            StartCoroutine(RetractClawCoroutine);
+        }
     }
 
+    // Use an IEnumerator to lerp the claw back to it's initial position
     public IEnumerator RetractClaw(GameObject claw, Vector3 clawInitialPosition)
     {
         claw.GetComponent<Rigidbody>().isKinematic = true;
 
-        var lerpStartTime = Time.time;
+        var lerpStartTime = Time.fixedDeltaTime;
 
         while (Vector3.Distance(claw.transform.position, clawInitialPosition) > 0.1f)
         {
-            var lerpFactor = (Time.time - lerpStartTime) / pullSpeed;
+            var lerpFactor = (Time.fixedDeltaTime - lerpStartTime) / pullSpeed;
             claw.transform.position = Vector3.Lerp(claw.transform.position, clawInitialPosition, lerpFactor);
             yield return null;
         }
-
         claw.transform.position = clawInitialPosition;
+        RetractClawCoroutine = null;
     }
 
-
-    // Check if the hooks have gone beyond the maximum distance and retract them if necessary
+    // Check if the hooks have gone beyond the maximum distance and retract them separately if necessary
     private void DistanceChecker()
     {
-        if (Vector3.Distance(transform.position, clawLeft.transform.position) > maxDistance && !isLeftRetracting)
+        if (Vector3.Distance(transform.position, clawLeft.transform.position - clawLeft.transform.forward * clawOffset) > maxDistance && !isLeftRetracting)
         {
             isLeftRetracting = true;
             StartCoroutine(RetractClaw(clawLeft, clawLeftInitialPosition));
             isLeftRetracting = false;
         }
 
-        if (Vector3.Distance(transform.position, clawRight.transform.position) > maxDistance && !isRightRetracting)
+        if (Vector3.Distance(transform.position, clawRight.transform.position - clawRight.transform.forward * clawOffset) > maxDistance && !isRightRetracting)
         {
             isRightRetracting = true;
             StartCoroutine(RetractClaw(clawRight, clawRightInitialPosition));
