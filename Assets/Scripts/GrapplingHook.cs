@@ -17,7 +17,7 @@ public class GrapplingHook : MonoBehaviour
     [SerializeField] private float clawOffset;
 
     [SerializeField] private float maxDistance = 2f;
-    [SerializeField] private float retractTime = 0.2f;
+    [SerializeField] private float retractSpeed = 4f;
     [SerializeField] private float autoRetractAfterDelay = 5f;
     [SerializeField] private float forceMagnitude = 15f;
 
@@ -38,9 +38,6 @@ public class GrapplingHook : MonoBehaviour
     public Vector3 leftClawRetractOrigin;
     public Vector3 rightClawRetractOrigin;
 
-    private float leftClawRetractTime;
-    private float rightClawRetractTime;
-
     private void Update()
     {
         DistanceChecker(clawLeft, ref clawLeftState, ref leftClawRetractOrigin, clawLeftInitialPosition);
@@ -48,28 +45,33 @@ public class GrapplingHook : MonoBehaviour
 
         if (clawLeftState == ClawState.Retracting)
         {
-            leftClawRetractTime += Time.deltaTime;
-            clawLeft.transform.position = Vector3.Lerp(leftClawRetractOrigin, clawLeftInitialPosition, leftClawRetractTime / retractTime);
-            if (leftClawRetractTime >= retractTime)
+            var distanceLeft = Vector3.Distance(clawLeft.transform.position, clawLeftInitialPosition);
+            var timeLeft = distanceLeft / retractSpeed;
+
+            clawLeft.transform.position = Vector3.MoveTowards(clawLeft.transform.position, clawLeftInitialPosition, Time.deltaTime * retractSpeed);
+
+            if (distanceLeft <= 0.01f)
             {
                 clawLeftState = ClawState.Idle;
-                leftClawRetractTime = 0;
                 clawLeft.isKinematic = true;
             }
         }
 
         if (clawRightState == ClawState.Retracting)
         {
-            rightClawRetractTime += Time.deltaTime;
-            clawRight.transform.position = Vector3.Lerp(rightClawRetractOrigin, clawRightInitialPosition, rightClawRetractTime / retractTime);
-            if (rightClawRetractTime >= retractTime)
+            var distanceRight = Vector3.Distance(clawRight.transform.position, clawRightInitialPosition);
+            var timeRight = distanceRight / retractSpeed;
+
+            clawRight.transform.position = Vector3.MoveTowards(clawRight.transform.position, clawRightInitialPosition, Time.deltaTime * retractSpeed);
+
+            if (distanceRight <= 0.01f)
             {
                 clawRightState = ClawState.Idle;
-                rightClawRetractTime = 0;
                 clawRight.isKinematic = true;
             }
         }
     }
+
 
     // In the hooks we are adding force that's why we need to use FixedUpdate
     private void FixedUpdate()
