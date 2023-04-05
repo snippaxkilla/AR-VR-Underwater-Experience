@@ -31,7 +31,6 @@ public class Claw : MonoBehaviour
     {
         Transform clawTransform = transform; 
         objectToPull.transform.position = clawTransform.position;
-        objectToPull.transform.rotation = clawTransform.rotation;
     }
 
     private void StartPullback(GameObject objectToPull)
@@ -39,18 +38,18 @@ public class Claw : MonoBehaviour
         var grapplingHook = GrapplingHook.GetComponent<GrapplingHook>();
         Rigidbody clawRigidbody = objectToPull.GetComponent<Rigidbody>();
 
-        if (objectToPull.transform == grapplingHook.clawLeft.transform)
+        if (grapplingHook.clawLeft)
         {
             grapplingHook.RetractClaw(clawRigidbody, ref grapplingHook.clawLeftState, ref grapplingHook.leftClawRetractOrigin);
         }
 
-        if (objectToPull.transform == grapplingHook.clawRight.transform)
+        if (grapplingHook.clawRight)
         {
             grapplingHook.RetractClaw(clawRigidbody, ref grapplingHook.clawRightState, ref grapplingHook.rightClawRetractOrigin);
         }
 
         // Pull the object back to the player first before destroying it
-        Destroy(objectToPull, 5f);
+        Destroy(objectToPull, 1f);
         isHooked = false;
     }
 }
