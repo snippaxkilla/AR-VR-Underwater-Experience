@@ -41,15 +41,21 @@ public class Claw : MonoBehaviour
         if (grapplingHook.clawLeft)
         {
             grapplingHook.RetractClaw(clawRigidbody, ref grapplingHook.clawLeftState, ref grapplingHook.leftClawRetractOrigin);
+            if (grapplingHook.clawLeftState == global::GrapplingHook.ClawState.Idle)
+            {
+                Destroy(objectToPull);
+                isHooked = false;
+            }
         }
 
         if (grapplingHook.clawRight)
         {
             grapplingHook.RetractClaw(clawRigidbody, ref grapplingHook.clawRightState, ref grapplingHook.rightClawRetractOrigin);
+            if (grapplingHook.clawRightState == global::GrapplingHook.ClawState.Idle)
+            {
+                Destroy(objectToPull);
+                isHooked = false;
+            }
         }
-
-        // Pull the object back to the player first before destroying it
-        Destroy(objectToPull, 1f);
-        isHooked = false;
     }
 }
