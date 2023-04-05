@@ -38,17 +38,19 @@ public class Claw : MonoBehaviour
         var grapplingHook = GrapplingHook.GetComponent<GrapplingHook>();
         Rigidbody clawRigidbody = objectToPull.GetComponent<Rigidbody>();
 
-        if (grapplingHook.clawLeft)
+        if (grapplingHook.clawLeft == gameObject.GetComponent<Rigidbody>())
         {
+            Debug.Log("pulling back");
             grapplingHook.RetractClaw(clawRigidbody, ref grapplingHook.clawLeftState, ref grapplingHook.leftClawRetractOrigin);
             if (grapplingHook.clawLeftState == global::GrapplingHook.ClawState.Idle)
             {
+                Debug.Log("Destroying item");
                 Destroy(objectToPull);
                 isHooked = false;
             }
         }
 
-        if (grapplingHook.clawRight)
+        if (grapplingHook.clawRight == gameObject.GetComponent<Rigidbody>())
         {
             grapplingHook.RetractClaw(clawRigidbody, ref grapplingHook.clawRightState, ref grapplingHook.rightClawRetractOrigin);
             if (grapplingHook.clawRightState == global::GrapplingHook.ClawState.Idle)

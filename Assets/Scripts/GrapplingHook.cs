@@ -57,7 +57,7 @@ public class GrapplingHook : MonoBehaviour
                 clawLeft.isKinematic = true;
             }
         }
-        
+
         if (clawRightState == ClawState.Retracting)
         {
             rightClawRetractTime += Time.deltaTime;
@@ -131,8 +131,7 @@ public class GrapplingHook : MonoBehaviour
     private void DistanceChecker(Rigidbody claw, ref ClawState state, ref Vector3 retractOrigin,
         Vector3 clawInitialPosition)
     {
-        if (Vector3.Distance(clawInitialPosition, claw.transform.position - claw.transform.forward * clawOffset) >
-            maxDistance && state == ClawState.Launched)
+        if (Vector3.Distance(clawInitialPosition, claw.transform.position - claw.transform.forward * clawOffset) > maxDistance && state == ClawState.Launched)
         {
             RetractClaw(claw, ref state, ref retractOrigin);
         }
