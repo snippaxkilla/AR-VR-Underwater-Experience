@@ -65,8 +65,8 @@ public class RaycastPlaceObject : MonoBehaviour
         {
             var hand = GetComponentInChildren<OVRHand>();
           
-            var (leftResult, leftPosition) = HandRayCast(OVRInput.Controller.LHand, targetingIconLeft);
-            var (rightResult, rightPosition) = HandRayCast(OVRInput.Controller.RHand, targetingIconRight);
+            var (leftResult, leftPosition) = HandRayCast(OVRHand.Hand.HandLeft, targetingIconLeft);
+            var (rightResult, rightPosition) = HandRayCast(OVRHand.Hand.HandRight, targetingIconRight);
 
             if (!isSwitching)
             {
@@ -159,13 +159,13 @@ public class RaycastPlaceObject : MonoBehaviour
 
     private bool isPinching;
 
-    private (HandRayCastResult, Vector3) HandRayCast(OVRInput.Controller controller, Transform targetIcon)
+    private (HandRayCastResult, Vector3) HandRayCast(OVRHand.Hand hand, Transform targetIcon)
     {
         var returnValue = new HandRayCastResult();
-        var hand = GetComponentInChildren<OVRHand>();
-        var isIndexFingerPinching = hand.GetFingerIsPinching(OVRHand.HandFinger.Index);
-        var indexFingerTipPosition = hand.PointerPose.localPosition;
-        var indexFingerDirection = hand.PointerPose.localRotation * Vector3.forward;
+        var ovrHand = GetComponentInChildren<OVRHand>();
+        var isIndexFingerPinching = ovrHand.GetFingerIsPinching(OVRHand.HandFinger.Index);
+        var indexFingerTipPosition = ovrHand.PointerPose.localPosition;
+        var indexFingerDirection = ovrHand.PointerPose.localRotation * Vector3.forward;
 
         if (Physics.Raycast(indexFingerTipPosition, indexFingerDirection, out var hitInfo, 1000.0f, sceneLayer))
         {

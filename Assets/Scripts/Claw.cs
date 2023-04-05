@@ -4,7 +4,7 @@ public class Claw : MonoBehaviour
 {
     [SerializeField] private GameObject GroupedGarbage;
     [SerializeField] private GameObject Player;
-    [SerializeField] private GameObject GrapplingHook;
+    [SerializeField] private GameObject GrapplingHookGun;
 
     private bool isHooked;
     private GameObject hookedGarbage;
@@ -15,7 +15,10 @@ public class Claw : MonoBehaviour
         {
             hookedGarbage = other.gameObject;
             isHooked = true;
-            StartPullback(hookedGarbage);
+
+            // TODO: create the references for pullback otherwise they can't be called
+            //StartPullback(hookedGarbage, clawLeft, ref clawLeftState, ref leftClawRetractOrigin);
+            //StartPullback(hookedGarbage, clawRight, ref clawRightState, ref rightClawRetractOrigin);
         }
     }
 
@@ -33,31 +36,14 @@ public class Claw : MonoBehaviour
         objectToPull.transform.position = clawTransform.position;
     }
 
-    private void StartPullback(GameObject objectToPull)
+    private void StartPullback(GameObject objectToPull, Rigidbody claw, ref GrapplingHook.ClawState state, ref Vector3 retractOrigin)
     {
-        var grapplingHook = GrapplingHook.GetComponent<GrapplingHook>();
+        var grapplingHook = GrapplingHookGun.GetComponent<GrapplingHook>();
         Rigidbody clawRigidbody = objectToPull.GetComponent<Rigidbody>();
 
-        if (grapplingHook.clawLeft == gameObject.GetComponent<Rigidbody>())
-        {
-            Debug.Log("pulling back");
-            grapplingHook.RetractClaw(clawRigidbody, ref grapplingHook.clawLeftState, ref grapplingHook.leftClawRetractOrigin);
-            if (grapplingHook.clawLeftState == global::GrapplingHook.ClawState.Idle)
-            {
-                Debug.Log("Destroying item");
-                Destroy(objectToPull);
-                isHooked = false;
-            }
-        }
-
-        if (grapplingHook.clawRight == gameObject.GetComponent<Rigidbody>())
-        {
-            grapplingHook.RetractClaw(clawRigidbody, ref grapplingHook.clawRightState, ref grapplingHook.rightClawRetractOrigin);
-            if (grapplingHook.clawRightState == global::GrapplingHook.ClawState.Idle)
-            {
-                Destroy(objectToPull);
-                isHooked = false;
-            }
-        }
+        grapplingHook.RetractClaw(claw, ref state, ref retractOrigin);
+         
+        Destroy(objectToPull);
+        isHooked = false;
     }
 }
