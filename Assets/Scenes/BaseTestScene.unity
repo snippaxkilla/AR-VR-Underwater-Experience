@@ -9537,6 +9537,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7265665762759749328, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
+      propertyPath: retractSpeed
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7265665762759749328, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
       propertyPath: leftButtons.Array.data[0]
       value: 536870912
       objectReference: {fileID: 0}
