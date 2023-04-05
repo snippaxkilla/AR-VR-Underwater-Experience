@@ -3,27 +3,36 @@ using UnityEngine;
 public class Claw : MonoBehaviour
 {
     [SerializeField] private GameObject GroupedGarbage;
-    [SerializeField] private GameObject Player;
-    [SerializeField] private GameObject GrapplingHookGun;
+    [SerializeField] private GrapplingHook GrapplingHookGun;
+
+    // Ref values we need for retracting the claw
+    [SerializeField] private Vector3 leftRetractOrigin;
+    [SerializeField] private Vector3 rightRetractOrigin;
+    private GrapplingHook.ClawState leftState;
+    private GrapplingHook.ClawState rightState;
 
     private bool isHooked;
     private GameObject hookedGarbage;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.transform.parent == GroupedGarbage.transform)
-        {
-            hookedGarbage = other.gameObject;
-            isHooked = true;
+        hookedGarbage = other.gameObject;
+        isHooked = true;
 
-            // TODO: create the references for pullback otherwise they can't be called
-            //StartPullback(hookedGarbage, clawLeft, ref clawLeftState, ref leftClawRetractOrigin);
-            //StartPullback(hookedGarbage, clawRight, ref clawRightState, ref rightClawRetractOrigin);
+        if (transform.name == "ClawLeft")
+        { 
+            GrapplingHookGun.RetractClaw(GrapplingHookGun.GetLeftRigidbody(), ref leftState, ref leftRetractOrigin);
+        }
+        if (transform.name == "ClawRight")
+        { 
+            GrapplingHookGun.RetractClaw(GrapplingHookGun.GetRightRigidbody(), ref rightState, ref rightRetractOrigin);
         }
     }
 
     private void Update()
     {
+        GarbageDestroyer();
+
         if (isHooked)
         {
             UpdateGarbagePosition(hookedGarbage);
@@ -32,18 +41,22 @@ public class Claw : MonoBehaviour
 
     private void UpdateGarbagePosition(GameObject objectToPull)
     {
-        Transform clawTransform = transform; 
+        Transform clawTransform = transform;
         objectToPull.transform.position = clawTransform.position;
     }
 
-    private void StartPullback(GameObject objectToPull, Rigidbody claw, ref GrapplingHook.ClawState state, ref Vector3 retractOrigin)
+    private void GarbageDestroyer()
     {
-        var grapplingHook = GrapplingHookGun.GetComponent<GrapplingHook>();
-        Rigidbody clawRigidbody = objectToPull.GetComponent<Rigidbody>();
+        if (GrapplingHookGun.GetLeftState() == GrapplingHook.ClawState.Idle && isHooked)
+        {
+            Destroy(hookedGarbage);
+            isHooked = false;
+        }
 
-        grapplingHook.RetractClaw(claw, ref state, ref retractOrigin);
-         
-        Destroy(objectToPull);
-        isHooked = false;
+        if (GrapplingHookGun.GetRightState() == GrapplingHook.ClawState.Idle && isHooked)
+        {
+            Destroy(hookedGarbage);
+            isHooked = false;
+        }
     }
 }

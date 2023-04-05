@@ -10,8 +10,8 @@ public class GrapplingHook : MonoBehaviour
         Retracting
     }
 
-    [SerializeField] public Rigidbody clawLeft;
-    [SerializeField] public Rigidbody clawRight;
+    [SerializeField] private Rigidbody clawLeft;
+    [SerializeField] private Rigidbody clawRight;
 
     [Header("How much offset in front of the controller does my claw sit?")]
     [SerializeField] private float clawOffset;
@@ -28,63 +28,62 @@ public class GrapplingHook : MonoBehaviour
     private Vector3 leftRayFwd => OVRInput.GetLocalControllerRotation(OVRInput.Controller.LTouch) * Vector3.forward;
     private Vector3 rightRayFwd => OVRInput.GetLocalControllerRotation(OVRInput.Controller.RTouch) * Vector3.forward;
 
-    private Vector3 clawLeftInitialPosition => OVRInput.GetLocalControllerPosition(OVRInput.Controller.LTouch) + leftRayFwd * clawOffset;
-    private Vector3 clawRightInitialPosition => OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch) + rightRayFwd * clawOffset;
+    private Vector3 leftInitialPosition => OVRInput.GetLocalControllerPosition(OVRInput.Controller.LTouch) + leftRayFwd * clawOffset;
+    private Vector3 rightInitialPosition => OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch) + rightRayFwd * clawOffset;
 
     // Start with the claws on idle
-    public ClawState clawLeftState = ClawState.Idle;
-    public ClawState clawRightState = ClawState.Idle;
+    private ClawState leftState = ClawState.Idle;
+    private ClawState rightState = ClawState.Idle;
 
-    public Vector3 leftClawRetractOrigin;
-    public Vector3 rightClawRetractOrigin;
+    private Vector3 leftRetractOrigin;
+    private Vector3 rightRetractOrigin;
 
     private void Update()
     {
-        DistanceChecker(clawLeft, ref clawLeftState, ref leftClawRetractOrigin, clawLeftInitialPosition);
-        DistanceChecker(clawRight, ref clawRightState, ref rightClawRetractOrigin, clawRightInitialPosition);
+        DistanceChecker(clawLeft, ref leftState, ref leftRetractOrigin, leftInitialPosition);
+        DistanceChecker(clawRight, ref rightState, ref rightRetractOrigin, rightInitialPosition);
 
-        if (clawLeftState == ClawState.Retracting)
+        if (leftState == ClawState.Retracting)
         {
-            var distanceLeft = Vector3.Distance(clawLeft.transform.position, clawLeftInitialPosition);
+            var distanceLeft = Vector3.Distance(clawLeft.transform.position, leftInitialPosition);
             var timeLeft = distanceLeft / retractSpeed;
 
-            clawLeft.transform.position = Vector3.MoveTowards(clawLeft.transform.position, clawLeftInitialPosition, Time.deltaTime * retractSpeed);
+            clawLeft.transform.position = Vector3.MoveTowards(clawLeft.transform.position, leftInitialPosition, Time.deltaTime * retractSpeed);
 
             if (distanceLeft <= 0.01f)
             {
-                clawLeftState = ClawState.Idle;
+                leftState = ClawState.Idle;
                 clawLeft.isKinematic = true;
             }
         }
 
-        if (clawRightState == ClawState.Retracting)
+        if (rightState == ClawState.Retracting)
         {
-            var distanceRight = Vector3.Distance(clawRight.transform.position, clawRightInitialPosition);
+            var distanceRight = Vector3.Distance(clawRight.transform.position, rightInitialPosition);
             var timeRight = distanceRight / retractSpeed;
 
-            clawRight.transform.position = Vector3.MoveTowards(clawRight.transform.position, clawRightInitialPosition, Time.deltaTime * retractSpeed);
+            clawRight.transform.position = Vector3.MoveTowards(clawRight.transform.position, rightInitialPosition, Time.deltaTime * retractSpeed);
 
             if (distanceRight <= 0.01f)
             {
-                clawRightState = ClawState.Idle;
+                rightState = ClawState.Idle;
                 clawRight.isKinematic = true;
             }
         }
     }
 
-
     // In the hooks we are adding force that's why we need to use FixedUpdate
     private void FixedUpdate()
     {
-        ShootClaw(OVRInput.Controller.LTouch, leftButtons, clawLeft, leftRayFwd, clawLeftInitialPosition, ref clawLeftState, ref leftClawRetractOrigin);
-        ShootClaw(OVRInput.Controller.RTouch, rightButtons, clawRight, rightRayFwd, clawRightInitialPosition, ref clawRightState, ref rightClawRetractOrigin);
+        ShootClaw(OVRInput.Controller.LTouch, leftButtons, clawLeft, leftRayFwd, leftInitialPosition, ref leftState, ref leftRetractOrigin);
+        ShootClaw(OVRInput.Controller.RTouch, rightButtons, clawRight, rightRayFwd, rightInitialPosition, ref rightState, ref rightRetractOrigin);
     }
 
     // Make sure that Origin happens after shooting
     private void LateUpdate()
     {
-        OriginUpdater(OVRInput.Controller.LTouch, clawLeft.transform, clawLeftState, clawLeftInitialPosition);
-        OriginUpdater(OVRInput.Controller.RTouch, clawRight.transform, clawRightState, clawRightInitialPosition);
+        OriginUpdater(OVRInput.Controller.LTouch, clawLeft.transform, leftState, leftInitialPosition);
+        OriginUpdater(OVRInput.Controller.RTouch, clawRight.transform, rightState, rightInitialPosition);
     }
 
     // Update the claw position in front of the controller and keep it there unless the claw is out
@@ -124,6 +123,11 @@ public class GrapplingHook : MonoBehaviour
 
     public void RetractClaw(Rigidbody claw, ref ClawState state, ref Vector3 retractOrigin)
     {
+        if (state == ClawState.Retracting)
+        {
+            return;
+        }
+
         retractOrigin = claw.transform.position;
         claw.isKinematic = true;
         state = ClawState.Retracting;
@@ -137,5 +141,36 @@ public class GrapplingHook : MonoBehaviour
         {
             RetractClaw(claw, ref state, ref retractOrigin);
         }
+    }
+
+    // Getters and Setters we want to use in other scripts
+    public ClawState GetLeftState()
+    {
+        return leftState;
+    }
+
+    public void SetLeftState(ClawState newState)
+    {
+        leftState = newState;
+    }
+
+    public ClawState GetRightState()
+    {
+        return rightState;
+    }
+
+    public void SetRightState(ClawState newState)
+    {
+        rightState = newState;
+    }
+
+    public Rigidbody GetLeftRigidbody()
+    {
+        return clawLeft;
+    }
+
+    public Rigidbody GetRightRigidbody()
+    {
+        return clawRight;
     }
 }
