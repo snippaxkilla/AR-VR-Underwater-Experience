@@ -1,18 +1,17 @@
-using System.Collections;
 using System.Linq;
 using UnityEngine;
 
 public class GrapplingHook : MonoBehaviour
 {
-    private enum ClawState
+    public enum ClawState
     {
         Idle,
         Launched,
         Retracting
     }
 
-    [SerializeField] private Rigidbody clawLeft;
-    [SerializeField] private Rigidbody clawRight;
+    [SerializeField] public Rigidbody clawLeft;
+    [SerializeField] public Rigidbody clawRight;
 
     [Header("How much offset in front of the controller does my claw sit?")]
     [SerializeField] private float clawOffset;
@@ -33,11 +32,11 @@ public class GrapplingHook : MonoBehaviour
     private Vector3 clawRightInitialPosition => OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch) + rightRayFwd * clawOffset;
 
     // Start with the claws on idle
-    private ClawState clawLeftState = ClawState.Idle;
-    private ClawState clawRightState = ClawState.Idle;
+    public ClawState clawLeftState = ClawState.Idle;
+    public ClawState clawRightState = ClawState.Idle;
 
-    private Vector3 leftClawRetractOrigin;
-    private Vector3 rightClawRetractOrigin;
+    public Vector3 leftClawRetractOrigin;
+    public Vector3 rightClawRetractOrigin;
 
     private float leftClawRetractTime;
     private float rightClawRetractTime;
@@ -121,7 +120,7 @@ public class GrapplingHook : MonoBehaviour
         }
     }
 
-    private void RetractClaw(Rigidbody claw, ref ClawState state, ref Vector3 retractOrigin)
+    public void RetractClaw(Rigidbody claw, ref ClawState state, ref Vector3 retractOrigin)
     {
         retractOrigin = claw.transform.position;
         claw.isKinematic = true;
