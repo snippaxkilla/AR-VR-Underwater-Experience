@@ -63,19 +63,29 @@ public class RaycastPlaceObject : MonoBehaviour
 
         if (activeController == OVRInput.Controller.Hands)
         {
-            var hand = GetComponentInChildren<OVRHand>();
-          
+            var ovrHands = GetComponentsInChildren<OVRHand>();
+            var leftHand = ovrHands.FirstOrDefault(h => h.HandType == OVRHand.Hand.HandLeft);
+            var rightHand = ovrHands.FirstOrDefault(h => h.HandType == OVRHand.Hand.HandRight);
+
             var (leftResult, leftPosition) = HandRayCast(OVRHand.Hand.HandLeft, targetingIconLeft);
             var (rightResult, rightPosition) = HandRayCast(OVRHand.Hand.HandRight, targetingIconRight);
 
             if (!isSwitching)
             {
-                StartCoroutine(SwitchDelayCoroutine()); 
+                StartCoroutine(SwitchDelayCoroutine());
             }
 
-            rayCastLineLeft.SetPosition(0, hand.PointerPose.localPosition);
-            rayCastLineRight.SetPosition(0, hand.PointerPose.localPosition);
+            if (leftHand != null)
+            {
+                rayCastLineLeft.SetPosition(0, leftHand.PointerPose.localPosition);
+            }
+
+            if (rightHand != null)
+            {
+                rayCastLineRight.SetPosition(0, rightHand.PointerPose.localPosition);
+            }
         }
+
         if (activeController == OVRInput.Controller.Touch)
         {
             ControllerRayCast(OVRInput.Controller.LTouch, leftButtons, targetingIconLeft);
@@ -162,7 +172,11 @@ public class RaycastPlaceObject : MonoBehaviour
     private (HandRayCastResult, Vector3) HandRayCast(OVRHand.Hand hand, Transform targetIcon)
     {
         var returnValue = new HandRayCastResult();
-        var ovrHand = GetComponentInChildren<OVRHand>();
+        var ovrHands = GetComponentsInChildren<OVRHand>();
+        var ovrHand = ovrHands.FirstOrDefault(h => h.HandType == hand);
+
+        if (ovrHand == null) return (returnValue, Vector3.zero);
+
         var isIndexFingerPinching = ovrHand.GetFingerIsPinching(OVRHand.HandFinger.Index);
         var indexFingerTipPosition = ovrHand.PointerPose.localPosition;
         var indexFingerDirection = ovrHand.PointerPose.localRotation * Vector3.forward;
