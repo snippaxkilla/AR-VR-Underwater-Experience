@@ -5,6 +5,8 @@ public class Claw : MonoBehaviour
     [SerializeField] private GameObject GroupedGarbage;
     [SerializeField] private GrapplingHook GrapplingHookGun;
 
+    [SerializeField] private GarbageCollector garbageCollector;
+
     // Ref values we need for retracting the claw
     private Vector3 leftRetractOrigin;
     private Vector3 rightRetractOrigin;
@@ -46,6 +48,7 @@ public class Claw : MonoBehaviour
             Destroy(GetComponent<FixedJoint>());
             Destroy(hookedGarbage);
             isHooked = false;
+            garbageCollector.IncrementGarbageCount();
         }
     }
 

@@ -8244,6 +8244,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 395b6922a6e9e1544a45e59a31223b43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1834628718
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1834628720}
+  - component: {fileID: 1834628719}
+  m_Layer: 0
+  m_Name: GarbageCollector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1834628719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1834628718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 933ff63c02b4d2b4185b88958df156a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1834628720
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1834628718}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1904219585 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1213269600831803700, guid: 61b469ffb3005554f8631a46a0f0c28a, type: 3}
@@ -9484,6 +9528,10 @@ PrefabInstance:
       propertyPath: GrapplingHookGun
       value: 
       objectReference: {fileID: 7265665762277905124}
+    - target: {fileID: 2750689206454579391, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
+      propertyPath: garbageCollector
+      value: 
+      objectReference: {fileID: 1834628719}
     - target: {fileID: 3790811607187880039, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.1
@@ -9632,6 +9680,10 @@ PrefabInstance:
       propertyPath: GrapplingHookGun
       value: 
       objectReference: {fileID: 7265665762277905124}
+    - target: {fileID: 8384999903482440150, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
+      propertyPath: garbageCollector
+      value: 
+      objectReference: {fileID: 1834628719}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
 --- !u!54 &7265665762277905123 stripped
