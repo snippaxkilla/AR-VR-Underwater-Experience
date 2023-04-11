@@ -21,11 +21,14 @@ public class GrapplingHook : MonoBehaviour
     [SerializeField] private float retractSpeed = 4f;
     [SerializeField] private float autoRetractAfterDelay = 3f;
     [SerializeField] private float forceMagnitude = 15f;
-    [SerializeField] private float cooldown = 0.2f;
+    [SerializeField] private float cooldown = 0.1f;
 
     [Header("Specify the buttons we want to use to shoot out hooks")] 
     [SerializeField] private OVRInput.RawButton[] leftButtons;
     [SerializeField] private OVRInput.RawButton[] rightButtons;
+
+    private bool leftButtonHeld = false;
+    private bool rightButtonHeld = false;
 
     private float leftCooldownTimer;
     private float rightCooldownTimer;
@@ -80,8 +83,8 @@ public class GrapplingHook : MonoBehaviour
     // In the hooks we are adding force that's why we need to use FixedUpdate
     private void FixedUpdate()
     {
-        ShootClaw(OVRInput.Controller.LTouch, leftButtons, clawLeft, leftRayFwd, leftInitialPosition, ref leftState, ref leftRetractOrigin, ref leftCooldownTimer, ref leftAutoRetractTimer);
-        ShootClaw(OVRInput.Controller.RTouch, rightButtons, clawRight, rightRayFwd, rightInitialPosition, ref rightState, ref rightRetractOrigin, ref rightCooldownTimer, ref rightAutoRetractTimer);
+        ShootClaw(OVRInput.Controller.LTouch, leftButtons, clawLeft, leftRayFwd, leftInitialPosition, ref leftState, ref leftRetractOrigin, ref leftCooldownTimer, ref leftAutoRetractTimer, ref leftButtonHeld);
+        ShootClaw(OVRInput.Controller.RTouch, rightButtons, clawRight, rightRayFwd, rightInitialPosition, ref rightState, ref rightRetractOrigin, ref rightCooldownTimer, ref rightAutoRetractTimer, ref rightButtonHeld);
     }
 
     // Make sure that Origin happens after shooting
@@ -103,11 +106,11 @@ public class GrapplingHook : MonoBehaviour
 
     // Add force to the claw to launch the claw forwards and keep track of it's current distance from claw to controller initial position
     private void ShootClaw(OVRInput.Controller controller, OVRInput.RawButton[] buttons, Rigidbody claw, Vector3 rayFwd, Vector3 clawInitialPosition,
-        ref ClawState state, ref Vector3 retractOrigin, ref float cooldownTimer, ref float autoRetractTimer)
+        ref ClawState state, ref Vector3 retractOrigin, ref float cooldownTimer, ref float autoRetractTimer, ref bool buttonHeld)
     {
-        var pressingButton = buttons.Any(button => OVRInput.GetDown(button, controller));
+        var pressingButton = buttons.Any(button => OVRInput.Get(button, controller));
 
-        if (pressingButton && state == ClawState.Idle && cooldownTimer <= 0f)
+        if (pressingButton && state == ClawState.Idle && cooldownTimer <= 0f && !buttonHeld)
         {
             claw.transform.position = clawInitialPosition;
             claw.isKinematic = false;
@@ -118,6 +121,12 @@ public class GrapplingHook : MonoBehaviour
             state = ClawState.Launched;
             cooldownTimer = cooldown;
             autoRetractTimer = autoRetractAfterDelay;
+            buttonHeld = true;
+        }
+
+        if (!pressingButton)
+        {
+            buttonHeld = false;
         }
 
         if (state == ClawState.Launched)
