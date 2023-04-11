@@ -13,6 +13,7 @@ public class Claw : MonoBehaviour
     private bool isHooked;
     private GameObject hookedGarbage;
 
+    // Whenever we hit any garbage we will create a fixed joint and set our state to retracting
     private void OnTriggerEnter(Collider other)
     {
         if (other.transform.parent != null && other.transform.parent.gameObject == GroupedGarbage)
@@ -62,6 +63,7 @@ public class Claw : MonoBehaviour
         }
     }
 
+    // If we are retracting and we are close enough to the origin we will destroy the fixed joint and our garbage
     private void GarbageDestroyer()
     {
         if (clawState == GrapplingHook.ClawState.Idle && isHooked)
@@ -74,6 +76,7 @@ public class Claw : MonoBehaviour
         }
     }
 
+    // FixedJoint between claw and garbage
     private FixedJoint CreateFixedJoint(GameObject claw, GameObject targetObject)
     {
         FixedJoint fixedJoint = targetObject.AddComponent<FixedJoint>();

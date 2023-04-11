@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class GrapplingHook : MonoBehaviour
 {
+
+    // We access these states from the claw script
     public enum ClawState
     {
         Idle,
