@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class GrapplingHook : MonoBehaviour
 {
-
     // We access these states from the claw script
     public enum ClawState
     {
@@ -20,12 +19,20 @@ public class GrapplingHook : MonoBehaviour
 
     [SerializeField] private float maxDistance = 2f;
     [SerializeField] private float retractSpeed = 4f;
-    [SerializeField] private float autoRetractAfterDelay = 5f;
+    [SerializeField] private float autoRetractAfterDelay = 3f;
     [SerializeField] private float forceMagnitude = 15f;
+    [SerializeField] private float cooldown = 0.2f;
 
     [Header("Specify the buttons we want to use to shoot out hooks")] 
     [SerializeField] private OVRInput.RawButton[] leftButtons;
     [SerializeField] private OVRInput.RawButton[] rightButtons;
+
+    private float leftCooldownTimer = 0f;
+    private float rightCooldownTimer = 0f;
+
+    private float leftAutoRetractTimer = 0f;
+    private float rightAutoRetractTimer = 0f;
+
 
     private Vector3 leftRayFwd => OVRInput.GetLocalControllerRotation(OVRInput.Controller.LTouch) * Vector3.forward;
     private Vector3 rightRayFwd => OVRInput.GetLocalControllerRotation(OVRInput.Controller.RTouch) * Vector3.forward;
@@ -42,8 +49,11 @@ public class GrapplingHook : MonoBehaviour
 
     private void Update()
     {
-        DistanceChecker(clawLeft, ref leftState, ref leftRetractOrigin, leftInitialPosition);
-        DistanceChecker(clawRight, ref rightState, ref rightRetractOrigin, rightInitialPosition);
+        if (leftCooldownTimer > 0f) leftCooldownTimer -= Time.deltaTime;
+        if (rightCooldownTimer > 0f) rightCooldownTimer -= Time.deltaTime;
+
+        DistanceChecker(clawLeft, ref leftState, ref leftRetractOrigin, leftInitialPosition, ref leftAutoRetractTimer);
+        DistanceChecker(clawRight, ref rightState, ref rightRetractOrigin, rightInitialPosition, ref rightAutoRetractTimer);
 
         if (leftState == ClawState.Retracting)
         {
@@ -71,8 +81,8 @@ public class GrapplingHook : MonoBehaviour
     // In the hooks we are adding force that's why we need to use FixedUpdate
     private void FixedUpdate()
     {
-        ShootClaw(OVRInput.Controller.LTouch, leftButtons, clawLeft, leftRayFwd, leftInitialPosition, ref leftState, ref leftRetractOrigin);
-        ShootClaw(OVRInput.Controller.RTouch, rightButtons, clawRight, rightRayFwd, rightInitialPosition, ref rightState, ref rightRetractOrigin);
+        ShootClaw(OVRInput.Controller.LTouch, leftButtons, clawLeft, leftRayFwd, leftInitialPosition, ref leftState, ref leftRetractOrigin, ref leftCooldownTimer, ref leftAutoRetractTimer);
+        ShootClaw(OVRInput.Controller.RTouch, rightButtons, clawRight, rightRayFwd, rightInitialPosition, ref rightState, ref rightRetractOrigin, ref rightCooldownTimer, ref rightAutoRetractTimer);
     }
 
     // Make sure that Origin happens after shooting
@@ -96,11 +106,11 @@ public class GrapplingHook : MonoBehaviour
 
     // Add force to the claw to launch the claw forwards and keep track of it's current distance from claw to controller initial position
     private void ShootClaw(OVRInput.Controller controller, OVRInput.RawButton[] buttons, Rigidbody claw, Vector3 rayFwd, Vector3 clawInitialPosition,
-        ref ClawState state, ref Vector3 retractOrigin)
+        ref ClawState state, ref Vector3 retractOrigin, ref float cooldownTimer, ref float autoRetractTimer)
     {
         var pressingButton = buttons.Any(button => OVRInput.GetDown(button, controller));
 
-        if (pressingButton && state == ClawState.Idle)
+        if (pressingButton && state == ClawState.Idle && cooldownTimer <= 0f)
         {
             claw.transform.position = clawInitialPosition;
             claw.isKinematic = false;
@@ -109,6 +119,13 @@ public class GrapplingHook : MonoBehaviour
             claw.AddForce(rayFwd * forceMagnitude, ForceMode.Impulse);
 
             state = ClawState.Launched;
+            cooldownTimer = cooldown;
+            autoRetractTimer = autoRetractAfterDelay;
+        }
+
+        if (state == ClawState.Launched)
+        {
+            autoRetractTimer -= Time.fixedDeltaTime;
         }
 
         else if (pressingButton && state == ClawState.Launched)
@@ -131,9 +148,13 @@ public class GrapplingHook : MonoBehaviour
 
     // Check if the hooks have gone beyond the maximum distance and retract them separately if necessary
     private void DistanceChecker(Rigidbody claw, ref ClawState state, ref Vector3 retractOrigin,
-        Vector3 clawInitialPosition)
+        Vector3 clawInitialPosition, ref float autoRetractTimer)
     {
         if (Vector3.Distance(clawInitialPosition, claw.transform.position - claw.transform.forward * clawOffset) > maxDistance && state == ClawState.Launched)
+        {
+            RetractClaw(claw, ref state, ref retractOrigin);
+        }
+        if (autoRetractTimer <= 0f && state == ClawState.Launched)
         {
             RetractClaw(claw, ref state, ref retractOrigin);
         }
