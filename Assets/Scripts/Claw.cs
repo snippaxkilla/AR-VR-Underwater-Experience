@@ -13,6 +13,21 @@ public class Claw : MonoBehaviour
     private bool isHooked;
     private GameObject hookedGarbage;
 
+    private GameObject clawLeft;
+    private GameObject clawRight;
+
+    private void Start()
+    {
+        if (transform.name == "ClawLeft")
+        {
+            clawLeft = gameObject;
+        }
+
+        if (transform.name == "ClawRight")
+        {
+            clawRight = gameObject;
+        }
+    }
     // Whenever we hit any garbage we will create a fixed joint and set our state to retracting
     private void OnTriggerEnter(Collider other)
     {
@@ -25,12 +40,12 @@ public class Claw : MonoBehaviour
 
             FixedJoint fixedJoint = CreateFixedJoint(gameObject, hookedGarbage);
 
-            if (transform.name == "ClawLeft")
+            if (clawLeft)
             {
                 GrapplingHookGun.SetLeftState(GrapplingHook.ClawState.Retracting);
             }
 
-            if (transform.name == "ClawRight")
+            if (clawRight)
             {
                 GrapplingHookGun.SetRightState(GrapplingHook.ClawState.Retracting);
             }
@@ -39,11 +54,11 @@ public class Claw : MonoBehaviour
 
     private void Update()
     {
-        if (transform.name == "ClawLeft")
+        if (clawLeft)
         {
             clawState = GrapplingHookGun.GetLeftState();
         }
-        if (transform.name == "ClawRight")
+        if (clawRight)
         {
             clawState = GrapplingHookGun.GetRightState();
         }
@@ -52,11 +67,11 @@ public class Claw : MonoBehaviour
 
         if (clawState == GrapplingHook.ClawState.Retracting)
         {
-            if (transform.name == "ClawLeft")
+            if (clawLeft)
             {
                 GrapplingHookGun.RetractClaw(GrapplingHookGun.GetLeftRigidbody(), ref clawState, ref leftRetractOrigin);
             }
-            if (transform.name == "ClawRight")
+            if (clawRight)
             {
                 GrapplingHookGun.RetractClaw(GrapplingHookGun.GetRightRigidbody(), ref clawState, ref rightRetractOrigin);
             }
