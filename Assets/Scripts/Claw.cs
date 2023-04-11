@@ -54,8 +54,8 @@ public class Claw : MonoBehaviour
 
     private FixedJoint CreateFixedJoint(GameObject claw, GameObject targetObject)
     {
-        FixedJoint fixedJoint = claw.AddComponent<FixedJoint>();
-        fixedJoint.connectedBody = targetObject.GetComponent<Rigidbody>();
+        FixedJoint fixedJoint = targetObject.AddComponent<FixedJoint>();
+        fixedJoint.connectedBody = claw.GetComponent<Rigidbody>();
         return fixedJoint;
     }
 }
