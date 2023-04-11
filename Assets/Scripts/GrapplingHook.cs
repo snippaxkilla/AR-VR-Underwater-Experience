@@ -27,12 +27,11 @@ public class GrapplingHook : MonoBehaviour
     [SerializeField] private OVRInput.RawButton[] leftButtons;
     [SerializeField] private OVRInput.RawButton[] rightButtons;
 
-    private float leftCooldownTimer = 0f;
-    private float rightCooldownTimer = 0f;
+    private float leftCooldownTimer;
+    private float rightCooldownTimer;
 
-    private float leftAutoRetractTimer = 0f;
-    private float rightAutoRetractTimer = 0f;
-
+    private float leftAutoRetractTimer;
+    private float rightAutoRetractTimer;
 
     private Vector3 leftRayFwd => OVRInput.GetLocalControllerRotation(OVRInput.Controller.LTouch) * Vector3.forward;
     private Vector3 rightRayFwd => OVRInput.GetLocalControllerRotation(OVRInput.Controller.RTouch) * Vector3.forward;
@@ -97,11 +96,9 @@ public class GrapplingHook : MonoBehaviour
     {
         var controllerRotation = OVRInput.GetLocalControllerRotation(controller);
 
-        if (state == ClawState.Idle)
-        {
-            claw.position = clawInitialPosition;
-            claw.rotation = controllerRotation;
-        }
+        if (state != ClawState.Idle) return;
+        claw.position = clawInitialPosition;
+        claw.rotation = controllerRotation;
     }
 
     // Add force to the claw to launch the claw forwards and keep track of it's current distance from claw to controller initial position
