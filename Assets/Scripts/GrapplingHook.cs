@@ -45,12 +45,9 @@ public class GrapplingHook : MonoBehaviour
 
         if (leftState == ClawState.Retracting)
         {
-            var distanceLeft = Vector3.Distance(clawLeft.transform.position, leftInitialPosition);
-            var timeLeft = distanceLeft / retractSpeed;
-
             clawLeft.transform.position = Vector3.MoveTowards(clawLeft.transform.position, leftInitialPosition, Time.deltaTime * retractSpeed);
 
-            if (distanceLeft <= 0.01f)
+            if (Vector3.Distance(clawLeft.transform.position, leftInitialPosition) <= 0.01f)
             {
                 leftState = ClawState.Idle;
                 clawLeft.isKinematic = true;
@@ -59,12 +56,9 @@ public class GrapplingHook : MonoBehaviour
 
         if (rightState == ClawState.Retracting)
         {
-            var distanceRight = Vector3.Distance(clawRight.transform.position, rightInitialPosition);
-            var timeRight = distanceRight / retractSpeed;
-
             clawRight.transform.position = Vector3.MoveTowards(clawRight.transform.position, rightInitialPosition, Time.deltaTime * retractSpeed);
 
-            if (distanceRight <= 0.01f)
+            if (Vector3.Distance(clawRight.transform.position, rightInitialPosition) <= 0.01f)
             {
                 rightState = ClawState.Idle;
                 clawRight.isKinematic = true;

@@ -4,10 +4,8 @@ public class Claw : MonoBehaviour
 {
     [SerializeField] private GameObject GroupedGarbage;
     [SerializeField] private GrapplingHook GrapplingHookGun;
-
     [SerializeField] private GarbageCollector garbageCollector;
 
-    // Ref values we need for retracting the claw
     private Vector3 leftRetractOrigin;
     private Vector3 rightRetractOrigin;
     private GrapplingHook.ClawState clawState;
@@ -22,8 +20,37 @@ public class Claw : MonoBehaviour
             hookedGarbage = other.gameObject;
             isHooked = true;
 
+            GetComponent<Rigidbody>().isKinematic = true;
+
             FixedJoint fixedJoint = CreateFixedJoint(gameObject, hookedGarbage);
 
+            if (transform.name == "ClawLeft")
+            {
+                GrapplingHookGun.SetLeftState(GrapplingHook.ClawState.Retracting);
+            }
+
+            if (transform.name == "ClawRight")
+            {
+                GrapplingHookGun.SetRightState(GrapplingHook.ClawState.Retracting);
+            }
+        }
+    }
+
+    private void Update()
+    {
+        if (transform.name == "ClawLeft")
+        {
+            clawState = GrapplingHookGun.GetLeftState();
+        }
+        if (transform.name == "ClawRight")
+        {
+            clawState = GrapplingHookGun.GetRightState();
+        }
+
+        GarbageDestroyer();
+
+        if (clawState == GrapplingHook.ClawState.Retracting)
+        {
             if (transform.name == "ClawLeft")
             {
                 GrapplingHookGun.RetractClaw(GrapplingHookGun.GetLeftRigidbody(), ref clawState, ref leftRetractOrigin);
@@ -35,18 +62,13 @@ public class Claw : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        GarbageDestroyer();
-    }
-
-    // Destroy the garbage when the claw is retracted so the claw state is idle
     private void GarbageDestroyer()
     {
         if (clawState == GrapplingHook.ClawState.Idle && isHooked)
         {
             Destroy(GetComponent<FixedJoint>());
             Destroy(hookedGarbage);
+
             isHooked = false;
             garbageCollector.IncrementGarbageCount();
         }
