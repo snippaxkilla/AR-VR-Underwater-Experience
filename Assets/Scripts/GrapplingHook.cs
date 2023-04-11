@@ -7,7 +7,7 @@ public class GrapplingHook : MonoBehaviour
     public enum ClawState
     {
         Idle,
-        Launched,
+        Launching,
         Retracting
     }
 
@@ -118,7 +118,7 @@ public class GrapplingHook : MonoBehaviour
 
             claw.AddForce(rayFwd * forceMagnitude, ForceMode.Impulse);
 
-            state = ClawState.Launched;
+            state = ClawState.Launching;
             cooldownTimer = cooldown;
             autoRetractTimer = autoRetractAfterDelay;
             buttonHeld = true;
@@ -129,12 +129,12 @@ public class GrapplingHook : MonoBehaviour
             buttonHeld = false;
         }
 
-        if (state == ClawState.Launched)
+        if (state == ClawState.Launching)
         {
             autoRetractTimer -= Time.fixedDeltaTime;
         }
 
-        else if (pressingButton && state == ClawState.Launched)
+        else if (pressingButton && state == ClawState.Launching)
         {
             RetractClaw(claw, ref state, ref retractOrigin);
         }
@@ -156,11 +156,11 @@ public class GrapplingHook : MonoBehaviour
     private void DistanceChecker(Rigidbody claw, ref ClawState state, ref Vector3 retractOrigin,
         Vector3 clawInitialPosition, ref float autoRetractTimer)
     {
-        if (Vector3.Distance(clawInitialPosition, claw.transform.position - claw.transform.forward * clawOffset) > maxDistance && state == ClawState.Launched)
+        if (Vector3.Distance(clawInitialPosition, claw.transform.position - claw.transform.forward * clawOffset) > maxDistance && state == ClawState.Launching)
         {
             RetractClaw(claw, ref state, ref retractOrigin);
         }
-        if (autoRetractTimer <= 0f && state == ClawState.Launched)
+        if (autoRetractTimer <= 0f && state == ClawState.Launching)
         {
             RetractClaw(claw, ref state, ref retractOrigin);
         }

@@ -28,29 +28,43 @@ public class Claw : MonoBehaviour
             clawRight = gameObject;
         }
     }
+
     // Whenever we hit any garbage we will create a fixed joint and set our state to retracting
     private void OnTriggerEnter(Collider other)
     {
         if (other.transform.parent != null && other.transform.parent.gameObject == GroupedGarbage)
         {
-            hookedGarbage = other.gameObject;
-            isHooked = true;
-
-            GetComponent<Rigidbody>().isKinematic = true;
-
-            FixedJoint fixedJoint = CreateFixedJoint(gameObject, hookedGarbage);
-
             if (clawLeft)
             {
-                GrapplingHookGun.SetLeftState(GrapplingHook.ClawState.Retracting);
+                clawState = GrapplingHookGun.GetLeftState();
             }
-
             if (clawRight)
             {
-                GrapplingHookGun.SetRightState(GrapplingHook.ClawState.Retracting);
+                clawState = GrapplingHookGun.GetRightState();
+            }
+
+            if (clawState == GrapplingHook.ClawState.Launching)
+            {
+                hookedGarbage = other.gameObject;
+                isHooked = true;
+
+                GetComponent<Rigidbody>().isKinematic = true;
+
+                FixedJoint fixedJoint = CreateFixedJoint(gameObject, hookedGarbage);
+
+                if (clawLeft)
+                {
+                    GrapplingHookGun.SetLeftState(GrapplingHook.ClawState.Retracting);
+                }
+
+                if (clawRight)
+                {
+                    GrapplingHookGun.SetRightState(GrapplingHook.ClawState.Retracting);
+                }
             }
         }
     }
+
 
     private void Update()
     {
