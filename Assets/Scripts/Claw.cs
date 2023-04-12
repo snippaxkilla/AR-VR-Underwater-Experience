@@ -9,7 +9,9 @@ public class Claw : MonoBehaviour
 
     private Vector3 leftRetractOrigin;
     private Vector3 rightRetractOrigin;
-    private GrapplingHook.ClawState clawState;
+
+    private GrapplingHook.ClawState leftState;
+    private GrapplingHook.ClawState rightState;
 
     private bool isLeftHooked;
     private bool isRightHooked;
@@ -35,85 +37,62 @@ public class Claw : MonoBehaviour
     {
         if (other.transform.parent != null && other.transform.parent.gameObject == GroupedGarbage)
         {
-            if (clawLeft)
-            {
-                clawState = GrapplingHookGun.GetLeftState();
-            }
-            if (clawRight)
-            {
-                clawState = GrapplingHookGun.GetRightState();
-            }
+            hookedGarbage = other.gameObject;
 
-            if (clawState == GrapplingHook.ClawState.Launching)
-            {
-                hookedGarbage = other.gameObject;
-
+            if (clawLeft && leftState == GrapplingHook.ClawState.Launching)
+            { 
+                isLeftHooked = true;
+                GrapplingHookGun.SetLeftState(GrapplingHook.ClawState.Retracting);
                 GetComponent<Rigidbody>().isKinematic = true;
-
                 FixedJoint fixedJoint = CreateFixedJoint(gameObject, hookedGarbage);
+            }
 
-                if (clawLeft)
-                {
-                    isLeftHooked = true;
-                    GrapplingHookGun.SetLeftState(GrapplingHook.ClawState.Retracting);
-                }
-
-                if (clawRight)
-                {
-                    isRightHooked = true;
-                    GrapplingHookGun.SetRightState(GrapplingHook.ClawState.Retracting);
-                }
+            if (clawRight && rightState == GrapplingHook.ClawState.Launching)
+            { 
+                isRightHooked = true; 
+                GrapplingHookGun.SetRightState(GrapplingHook.ClawState.Retracting);
+                GetComponent<Rigidbody>().isKinematic = true;
+                FixedJoint fixedJoint = CreateFixedJoint(gameObject, hookedGarbage);
             }
         }
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        if (clawLeft)
-        {
-            clawState = GrapplingHookGun.GetLeftState();
-        }
-        if (clawRight)
-        {
-            clawState = GrapplingHookGun.GetRightState();
-        }
-
+        leftState = GrapplingHookGun.GetLeftState();
+        rightState = GrapplingHookGun.GetRightState();
+        
         GarbageDestroyer();
 
-        if (clawState == GrapplingHook.ClawState.Retracting)
+        if (clawLeft && leftState == GrapplingHook.ClawState.Retracting)
         {
-            if (clawLeft)
-            {
-                GrapplingHookGun.RetractClaw(GrapplingHookGun.GetLeftRigidbody(), ref clawState, ref leftRetractOrigin);
-            }
-            if (clawRight)
-            {
-                GrapplingHookGun.RetractClaw(GrapplingHookGun.GetRightRigidbody(), ref clawState, ref rightRetractOrigin);
-            }
+            GrapplingHookGun.RetractClaw(GrapplingHookGun.GetLeftRigidbody(), ref leftState, ref leftRetractOrigin);
+        }
+
+        if (clawRight && rightState == GrapplingHook.ClawState.Retracting)
+        {
+            GrapplingHookGun.RetractClaw(GrapplingHookGun.GetRightRigidbody(), ref rightState, ref rightRetractOrigin);
         }
     }
 
     private void GarbageDestroyer()
     {
-        if (clawState == GrapplingHook.ClawState.Idle)
+        if (clawLeft && isLeftHooked && leftState == GrapplingHook.ClawState.Idle)
         {
-            if (clawLeft && isLeftHooked)
-            {
-                Destroy(GetComponent<FixedJoint>());
-                Destroy(hookedGarbage);
+            Destroy(GetComponent<FixedJoint>());
+            Destroy(hookedGarbage);
 
-                isLeftHooked = false;
-                garbageCollector.IncrementGarbageCount();
-            }
+            isLeftHooked = false;
+            garbageCollector.IncrementGarbageCount();
+        }
 
-            if (clawRight && isRightHooked)
-            {
-                Destroy(GetComponent<FixedJoint>());
-                Destroy(hookedGarbage);
+        if (clawRight && isRightHooked && rightState == GrapplingHook.ClawState.Idle)
+        { 
+            Destroy(GetComponent<FixedJoint>());
+            Destroy(hookedGarbage);
 
-                isRightHooked = false;
-                garbageCollector.IncrementGarbageCount();
-            }
+            isRightHooked = false;
+            garbageCollector.IncrementGarbageCount();
         }
     }
 
