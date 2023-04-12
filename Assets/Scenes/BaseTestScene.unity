@@ -1055,10 +1055,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.5000001
+  m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &189481238
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2786,10 +2786,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.5000001
+  m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1070342101
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2973,10 +2973,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.5000001
+  m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1143511858
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3169,10 +3169,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.5000001
+  m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1231899351
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3267,10 +3267,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.5000001
+  m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1267825007
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3365,10 +3365,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.5000001
+  m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1271995167
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3876,10 +3876,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.5000001
+  m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1531714723
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3974,10 +3974,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.5000001
+  m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1539114270
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -9040,10 +9040,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.5000001
+  m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1669066044
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -9165,10 +9165,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.5000001
+  m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1817724312
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -9460,10 +9460,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.5000001
+  m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1967860910
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -10067,10 +10067,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.5000001
+  m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &2118341882
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -10415,7 +10415,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 249790294128899707, guid: 3d5396f867dd61b42897e6dca3a6c943, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5159054989330168736, guid: 3d5396f867dd61b42897e6dca3a6c943, type: 3}
       propertyPath: m_Positions.Array.size
