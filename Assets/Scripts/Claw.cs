@@ -3,8 +3,9 @@ using UnityEngine;
 public class Claw : MonoBehaviour
 {
     [SerializeField] private GameObject GroupedGarbage;
-    [SerializeField] private GrapplingHook GrapplingHookGun;
-    [SerializeField] private GarbageCollector garbageCollector;
+
+    private GrapplingHook GrapplingHookGun;
+    private GarbageCollector garbageCollector;
 
     private Vector3 leftRetractOrigin;
     private Vector3 rightRetractOrigin;

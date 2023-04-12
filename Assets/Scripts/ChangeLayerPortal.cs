@@ -14,6 +14,7 @@ public class ChangeLayerPortal : MonoBehaviour
 
     private int newLayer;
     private int oldLayer;
+
     private Transform targetObjectTransform;
     private Vector3 colliderNormal = Vector3.forward;
 
@@ -60,6 +61,7 @@ public class ChangeLayerPortal : MonoBehaviour
         }
     }
 
+    // Change all children in the target object to the new layer
     private static void ChangeChildrenLayer(Transform parent, int newLayer)
     {
         parent.gameObject.layer = newLayer;

@@ -12,7 +12,7 @@ public class PortalManager : MonoBehaviour
 
     public void ClosePortalAndOtherWorld()
     {
-        // Disable the portal
+        // Disable the portal and all objects in the overworld
         gameObject.SetActive(false);
 
         GameObject[] otherWorldObjects = GameObject.FindGameObjectsWithTag("OtherWorldObject");
