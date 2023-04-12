@@ -9378,25 +9378,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1839039323}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &1904219585 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1213269600831803700, guid: 61b469ffb3005554f8631a46a0f0c28a, type: 3}
-  m_PrefabInstance: {fileID: 829178643}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1904219590
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1904219585}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45b0c2001795fbf44b77ada96c098fbf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetObject: {fileID: 2127731978}
-  collisionWithThisTag: MainCamera
 --- !u!1 &1948459563 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
@@ -10238,11 +10219,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2125103826}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &2127731978 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8880798243300816678, guid: 61b469ffb3005554f8631a46a0f0c28a, type: 3}
-  m_PrefabInstance: {fileID: 829178643}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &239422734968454960
 PrefabInstance:
   m_ObjectHideFlags: 0
