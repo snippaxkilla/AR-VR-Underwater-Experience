@@ -141,7 +141,7 @@ GameObject:
   - component: {fileID: 8013016026686888416}
   m_Layer: 9
   m_Name: OccludingVolume
-  m_TagString: Untagged
+  m_TagString: OtherWorldObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
