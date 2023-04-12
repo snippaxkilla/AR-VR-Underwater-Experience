@@ -20,5 +20,12 @@ public class PortalManager : MonoBehaviour
         {
             otherWorldObject.SetActive(false);
         }
+
+        TurnOffPassthrough();
+    }
+
+    private void TurnOffPassthrough()
+    {
+        OVRManager.instance.isInsightPassthroughEnabled = false;
     }
 }
