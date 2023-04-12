@@ -39,9 +39,12 @@ public class ChangeLayerPortal : MonoBehaviour
         {
             // If the portal type is OneWay, set the new layer to default so we see the other world
             case PortalManager.PortalType.OneWay:
-                newLayerToSet = newLayer;
-                ChangeChildrenLayer(targetObjectTransform, newLayerToSet);
-                portalManager.ClosePortalAndOtherWorld();
+                if (Vector3.Dot(direction.normalized, colliderNormal) > 0)
+                {
+                    newLayerToSet = newLayer;
+                    ChangeChildrenLayer(targetObjectTransform, newLayerToSet);
+                    portalManager.ClosePortalAndOtherWorld();
+                }
                 break;
 
             // If the portal type is TwoWay, set the new layer to newLayer if the direction is the same as the normal of the portal
