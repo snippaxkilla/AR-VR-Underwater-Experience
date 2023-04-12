@@ -39,7 +39,7 @@ public class Claw : MonoBehaviour
         {
             hookedGarbage = other.gameObject;
 
-            if (clawLeft && leftState == GrapplingHook.ClawState.Launching)
+            if (clawLeft && leftState == GrapplingHook.ClawState.Launching && !isLeftHooked)
             { 
                 isLeftHooked = true;
                 GrapplingHookGun.SetLeftState(GrapplingHook.ClawState.Retracting);
@@ -47,7 +47,7 @@ public class Claw : MonoBehaviour
                 FixedJoint fixedJoint = CreateFixedJoint(gameObject, hookedGarbage);
             }
 
-            if (clawRight && rightState == GrapplingHook.ClawState.Launching)
+            if (clawRight && rightState == GrapplingHook.ClawState.Launching && !isRightHooked)
             { 
                 isRightHooked = true; 
                 GrapplingHookGun.SetRightState(GrapplingHook.ClawState.Retracting);
