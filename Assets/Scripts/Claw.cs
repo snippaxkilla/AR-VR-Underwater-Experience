@@ -4,8 +4,8 @@ public class Claw : MonoBehaviour
 {
     [SerializeField] private GameObject GroupedGarbage;
 
-    private GrapplingHook GrapplingHookGun;
-    private GarbageCollector garbageCollector;
+    [SerializeField] private GrapplingHook GrapplingHookGun;
+    [SerializeField] private GarbageCollector garbageCollector;
 
     private Vector3 leftRetractOrigin;
     private Vector3 rightRetractOrigin;
