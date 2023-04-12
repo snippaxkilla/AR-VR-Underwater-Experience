@@ -1598,6 +1598,7 @@ GameObject:
   - component: {fileID: 4268295084943242974}
   - component: {fileID: 7356530658785200338}
   - component: {fileID: 6883419800680929910}
+  - component: {fileID: 1859377054520818508}
   m_Layer: 0
   m_Name: PortalCollider
   m_TagString: Untagged
@@ -1671,6 +1672,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetObject: {fileID: 8880798243300816678}
   collisionWithThisTag: MainCamera
+--- !u!114 &1859377054520818508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1213269600831803700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4de3dad55600cf4f84712c4136ea9a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  portalType: 0
 --- !u!1 &1218974605974322495
 GameObject:
   m_ObjectHideFlags: 0

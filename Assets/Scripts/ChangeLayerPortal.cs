@@ -10,6 +10,8 @@ public class ChangeLayerPortal : MonoBehaviour
     [SerializeField] private GameObject targetObject;
     [SerializeField] private string collisionWithThisTag = "MainCamera";
 
+    private PortalManager portalManager;
+
     private int newLayer;
     private int oldLayer;
     private Transform targetObjectTransform;
@@ -17,6 +19,8 @@ public class ChangeLayerPortal : MonoBehaviour
 
     private void Start()
     {
+        portalManager = GetComponent<PortalManager>();
+
         newLayer = LayerMask.NameToLayer(newLayerName);
         oldLayer = LayerMask.NameToLayer(oldLayerName);
         targetObjectTransform = targetObject.transform;
@@ -26,14 +30,33 @@ public class ChangeLayerPortal : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag(collisionWithThisTag)) return;
+
         var direction = other.transform.position - transform.position;
-        if (Vector3.Dot(direction.normalized, colliderNormal) > 0)
+        int newLayerToSet;
+
+        switch (portalManager.portalType)
         {
-            ChangeChildrenLayer(targetObjectTransform, newLayer);
-        }
-        else
-        {
-            ChangeChildrenLayer(targetObjectTransform, oldLayer);
+            // If the portal type is OneWay, set the new layer to default so we see the other world
+            case PortalManager.PortalType.OneWay:
+                newLayerToSet = newLayer;
+                ChangeChildrenLayer(targetObjectTransform, newLayerToSet);
+                portalManager.ClosePortalAndOtherWorld();
+                break;
+
+            // If the portal type is TwoWay, set the new layer to newLayer if the direction is the same as the normal of the portal
+            case PortalManager.PortalType.TwoWay:
+            {
+                if (Vector3.Dot(direction.normalized, colliderNormal) > 0)
+                {
+                    newLayerToSet = newLayer;
+                }
+                else
+                {
+                    newLayerToSet = oldLayer;
+                }
+                ChangeChildrenLayer(targetObjectTransform, newLayerToSet);
+                break;
+            }
         }
     }
 
