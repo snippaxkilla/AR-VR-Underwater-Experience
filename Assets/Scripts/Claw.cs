@@ -10,7 +10,8 @@ public class Claw : MonoBehaviour
     private Vector3 rightRetractOrigin;
     private GrapplingHook.ClawState clawState;
 
-    private bool isHooked;
+    private bool isLeftHooked;
+    private bool isRightHooked;
     private GameObject hookedGarbage;
 
     private GameObject clawLeft;
@@ -29,7 +30,6 @@ public class Claw : MonoBehaviour
         }
     }
 
-    // Whenever we hit any garbage we will create a fixed joint and set our state to retracting
     private void OnTriggerEnter(Collider other)
     {
         if (other.transform.parent != null && other.transform.parent.gameObject == GroupedGarbage)
@@ -46,7 +46,6 @@ public class Claw : MonoBehaviour
             if (clawState == GrapplingHook.ClawState.Launching)
             {
                 hookedGarbage = other.gameObject;
-                isHooked = true;
 
                 GetComponent<Rigidbody>().isKinematic = true;
 
@@ -54,17 +53,18 @@ public class Claw : MonoBehaviour
 
                 if (clawLeft)
                 {
+                    isLeftHooked = true;
                     GrapplingHookGun.SetLeftState(GrapplingHook.ClawState.Retracting);
                 }
 
                 if (clawRight)
                 {
+                    isRightHooked = true;
                     GrapplingHookGun.SetRightState(GrapplingHook.ClawState.Retracting);
                 }
             }
         }
     }
-
 
     private void Update()
     {
@@ -92,20 +92,30 @@ public class Claw : MonoBehaviour
         }
     }
 
-    // If we are retracting and we are close enough to the origin we will destroy the fixed joint and our garbage
     private void GarbageDestroyer()
     {
-        if (clawState == GrapplingHook.ClawState.Idle && isHooked)
+        if (clawState == GrapplingHook.ClawState.Idle)
         {
-            Destroy(GetComponent<FixedJoint>());
-            Destroy(hookedGarbage);
+            if (clawLeft && isLeftHooked)
+            {
+                Destroy(GetComponent<FixedJoint>());
+                Destroy(hookedGarbage);
 
-            isHooked = false;
-            garbageCollector.IncrementGarbageCount();
+                isLeftHooked = false;
+                garbageCollector.IncrementGarbageCount();
+            }
+
+            if (clawRight && isRightHooked)
+            {
+                Destroy(GetComponent<FixedJoint>());
+                Destroy(hookedGarbage);
+
+                isRightHooked = false;
+                garbageCollector.IncrementGarbageCount();
+            }
         }
     }
 
-    // FixedJoint between claw and garbage
     private FixedJoint CreateFixedJoint(GameObject claw, GameObject targetObject)
     {
         FixedJoint fixedJoint = targetObject.AddComponent<FixedJoint>();
