@@ -2411,7 +2411,7 @@ GameObject:
   - component: {fileID: 937062273}
   m_Layer: 0
   m_Name: GroupedGarbage
-  m_TagString: Untagged
+  m_TagString: OtherWorldObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10339,7 +10339,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 249790294128899652, guid: 3d5396f867dd61b42897e6dca3a6c943, type: 3}
       propertyPath: isAnchored
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 249790294128899652, guid: 3d5396f867dd61b42897e6dca3a6c943, type: 3}
       propertyPath: maxObjects
@@ -10415,7 +10415,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 249790294128899707, guid: 3d5396f867dd61b42897e6dca3a6c943, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5159054989330168736, guid: 3d5396f867dd61b42897e6dca3a6c943, type: 3}
       propertyPath: m_Positions.Array.size

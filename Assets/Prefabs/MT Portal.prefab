@@ -9666,6 +9666,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RenderingPlane
       objectReference: {fileID: 0}
+    - target: {fileID: 6581584683795257372, guid: 5876ddf9711e10d45a9ec2a5d7649de3, type: 3}
+      propertyPath: m_TagString
+      value: OtherWorldObject
+      objectReference: {fileID: 0}
     - target: {fileID: 9119204145953709766, guid: 5876ddf9711e10d45a9ec2a5d7649de3, type: 3}
       propertyPath: targetObject
       value: 
