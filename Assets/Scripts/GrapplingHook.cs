@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Linq;
 using UnityEngine;
 
@@ -60,9 +61,11 @@ public class GrapplingHook : MonoBehaviour
         if (leftState == ClawState.Retracting)
         {
             clawLeft.transform.position = Vector3.MoveTowards(clawLeft.transform.position, leftInitialPosition, Time.deltaTime * retractSpeed);
+            OVRInput.SetControllerVibration(1f, 0.1f, OVRInput.Controller.LTouch);
 
             if (Vector3.Distance(clawLeft.transform.position, leftInitialPosition) <= 0.01f)
             {
+                OVRInput.SetControllerVibration(0, 0, OVRInput.Controller.LTouch);
                 leftState = ClawState.Idle;
                 clawLeft.isKinematic = true;
             }
@@ -71,9 +74,11 @@ public class GrapplingHook : MonoBehaviour
         if (rightState == ClawState.Retracting)
         {
             clawRight.transform.position = Vector3.MoveTowards(clawRight.transform.position, rightInitialPosition, Time.deltaTime * retractSpeed);
+            OVRInput.SetControllerVibration(1f, 0.1f, OVRInput.Controller.RTouch);
 
             if (Vector3.Distance(clawRight.transform.position, rightInitialPosition) <= 0.01f)
             {
+                OVRInput.SetControllerVibration(0, 0, OVRInput.Controller.RTouch);
                 rightState = ClawState.Idle;
                 clawRight.isKinematic = true;
             }
@@ -121,6 +126,9 @@ public class GrapplingHook : MonoBehaviour
             state = ClawState.Launching;
             cooldownTimer = cooldown;
             autoRetractTimer = autoRetractAfterDelay;
+
+            OVRInput.SetControllerVibration(1f, 1f, controller);
+
             buttonHeld = true;
         }
 

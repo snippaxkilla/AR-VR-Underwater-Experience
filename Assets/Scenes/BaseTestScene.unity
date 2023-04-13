@@ -1807,11 +1807,6 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
---- !u!54 &811309700 stripped
-Rigidbody:
-  m_CorrespondingSourceObject: {fileID: 6906662718765571972, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
-  m_PrefabInstance: {fileID: 7265665762277905122}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &829178643
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10415,7 +10410,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 249790294128899707, guid: 3d5396f867dd61b42897e6dca3a6c943, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5159054989330168736, guid: 3d5396f867dd61b42897e6dca3a6c943, type: 3}
       propertyPath: m_Positions.Array.size
@@ -10676,138 +10671,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1695045799325819976, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1695045799325819976, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1695045799325819976, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1698912239411195153, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
-      propertyPath: m_UseGravity
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1698912239411195153, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
-      propertyPath: m_Constraints
-      value: 112
-      objectReference: {fileID: 0}
-    - target: {fileID: 1698912239411195153, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
-      propertyPath: m_IsKinematic
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2750689206454579391, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
-      propertyPath: Player
-      value: 
-      objectReference: {fileID: 1485917842}
-    - target: {fileID: 2750689206454579391, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
-      propertyPath: clawLeft
-      value: 
-      objectReference: {fileID: 7265665762277905123}
-    - target: {fileID: 2750689206454579391, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
-      propertyPath: clawRight
-      value: 
-      objectReference: {fileID: 811309700}
     - target: {fileID: 2750689206454579391, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
       propertyPath: GroupedGarbage
       value: 
       objectReference: {fileID: 937062272}
     - target: {fileID: 2750689206454579391, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
-      propertyPath: GrapplingHookGun
-      value: 
-      objectReference: {fileID: 7265665762277905124}
-    - target: {fileID: 2750689206454579391, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
       propertyPath: garbageCollector
       value: 
       objectReference: {fileID: 1834628719}
-    - target: {fileID: 3790811607187880039, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3790811607187880039, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3790811607187880039, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6906662718765571972, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
-      propertyPath: m_UseGravity
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6906662718765571972, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
-      propertyPath: m_Constraints
-      value: 112
-      objectReference: {fileID: 0}
-    - target: {fileID: 6906662718765571972, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
-      propertyPath: m_IsKinematic
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7265665762759749328, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
-      propertyPath: clawLeft
-      value: 
-      objectReference: {fileID: 7265665762277905123}
-    - target: {fileID: 7265665762759749328, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
-      propertyPath: cooldown
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7265665762759749328, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
-      propertyPath: clawRight
-      value: 
-      objectReference: {fileID: 811309700}
-    - target: {fileID: 7265665762759749328, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
-      propertyPath: pullSpeed
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7265665762759749328, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
-      propertyPath: clawOffset
-      value: 0.15
-      objectReference: {fileID: 0}
-    - target: {fileID: 7265665762759749328, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
-      propertyPath: rbClawLeft
-      value: 
-      objectReference: {fileID: 811309700}
-    - target: {fileID: 7265665762759749328, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
-      propertyPath: maxDistance
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7265665762759749328, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
-      propertyPath: rbClawRight
-      value: 
-      objectReference: {fileID: 811309700}
-    - target: {fileID: 7265665762759749328, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
-      propertyPath: retractTime
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7265665762759749328, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
-      propertyPath: clawOffset.x
-      value: 0.12
-      objectReference: {fileID: 0}
-    - target: {fileID: 7265665762759749328, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
-      propertyPath: clawOffset.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7265665762759749328, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
-      propertyPath: retractSpeed
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 7265665762759749328, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
-      propertyPath: autoRetractAfterDelay
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7265665762759749328, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
-      propertyPath: leftButtons.Array.data[0]
-      value: 536870912
-      objectReference: {fileID: 0}
-    - target: {fileID: 7265665762759749328, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
-      propertyPath: rightButtons.Array.data[0]
-      value: 134217728
-      objectReference: {fileID: 0}
     - target: {fileID: 7265665762759749329, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
       propertyPath: m_RootOrder
       value: 11
@@ -10856,52 +10727,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: GrapplingHookGun
       objectReference: {fileID: 0}
-    - target: {fileID: 7265665762759749331, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8384999903482440150, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
-      propertyPath: Player
-      value: 
-      objectReference: {fileID: 1485917842}
-    - target: {fileID: 8384999903482440150, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
-      propertyPath: clawLeft
-      value: 
-      objectReference: {fileID: 7265665762277905123}
-    - target: {fileID: 8384999903482440150, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
-      propertyPath: clawRight
-      value: 
-      objectReference: {fileID: 811309700}
     - target: {fileID: 8384999903482440150, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
       propertyPath: GroupedGarbage
       value: 
       objectReference: {fileID: 937062272}
-    - target: {fileID: 8384999903482440150, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
-      propertyPath: GrapplingHookGun
-      value: 
-      objectReference: {fileID: 7265665762277905124}
     - target: {fileID: 8384999903482440150, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
       propertyPath: garbageCollector
       value: 
       objectReference: {fileID: 1834628719}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
---- !u!54 &7265665762277905123 stripped
-Rigidbody:
-  m_CorrespondingSourceObject: {fileID: 1698912239411195153, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
-  m_PrefabInstance: {fileID: 7265665762277905122}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &7265665762277905124 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7265665762759749328, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
-  m_PrefabInstance: {fileID: 7265665762277905122}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e579af61d481fa842a9e2696beb784c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &7947443326735936681
 PrefabInstance:
   m_ObjectHideFlags: 0

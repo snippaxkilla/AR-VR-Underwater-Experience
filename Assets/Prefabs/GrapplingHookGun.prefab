@@ -46,13 +46,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e579af61d481fa842a9e2696beb784c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clawLeft: {fileID: 6951516469666537339}
-  clawRight: {fileID: 4856313439960253268}
-  maxDistance: 10
-  pullSpeed: 5
+  clawLeft: {fileID: 1698912239411195153}
+  clawRight: {fileID: 6906662718765571972}
+  clawOffset: 0.15
+  maxDistance: 2
+  retractSpeed: 4
+  autoRetractAfterDelay: 3
   forceMagnitude: 15
-  leftButtons: 00000000
-  rightButtons: 00000000
+  cooldown: 0.1
+  leftButtons: 00000020
+  rightButtons: 00000008
 --- !u!1001 &374292984183712919
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -63,6 +66,18 @@ PrefabInstance:
     - target: {fileID: 1348760262658066655, guid: 624c48e058831e7449e268177cbb4f67, type: 3}
       propertyPath: m_RootOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1348760262658066655, guid: 624c48e058831e7449e268177cbb4f67, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1348760262658066655, guid: 624c48e058831e7449e268177cbb4f67, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1348760262658066655, guid: 624c48e058831e7449e268177cbb4f67, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 1348760262658066655, guid: 624c48e058831e7449e268177cbb4f67, type: 3}
       propertyPath: m_LocalPosition.x
@@ -120,21 +135,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5067910932667674563, guid: 624c48e058831e7449e268177cbb4f67, type: 3}
   m_PrefabInstance: {fileID: 374292984183712919}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8384999903482440150
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4856313439960253268}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 023aa500353f0084a8138af24f102ed4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GroupedGarbage: {fileID: 0}
-  Player: {fileID: 0}
-  GrapplingHook: {fileID: 7265665762759749331}
 --- !u!54 &6906662718765571972
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -149,8 +149,23 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 1
+--- !u!114 &8384999903482440150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4856313439960253268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 023aa500353f0084a8138af24f102ed4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GroupedGarbage: {fileID: 0}
+  GrapplingHookGun: {fileID: 7265665762759749328}
+  garbageCollector: {fileID: 0}
 --- !u!1001 &2750689206454579384
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -161,6 +176,18 @@ PrefabInstance:
     - target: {fileID: 1348760262658066655, guid: 624c48e058831e7449e268177cbb4f67, type: 3}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1348760262658066655, guid: 624c48e058831e7449e268177cbb4f67, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1348760262658066655, guid: 624c48e058831e7449e268177cbb4f67, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1348760262658066655, guid: 624c48e058831e7449e268177cbb4f67, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 1348760262658066655, guid: 624c48e058831e7449e268177cbb4f67, type: 3}
       propertyPath: m_LocalPosition.x
@@ -218,21 +245,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5067910932667674563, guid: 624c48e058831e7449e268177cbb4f67, type: 3}
   m_PrefabInstance: {fileID: 2750689206454579384}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2750689206454579391
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6951516469666537339}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 023aa500353f0084a8138af24f102ed4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GroupedGarbage: {fileID: 0}
-  Player: {fileID: 0}
-  GrapplingHook: {fileID: 7265665762759749331}
 --- !u!54 &1698912239411195153
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -247,5 +259,20 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 1
+--- !u!114 &2750689206454579391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6951516469666537339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 023aa500353f0084a8138af24f102ed4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GroupedGarbage: {fileID: 0}
+  GrapplingHookGun: {fileID: 7265665762759749328}
+  garbageCollector: {fileID: 0}

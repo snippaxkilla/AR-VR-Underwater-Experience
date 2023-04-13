@@ -40,19 +40,19 @@ public class Claw : MonoBehaviour
             hookedGarbage = other.gameObject;
 
             if (clawLeft && leftState == GrapplingHook.ClawState.Launching && !isLeftHooked)
-            { 
-                isLeftHooked = true;
-                GrapplingHookGun.SetLeftState(GrapplingHook.ClawState.Retracting);
+            {
                 GetComponent<Rigidbody>().isKinematic = true;
                 FixedJoint fixedJoint = CreateFixedJoint(gameObject, hookedGarbage);
+                isLeftHooked = true;
+                GrapplingHookGun.SetLeftState(GrapplingHook.ClawState.Retracting);
             }
 
             if (clawRight && rightState == GrapplingHook.ClawState.Launching && !isRightHooked)
-            { 
-                isRightHooked = true; 
-                GrapplingHookGun.SetRightState(GrapplingHook.ClawState.Retracting);
+            {
                 GetComponent<Rigidbody>().isKinematic = true;
                 FixedJoint fixedJoint = CreateFixedJoint(gameObject, hookedGarbage);
+                isRightHooked = true;
+                GrapplingHookGun.SetRightState(GrapplingHook.ClawState.Retracting);
             }
         }
     }
