@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -11,6 +12,8 @@ public class GrapplingHook : MonoBehaviour
         Retracting
     }
 
+    [SerializeField] private Dictionary<Garbage.GarbageSize, float> pullSpeeds;
+
     [SerializeField] private Rigidbody clawLeft;
     [SerializeField] private Rigidbody clawRight;
 
@@ -18,6 +21,9 @@ public class GrapplingHook : MonoBehaviour
     [SerializeField] private float clawOffset;
 
     [SerializeField] private float maxDistance = 2f;
+
+    [Header("The retract speed variable is only used when no garbage are hooked")]
+    [Tooltip("Change the retract speed in the garbage prefab when hooking items")]
     [SerializeField] private float retractSpeed = 4f;
     [SerializeField] private float autoRetractAfterDelay = 3f;
     [SerializeField] private float forceMagnitude = 15f;
@@ -26,6 +32,8 @@ public class GrapplingHook : MonoBehaviour
     [Header("Specify the buttons we want to use to shoot out hooks")] 
     [SerializeField] private OVRInput.RawButton[] leftButtons;
     [SerializeField] private OVRInput.RawButton[] rightButtons;
+
+    private float currentRetractSpeed;
 
     private bool leftButtonHeld = false;
     private bool rightButtonHeld = false;
@@ -51,15 +59,24 @@ public class GrapplingHook : MonoBehaviour
 
     private void Update()
     {
-        if (leftCooldownTimer > 0f) leftCooldownTimer -= Time.deltaTime;
-        if (rightCooldownTimer > 0f) rightCooldownTimer -= Time.deltaTime;
-
         DistanceChecker(clawLeft, ref leftState, ref leftRetractOrigin, leftInitialPosition, ref leftAutoRetractTimer);
         DistanceChecker(clawRight, ref rightState, ref rightRetractOrigin, rightInitialPosition, ref rightAutoRetractTimer);
+    }
+
+    // In the hooks we are adding force that's why we need to use FixedUpdate
+    private void FixedUpdate()
+    {
+        ShootClaw(OVRInput.Controller.LTouch, leftButtons, clawLeft, leftRayFwd, leftInitialPosition, ref leftState, ref leftRetractOrigin, ref leftCooldownTimer, ref leftAutoRetractTimer, ref leftButtonHeld);
+        ShootClaw(OVRInput.Controller.RTouch, rightButtons, clawRight, rightRayFwd, rightInitialPosition, ref rightState, ref rightRetractOrigin, ref rightCooldownTimer, ref rightAutoRetractTimer, ref rightButtonHeld);
+
+        if (leftCooldownTimer > 0f) leftCooldownTimer -= Time.fixedDeltaTime;
+        if (rightCooldownTimer > 0f) rightCooldownTimer -= Time.fixedDeltaTime;
 
         if (leftState == ClawState.Retracting)
         {
-            clawLeft.transform.position = Vector3.MoveTowards(clawLeft.transform.position, leftInitialPosition, Time.deltaTime * retractSpeed);
+            Garbage garbage = clawLeft.GetComponent<Garbage>();
+            var pullSpeed = pullSpeeds[garbage.GetSize()];
+            clawLeft.transform.position = Vector3.MoveTowards(clawLeft.transform.position, leftInitialPosition, Time.fixedDeltaTime * pullSpeed);
             OVRInput.SetControllerVibration(1f, 0.1f, OVRInput.Controller.LTouch);
 
             if (Vector3.Distance(clawLeft.transform.position, leftInitialPosition) <= 0.01f)
@@ -72,7 +89,9 @@ public class GrapplingHook : MonoBehaviour
 
         if (rightState == ClawState.Retracting)
         {
-            clawRight.transform.position = Vector3.MoveTowards(clawRight.transform.position, rightInitialPosition, Time.deltaTime * retractSpeed);
+            Garbage garbage = clawRight.GetComponent<Garbage>();
+            var pullSpeed = pullSpeeds[garbage.GetSize()];
+            clawRight.transform.position = Vector3.MoveTowards(clawRight.transform.position, rightInitialPosition, Time.fixedDeltaTime * pullSpeed);
             OVRInput.SetControllerVibration(1f, 0.1f, OVRInput.Controller.RTouch);
 
             if (Vector3.Distance(clawRight.transform.position, rightInitialPosition) <= 0.01f)
@@ -82,13 +101,6 @@ public class GrapplingHook : MonoBehaviour
                 clawRight.isKinematic = true;
             }
         }
-    }
-
-    // In the hooks we are adding force that's why we need to use FixedUpdate
-    private void FixedUpdate()
-    {
-        ShootClaw(OVRInput.Controller.LTouch, leftButtons, clawLeft, leftRayFwd, leftInitialPosition, ref leftState, ref leftRetractOrigin, ref leftCooldownTimer, ref leftAutoRetractTimer, ref leftButtonHeld);
-        ShootClaw(OVRInput.Controller.RTouch, rightButtons, clawRight, rightRayFwd, rightInitialPosition, ref rightState, ref rightRetractOrigin, ref rightCooldownTimer, ref rightAutoRetractTimer, ref rightButtonHeld);
     }
 
     // Make sure that Origin happens after shooting
@@ -157,6 +169,11 @@ public class GrapplingHook : MonoBehaviour
         retractOrigin = claw.transform.position;
         claw.isKinematic = true;
         state = ClawState.Retracting;
+    }
+
+    public void SetRetractSpeed(float speed)
+    {
+        currentRetractSpeed = speed;
     }
 
     // Check if the hooks have gone beyond the maximum distance and retract them separately if necessary

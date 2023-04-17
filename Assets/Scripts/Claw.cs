@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class Claw : MonoBehaviour
 {
-    [SerializeField] private GameObject GroupedGarbage;
-
     [SerializeField] private GrapplingHook GrapplingHookGun;
     [SerializeField] private GarbageCollector garbageCollector;
 
@@ -35,8 +33,9 @@ public class Claw : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform.parent != null && other.transform.parent.gameObject == GroupedGarbage)
+        if (other.CompareTag("SmallGarbage")|| other.CompareTag("MediumGarbage") || other.CompareTag("LargeGarbage"))
         {
+            Garbage garbage = other.GetComponent<Garbage>();
             hookedGarbage = other.gameObject;
 
             if (clawLeft && leftState == GrapplingHook.ClawState.Launching && !isLeftHooked)
@@ -45,6 +44,7 @@ public class Claw : MonoBehaviour
                 FixedJoint fixedJoint = CreateFixedJoint(gameObject, hookedGarbage);
                 isLeftHooked = true;
                 GrapplingHookGun.SetLeftState(GrapplingHook.ClawState.Retracting);
+                GrapplingHookGun.SetRetractSpeed(garbage.GetPullbackSpeed());
             }
 
             if (clawRight && rightState == GrapplingHook.ClawState.Launching && !isRightHooked)
@@ -53,6 +53,7 @@ public class Claw : MonoBehaviour
                 FixedJoint fixedJoint = CreateFixedJoint(gameObject, hookedGarbage);
                 isRightHooked = true;
                 GrapplingHookGun.SetRightState(GrapplingHook.ClawState.Retracting);
+                GrapplingHookGun.SetRetractSpeed(garbage.GetPullbackSpeed());
             }
         }
     }
@@ -83,7 +84,8 @@ public class Claw : MonoBehaviour
             Destroy(hookedGarbage);
 
             isLeftHooked = false;
-            garbageCollector.IncrementGarbageCount();
+            Garbage garbage = hookedGarbage.GetComponent<Garbage>();
+            garbageCollector.IncrementGarbageCount(garbage.GetPoints());
         }
 
         if (clawRight && isRightHooked && rightState == GrapplingHook.ClawState.Idle)
@@ -92,7 +94,8 @@ public class Claw : MonoBehaviour
             Destroy(hookedGarbage);
 
             isRightHooked = false;
-            garbageCollector.IncrementGarbageCount();
+            Garbage garbage = hookedGarbage.GetComponent<Garbage>();
+            garbageCollector.IncrementGarbageCount(garbage.GetPoints());
         }
     }
 

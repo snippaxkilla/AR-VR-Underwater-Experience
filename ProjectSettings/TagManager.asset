@@ -7,6 +7,9 @@ TagManager:
   - FX
   - PlaceableObject
   - OtherWorldObject
+  - SmallGarbage
+  - MediumGarbage
+  - LargeGarbage
   layers:
   - Default
   - TransparentFX
