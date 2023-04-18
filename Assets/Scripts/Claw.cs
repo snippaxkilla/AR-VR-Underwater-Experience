@@ -41,7 +41,7 @@ public class Claw : MonoBehaviour
 
         if (PredictCollision(out hit))
         {
-            if (hit.collider.CompareTag("SmallGarbage") || hit.collider.CompareTag("MediumGarbage") || hit.collider.CompareTag("LargeGarbage"))
+            if (hit.collider.CompareTag("Garbage"))
             { 
                 HookGarbage(hit.collider.gameObject);
             }
@@ -84,7 +84,7 @@ public class Claw : MonoBehaviour
             isLeftHooked = true;
             GrapplingHookGun.SetLeftState(GrapplingHook.ClawState.Retracting);
             Garbage garbage = garbageObject.GetComponent<Garbage>();
-            GrapplingHookGun.SetLeftRetractSpeed(garbage.GetPullbackSpeed());
+            GrapplingHookGun.SetLeftRetractSpeed(garbage.GetRetractSpeed());
         }
 
         if (clawRight && rightState == GrapplingHook.ClawState.Launching && !isRightHooked)
@@ -95,7 +95,7 @@ public class Claw : MonoBehaviour
             isRightHooked = true;
             GrapplingHookGun.SetRightState(GrapplingHook.ClawState.Retracting);
             Garbage garbage = garbageObject.GetComponent<Garbage>();
-            GrapplingHookGun.SetRightRetractSpeed(garbage.GetPullbackSpeed());
+            GrapplingHookGun.SetRightRetractSpeed(garbage.GetRetractSpeed());
         }
     }
 

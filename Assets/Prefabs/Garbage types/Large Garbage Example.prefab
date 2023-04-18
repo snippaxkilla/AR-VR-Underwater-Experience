@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8577584645428361033}
   m_Layer: 0
   m_Name: Large Garbage Example
-  m_TagString: LargeGarbage
+  m_TagString: Garbage
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -113,4 +113,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   size: 2
   points: 3
-  pullbackSpeed: 1
+  retractSpeed: 0.1

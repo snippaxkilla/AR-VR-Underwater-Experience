@@ -12,8 +12,6 @@ public class GrapplingHook : MonoBehaviour
         Retracting
     }
 
-    [SerializeField] private Dictionary<Garbage.GarbageSize, float> retractSpeedsGarbage;
-
     [SerializeField] private Rigidbody clawLeft;
     [SerializeField] private Rigidbody clawRight;
 
@@ -78,7 +76,7 @@ public class GrapplingHook : MonoBehaviour
             Garbage garbage = clawLeft.GetComponent<Garbage>();
             if (garbage != null)
             {
-                leftRetractSpeed = retractSpeedsGarbage[garbage.GetSize()];
+                leftRetractSpeed = garbage.GetRetractSpeed();
             }
             else
             {
@@ -100,7 +98,7 @@ public class GrapplingHook : MonoBehaviour
             Garbage garbage = clawRight.GetComponent<Garbage>();
             if (garbage != null)
             {
-                rightRetractSpeed = retractSpeedsGarbage[garbage.GetSize()];
+                rightRetractSpeed = garbage.GetRetractSpeed();
             }
             else
             {

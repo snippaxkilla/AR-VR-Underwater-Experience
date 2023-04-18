@@ -11,7 +11,7 @@ public class Garbage : MonoBehaviour
 
     [SerializeField] private GarbageSize size;
     [SerializeField] private int points;
-    [SerializeField] private float pullbackSpeed;
+    [SerializeField] private float retractSpeed;
 
     public GarbageSize GetSize()
     {
@@ -23,8 +23,8 @@ public class Garbage : MonoBehaviour
         return points;
     }
 
-    public float GetPullbackSpeed()
+    public float GetRetractSpeed()
     {
-        return pullbackSpeed;
+        return retractSpeed;
     }
 }
