@@ -32,38 +32,23 @@ public class Claw : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("SmallGarbage")|| other.CompareTag("MediumGarbage") || other.CompareTag("LargeGarbage"))
-        {
-            Garbage garbage = other.GetComponent<Garbage>();
-            hookedGarbage = other.gameObject;
-
-            if (clawLeft && leftState == GrapplingHook.ClawState.Launching && !isLeftHooked)
-            {
-                GetComponent<Rigidbody>().isKinematic = true;
-                FixedJoint fixedJoint = CreateFixedJoint(gameObject, hookedGarbage);
-                isLeftHooked = true;
-                GrapplingHookGun.SetLeftState(GrapplingHook.ClawState.Retracting);
-                GrapplingHookGun.SetLeftRetractSpeed(garbage.GetPullbackSpeed());
-            }
-
-            if (clawRight && rightState == GrapplingHook.ClawState.Launching && !isRightHooked)
-            {
-                GetComponent<Rigidbody>().isKinematic = true;
-                FixedJoint fixedJoint = CreateFixedJoint(gameObject, hookedGarbage);
-                isRightHooked = true;
-                GrapplingHookGun.SetRightState(GrapplingHook.ClawState.Retracting);
-                GrapplingHookGun.SetRightRetractSpeed(garbage.GetPullbackSpeed());
-            }
-        }
-    }
-
     private void FixedUpdate()
     {
         leftState = GrapplingHookGun.GetLeftState();
         rightState = GrapplingHookGun.GetRightState();
-        
+
+        if (!isLeftHooked || !isRightHooked)
+        {
+            RaycastHit hit;
+            if (PredictCollision(out hit))
+            {
+                if (hit.collider.CompareTag("SmallGarbage") || hit.collider.CompareTag("MediumGarbage") || hit.collider.CompareTag("LargeGarbage"))
+                {
+                    HookGarbage(hit.collider.gameObject);
+                }
+            }
+        }
+
         GarbageDestroyer();
 
         if (clawLeft && leftState == GrapplingHook.ClawState.Retracting)
@@ -74,6 +59,45 @@ public class Claw : MonoBehaviour
         if (clawRight && rightState == GrapplingHook.ClawState.Retracting)
         {
             GrapplingHookGun.RetractClaw(GrapplingHookGun.GetRightRigidbody(), ref rightState, ref rightRetractOrigin);
+        }
+    }
+
+    private bool PredictCollision(out RaycastHit hit)
+    {
+        Vector3 prediction = transform.position + GetComponent<Rigidbody>().velocity * Time.fixedDeltaTime;
+
+        int layerMask = ~LayerMask.GetMask("Claw");
+
+        if (Physics.Linecast(transform.position, prediction, out hit, layerMask))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    private void HookGarbage(GameObject garbageObject)
+    {
+        if (clawLeft && leftState == GrapplingHook.ClawState.Launching && !isLeftHooked)
+        {
+            hookedGarbage = garbageObject;
+            GetComponent<Rigidbody>().isKinematic = true;
+            FixedJoint fixedJoint = CreateFixedJoint(gameObject, garbageObject);
+            isLeftHooked = true;
+            GrapplingHookGun.SetLeftState(GrapplingHook.ClawState.Retracting);
+            Garbage garbage = garbageObject.GetComponent<Garbage>();
+            GrapplingHookGun.SetLeftRetractSpeed(garbage.GetPullbackSpeed());
+        }
+
+        if (clawRight && rightState == GrapplingHook.ClawState.Launching && !isRightHooked)
+        {
+            hookedGarbage = garbageObject;
+            GetComponent<Rigidbody>().isKinematic = true;
+            FixedJoint fixedJoint = CreateFixedJoint(gameObject, garbageObject);
+            isRightHooked = true;
+            GrapplingHookGun.SetRightState(GrapplingHook.ClawState.Retracting);
+            Garbage garbage = garbageObject.GetComponent<Garbage>();
+            GrapplingHookGun.SetRightRetractSpeed(garbage.GetPullbackSpeed());
         }
     }
 
