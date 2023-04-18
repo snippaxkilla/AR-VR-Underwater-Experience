@@ -11,8 +11,8 @@ public class Claw : MonoBehaviour
     private GrapplingHook.ClawState leftState;
     private GrapplingHook.ClawState rightState;
 
-    private bool isLeftHooked;
-    private bool isRightHooked;
+    public bool isLeftHooked;
+    public bool isRightHooked;
 
     private GameObject hookedGarbage;
 
@@ -42,8 +42,7 @@ public class Claw : MonoBehaviour
         leftState = GrapplingHookGun.GetLeftState();
         rightState = GrapplingHookGun.GetRightState();
 
-        GarbageHitInfo hitInfo;
-        if (PredictCollision(out hitInfo))
+        if (PredictCollision(out var hitInfo))
         {
             if (hitInfo.HitCollider.CompareTag("Garbage"))
             {
@@ -90,8 +89,7 @@ public class Claw : MonoBehaviour
             }
         }
 
-        RaycastHit hit;
-        if (Physics.SphereCast(transform.position, castRadius, (prediction - transform.position).normalized, out hit, Vector3.Distance(transform.position, prediction), layerMask))
+        if (Physics.SphereCast(transform.position, castRadius, (prediction - transform.position).normalized, out var hit, Vector3.Distance(transform.position, prediction), layerMask))
         {
             if (hit.collider.CompareTag("Garbage"))
             {
