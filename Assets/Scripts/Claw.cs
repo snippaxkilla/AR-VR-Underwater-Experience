@@ -68,6 +68,7 @@ public class Claw : MonoBehaviour
         Bounds bounds = GetComponent<Renderer>().bounds;
         var castRadius = (bounds.extents.x + bounds.extents.y + bounds.extents.z) / 3f;
 
+        // Ony checking this mask for more efficient raycasting
         var layerMask = ~LayerMask.GetMask("Claw");
 
         if (Physics.SphereCast(transform.position, castRadius, (prediction - transform.position).normalized, out hit, Vector3.Distance(transform.position, prediction), layerMask))
