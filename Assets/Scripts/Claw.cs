@@ -19,6 +19,11 @@ public class Claw : MonoBehaviour
     private GameObject clawLeft;
     private GameObject clawRight;
 
+    private class GarbageHitInfo
+    {
+        public Collider HitCollider { get; set; }
+    }
+
     private void Start()
     {
         if (transform.name == "ClawLeft")
@@ -37,16 +42,15 @@ public class Claw : MonoBehaviour
         leftState = GrapplingHookGun.GetLeftState();
         rightState = GrapplingHookGun.GetRightState();
 
-        RaycastHit hit;
-
-        if (PredictCollision(out hit))
+        GarbageHitInfo hitInfo;
+        if (PredictCollision(out hitInfo))
         {
-            if (hit.collider.CompareTag("Garbage"))
-            { 
-                HookGarbage(hit.collider.gameObject);
+            if (hitInfo.HitCollider.CompareTag("Garbage"))
+            {
+                HookGarbage(hitInfo.HitCollider.gameObject);
             }
         }
-        
+
         GarbageDestroyer();
 
         if (clawLeft && leftState == GrapplingHook.ClawState.Retracting)
@@ -60,20 +64,40 @@ public class Claw : MonoBehaviour
         }
     }
 
-    private bool PredictCollision(out RaycastHit hit)
+    private bool PredictCollision(out GarbageHitInfo hitInfo)
     {
+        hitInfo = null;
         var prediction = transform.position + GetComponent<Rigidbody>().velocity * Time.fixedDeltaTime;
 
         // Calculate the castRadius based on the Renderer's bounding box
         Bounds bounds = GetComponent<Renderer>().bounds;
         var castRadius = (bounds.extents.x + bounds.extents.y + bounds.extents.z) / 3f;
 
-        // Ony checking this mask for more efficient raycasting
+        // Only checking this mask for more efficient raycasting
         var layerMask = ~LayerMask.GetMask("Claw");
 
+        // Check if the claw is already intersecting with the garbage object
+        Collider[] intersectingColliders = Physics.OverlapSphere(transform.position, castRadius, layerMask);
+        if (intersectingColliders.Length > 0)
+        {
+            foreach (Collider intersectingCollider in intersectingColliders)
+            {
+                if (intersectingCollider.CompareTag("Garbage"))
+                {
+                    hitInfo = new GarbageHitInfo { HitCollider = intersectingCollider };
+                    return true;
+                }
+            }
+        }
+
+        RaycastHit hit;
         if (Physics.SphereCast(transform.position, castRadius, (prediction - transform.position).normalized, out hit, Vector3.Distance(transform.position, prediction), layerMask))
         {
-            return true;
+            if (hit.collider.CompareTag("Garbage"))
+            {
+                hitInfo = new GarbageHitInfo { HitCollider = hit.collider };
+                return true;
+            }
         }
 
         return false;

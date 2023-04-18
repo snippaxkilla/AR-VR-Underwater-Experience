@@ -73,15 +73,24 @@ public class GrapplingHook : MonoBehaviour
 
         if (leftState == ClawState.Retracting)
         {
-            Garbage garbage = clawLeft.GetComponent<Garbage>();
-            if (garbage != null)
+            FixedJoint fixedJoint = clawLeft.GetComponent<FixedJoint>();
+            if (fixedJoint != null && fixedJoint.connectedBody != null)
             {
-                leftRetractSpeed = garbage.GetRetractSpeed();
+                Garbage garbage = fixedJoint.connectedBody.GetComponent<Garbage>();
+                if (garbage != null)
+                {
+                    leftRetractSpeed = garbage.GetRetractSpeed();
+                }
+                else
+                {
+                    leftRetractSpeed = retractSpeedEmpty;
+                }
             }
             else
             {
                 leftRetractSpeed = retractSpeedEmpty;
             }
+
             clawLeft.transform.position = Vector3.MoveTowards(clawLeft.transform.position, leftInitialPosition, Time.fixedDeltaTime * leftRetractSpeed);
             OVRInput.SetControllerVibration(1f, 0.1f, OVRInput.Controller.LTouch);
 
@@ -93,17 +102,27 @@ public class GrapplingHook : MonoBehaviour
             }
         }
 
+
         if (rightState == ClawState.Retracting)
         {
-            Garbage garbage = clawRight.GetComponent<Garbage>();
-            if (garbage != null)
+            FixedJoint fixedJoint = clawRight.GetComponent<FixedJoint>();
+            if (fixedJoint != null && fixedJoint.connectedBody != null)
             {
-                rightRetractSpeed = garbage.GetRetractSpeed();
+                Garbage garbage = fixedJoint.connectedBody.GetComponent<Garbage>();
+                if (garbage != null)
+                {
+                    rightRetractSpeed = garbage.GetRetractSpeed();
+                }
+                else
+                {
+                    rightRetractSpeed = retractSpeedEmpty;
+                }
             }
             else
             {
                 rightRetractSpeed = retractSpeedEmpty;
             }
+
             clawRight.transform.position = Vector3.MoveTowards(clawRight.transform.position, rightInitialPosition, Time.fixedDeltaTime * rightRetractSpeed);
             OVRInput.SetControllerVibration(1f, 0.1f, OVRInput.Controller.RTouch);
 
