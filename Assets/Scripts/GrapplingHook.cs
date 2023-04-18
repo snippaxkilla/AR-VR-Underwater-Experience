@@ -12,7 +12,7 @@ public class GrapplingHook : MonoBehaviour
         Retracting
     }
 
-    [SerializeField] private Dictionary<Garbage.GarbageSize, float> pullSpeeds;
+    [SerializeField] private Dictionary<Garbage.GarbageSize, float> retractSpeedsGarbage;
 
     [SerializeField] private Rigidbody clawLeft;
     [SerializeField] private Rigidbody clawRight;
@@ -24,7 +24,7 @@ public class GrapplingHook : MonoBehaviour
 
     [Header("The retract speed variable is only used when no garbage are hooked")]
     [Tooltip("Change the retract speed in the garbage prefab when hooking items")]
-    [SerializeField] private float retractSpeed = 4f;
+    [SerializeField] private float retractSpeedEmpty = 4f;
     [SerializeField] private float autoRetractAfterDelay = 3f;
     [SerializeField] private float forceMagnitude = 15f;
     [SerializeField] private float cooldown = 0.1f;
@@ -33,7 +33,8 @@ public class GrapplingHook : MonoBehaviour
     [SerializeField] private OVRInput.RawButton[] leftButtons;
     [SerializeField] private OVRInput.RawButton[] rightButtons;
 
-    private float currentRetractSpeed;
+    private float leftRetractSpeed;
+    private float rightRetractSpeed;
 
     private bool leftButtonHeld = false;
     private bool rightButtonHeld = false;
@@ -75,8 +76,15 @@ public class GrapplingHook : MonoBehaviour
         if (leftState == ClawState.Retracting)
         {
             Garbage garbage = clawLeft.GetComponent<Garbage>();
-            var pullSpeed = pullSpeeds[garbage.GetSize()];
-            clawLeft.transform.position = Vector3.MoveTowards(clawLeft.transform.position, leftInitialPosition, Time.fixedDeltaTime * pullSpeed);
+            if (garbage != null)
+            {
+                leftRetractSpeed = retractSpeedsGarbage[garbage.GetSize()];
+            }
+            else
+            {
+                leftRetractSpeed = retractSpeedEmpty;
+            }
+            clawLeft.transform.position = Vector3.MoveTowards(clawLeft.transform.position, leftInitialPosition, Time.fixedDeltaTime * leftRetractSpeed);
             OVRInput.SetControllerVibration(1f, 0.1f, OVRInput.Controller.LTouch);
 
             if (Vector3.Distance(clawLeft.transform.position, leftInitialPosition) <= 0.01f)
@@ -90,8 +98,15 @@ public class GrapplingHook : MonoBehaviour
         if (rightState == ClawState.Retracting)
         {
             Garbage garbage = clawRight.GetComponent<Garbage>();
-            var pullSpeed = pullSpeeds[garbage.GetSize()];
-            clawRight.transform.position = Vector3.MoveTowards(clawRight.transform.position, rightInitialPosition, Time.fixedDeltaTime * pullSpeed);
+            if (garbage != null)
+            {
+                rightRetractSpeed = retractSpeedsGarbage[garbage.GetSize()];
+            }
+            else
+            {
+                rightRetractSpeed = retractSpeedEmpty;
+            }
+            clawRight.transform.position = Vector3.MoveTowards(clawRight.transform.position, rightInitialPosition, Time.fixedDeltaTime * rightRetractSpeed);
             OVRInput.SetControllerVibration(1f, 0.1f, OVRInput.Controller.RTouch);
 
             if (Vector3.Distance(clawRight.transform.position, rightInitialPosition) <= 0.01f)
@@ -171,11 +186,6 @@ public class GrapplingHook : MonoBehaviour
         state = ClawState.Retracting;
     }
 
-    public void SetRetractSpeed(float speed)
-    {
-        currentRetractSpeed = speed;
-    }
-
     // Check if the hooks have gone beyond the maximum distance and retract them separately if necessary
     private void DistanceChecker(Rigidbody claw, ref ClawState state, ref Vector3 retractOrigin,
         Vector3 clawInitialPosition, ref float autoRetractTimer)
@@ -188,6 +198,16 @@ public class GrapplingHook : MonoBehaviour
         {
             RetractClaw(claw, ref state, ref retractOrigin);
         }
+    }
+
+    public void SetLeftRetractSpeed(float speed)
+    {
+        leftRetractSpeed = speed;
+    }
+
+    public void SetRightRetractSpeed(float speed)
+    {
+        rightRetractSpeed = speed;
     }
 
     // Getters and Setters we want to use in other scripts
