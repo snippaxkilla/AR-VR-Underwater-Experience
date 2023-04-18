@@ -62,11 +62,15 @@ public class Claw : MonoBehaviour
 
     private bool PredictCollision(out RaycastHit hit)
     {
-        Vector3 prediction = transform.position + GetComponent<Rigidbody>().velocity * Time.fixedDeltaTime;
+        var prediction = transform.position + GetComponent<Rigidbody>().velocity * Time.fixedDeltaTime;
+
+        // Calculate the castRadius based on the Renderer's bounding box
+        Bounds bounds = GetComponent<Renderer>().bounds;
+        var castRadius = (bounds.extents.x + bounds.extents.y + bounds.extents.z) / 3f;
 
         var layerMask = ~LayerMask.GetMask("Claw");
 
-        if (Physics.Linecast(transform.position, prediction, out hit, layerMask))
+        if (Physics.SphereCast(transform.position, castRadius, (prediction - transform.position).normalized, out hit, Vector3.Distance(transform.position, prediction), layerMask))
         {
             return true;
         }
