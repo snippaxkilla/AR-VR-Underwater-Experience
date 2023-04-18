@@ -24,10 +24,10 @@ TagManager:
   - Passthrough
   - Floor
   - Terrain
-  - Oppy
-  - Balls
-  - BallDebris
-  - NavMeshCollision
+  - 
+  - 
+  - 
+  - Claw
   - PortalRendererMask
   - InsidePortal
   - GroundMask

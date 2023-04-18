@@ -37,18 +37,16 @@ public class Claw : MonoBehaviour
         leftState = GrapplingHookGun.GetLeftState();
         rightState = GrapplingHookGun.GetRightState();
 
-        if (!isLeftHooked || !isRightHooked)
+        RaycastHit hit;
+
+        if (PredictCollision(out hit))
         {
-            RaycastHit hit;
-            if (PredictCollision(out hit))
-            {
-                if (hit.collider.CompareTag("SmallGarbage") || hit.collider.CompareTag("MediumGarbage") || hit.collider.CompareTag("LargeGarbage"))
-                {
-                    HookGarbage(hit.collider.gameObject);
-                }
+            if (hit.collider.CompareTag("SmallGarbage") || hit.collider.CompareTag("MediumGarbage") || hit.collider.CompareTag("LargeGarbage"))
+            { 
+                HookGarbage(hit.collider.gameObject);
             }
         }
-
+        
         GarbageDestroyer();
 
         if (clawLeft && leftState == GrapplingHook.ClawState.Retracting)
@@ -66,7 +64,7 @@ public class Claw : MonoBehaviour
     {
         Vector3 prediction = transform.position + GetComponent<Rigidbody>().velocity * Time.fixedDeltaTime;
 
-        int layerMask = ~LayerMask.GetMask("Claw");
+        var layerMask = ~LayerMask.GetMask("Claw");
 
         if (Physics.Linecast(transform.position, prediction, out hit, layerMask))
         {
