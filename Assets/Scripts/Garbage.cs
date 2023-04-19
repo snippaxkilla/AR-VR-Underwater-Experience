@@ -11,7 +11,7 @@ public class Garbage : MonoBehaviour
 
     [SerializeField] private GarbageSize size;
     [SerializeField] private int points;
-    [SerializeField] private float retractSpeed;
+    [SerializeField] private float retractSpeed = 1;
 
     public GarbageSize GetSize()
     {
