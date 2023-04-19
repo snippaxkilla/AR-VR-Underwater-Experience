@@ -20,7 +20,7 @@ public class GrapplingHook : MonoBehaviour
     [SerializeField] private float maxDistance = 2f;
 
     [Header("The retract speed variable is only used when no garbage are hooked")]
-    [Tooltip("Change the retract speed in the garbage prefab when hooking items")]
+    [Tooltip("Change the retract speed in the garbage prefab when hooking items, also make sure this speed is higher then small garbage")]
     [SerializeField] private float retractSpeedEmpty = 4f;
     [SerializeField] private float autoRetractAfterDelay = 3f;
     [SerializeField] private float forceMagnitude = 15f;
