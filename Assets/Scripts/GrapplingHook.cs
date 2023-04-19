@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -56,6 +55,12 @@ public class GrapplingHook : MonoBehaviour
     private Vector3 leftRetractOrigin;
     private Vector3 rightRetractOrigin;
 
+    private void Start()
+    {
+        leftRetractSpeed = retractSpeedEmpty;
+        rightRetractSpeed = retractSpeedEmpty;
+    }
+
     private void Update()
     {
         DistanceChecker(clawLeft, ref leftState, ref leftRetractOrigin, leftInitialPosition, ref leftAutoRetractTimer);
@@ -73,24 +78,6 @@ public class GrapplingHook : MonoBehaviour
 
         if (leftState == ClawState.Retracting)
         {
-            FixedJoint fixedJoint = clawLeft.GetComponent<FixedJoint>();
-            if (fixedJoint != null && fixedJoint.connectedBody != null)
-            {
-                Garbage garbage = fixedJoint.connectedBody.GetComponent<Garbage>();
-                if (garbage != null)
-                {
-                    leftRetractSpeed = garbage.GetRetractSpeed();
-                }
-                else
-                {
-                    leftRetractSpeed = retractSpeedEmpty;
-                }
-            }
-            else
-            {
-                leftRetractSpeed = retractSpeedEmpty;
-            }
-
             clawLeft.transform.position = Vector3.MoveTowards(clawLeft.transform.position, leftInitialPosition, Time.fixedDeltaTime * leftRetractSpeed);
             OVRInput.SetControllerVibration(1f, 0.1f, OVRInput.Controller.LTouch);
 
@@ -99,30 +86,12 @@ public class GrapplingHook : MonoBehaviour
                 OVRInput.SetControllerVibration(0, 0, OVRInput.Controller.LTouch);
                 leftState = ClawState.Idle;
                 clawLeft.isKinematic = true;
+                leftRetractSpeed = retractSpeedEmpty;
             }
         }
 
-
         if (rightState == ClawState.Retracting)
         {
-            FixedJoint fixedJoint = clawRight.GetComponent<FixedJoint>();
-            if (fixedJoint != null && fixedJoint.connectedBody != null)
-            {
-                Garbage garbage = fixedJoint.connectedBody.GetComponent<Garbage>();
-                if (garbage != null)
-                {
-                    rightRetractSpeed = garbage.GetRetractSpeed();
-                }
-                else
-                {
-                    rightRetractSpeed = retractSpeedEmpty;
-                }
-            }
-            else
-            {
-                rightRetractSpeed = retractSpeedEmpty;
-            }
-
             clawRight.transform.position = Vector3.MoveTowards(clawRight.transform.position, rightInitialPosition, Time.fixedDeltaTime * rightRetractSpeed);
             OVRInput.SetControllerVibration(1f, 0.1f, OVRInput.Controller.RTouch);
 
@@ -131,6 +100,7 @@ public class GrapplingHook : MonoBehaviour
                 OVRInput.SetControllerVibration(0, 0, OVRInput.Controller.RTouch);
                 rightState = ClawState.Idle;
                 clawRight.isKinematic = true;
+                rightRetractSpeed = retractSpeedEmpty;
             }
         }
     }

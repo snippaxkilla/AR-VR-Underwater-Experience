@@ -11,8 +11,8 @@ public class Claw : MonoBehaviour
     private GrapplingHook.ClawState leftState;
     private GrapplingHook.ClawState rightState;
 
-    public bool isLeftHooked;
-    public bool isRightHooked;
+    private bool isLeftHooked;
+    private bool isRightHooked;
 
     private GameObject hookedGarbage;
 
@@ -103,38 +103,37 @@ public class Claw : MonoBehaviour
 
     private void HookGarbage(GameObject garbageObject)
     {
+        hookedGarbage = garbageObject;
+        GetComponent<Rigidbody>().isKinematic = true;
+        FixedJoint fixedJoint = CreateFixedJoint(gameObject, garbageObject);
+        Garbage garbage = garbageObject.GetComponent<Garbage>();
+
         if (clawLeft && leftState == GrapplingHook.ClawState.Launching && !isLeftHooked)
         {
-            hookedGarbage = garbageObject;
-            GetComponent<Rigidbody>().isKinematic = true;
-            FixedJoint fixedJoint = CreateFixedJoint(gameObject, garbageObject);
+        
             isLeftHooked = true;
             GrapplingHookGun.SetLeftState(GrapplingHook.ClawState.Retracting);
-            Garbage garbage = garbageObject.GetComponent<Garbage>();
             GrapplingHookGun.SetLeftRetractSpeed(garbage.GetRetractSpeed());
         }
 
         if (clawRight && rightState == GrapplingHook.ClawState.Launching && !isRightHooked)
         {
-            hookedGarbage = garbageObject;
-            GetComponent<Rigidbody>().isKinematic = true;
-            FixedJoint fixedJoint = CreateFixedJoint(gameObject, garbageObject);
             isRightHooked = true;
             GrapplingHookGun.SetRightState(GrapplingHook.ClawState.Retracting);
-            Garbage garbage = garbageObject.GetComponent<Garbage>();
             GrapplingHookGun.SetRightRetractSpeed(garbage.GetRetractSpeed());
         }
     }
 
     private void GarbageDestroyer()
     {
+        Garbage garbage = hookedGarbage.GetComponent<Garbage>();
+
         if (clawLeft && isLeftHooked && leftState == GrapplingHook.ClawState.Idle)
         {
             Destroy(GetComponent<FixedJoint>());
             Destroy(hookedGarbage);
 
             isLeftHooked = false;
-            Garbage garbage = hookedGarbage.GetComponent<Garbage>();
             garbageCollector.IncrementGarbageCount(garbage.GetPoints());
         }
 
@@ -144,7 +143,6 @@ public class Claw : MonoBehaviour
             Destroy(hookedGarbage);
 
             isRightHooked = false;
-            Garbage garbage = hookedGarbage.GetComponent<Garbage>();
             garbageCollector.IncrementGarbageCount(garbage.GetPoints());
         }
     }
