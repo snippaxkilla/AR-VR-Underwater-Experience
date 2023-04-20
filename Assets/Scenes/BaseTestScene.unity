@@ -2639,8 +2639,8 @@ MonoBehaviour:
   - {fileID: 2723824293561186720, guid: 71dcbf71b9460b44593df87cb33050fd, type: 3}
   player: {fileID: 2101865840}
   spawnInterval: 3
-  minSpawnHeight: 0.5
-  maxSpawnHeight: 3
+  minSpawnHeight: 0.1
+  maxSpawnHeight: 2
   minSpawnDistance: 0.1
   maxSpawnDistance: 4
   maxGarbageCount: 50
