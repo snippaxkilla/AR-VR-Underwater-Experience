@@ -6,6 +6,8 @@ public class GarbageSpawner : MonoBehaviour
     [SerializeField] private GameObject[] garbagePrefabs;
     [SerializeField] private GameObject player;
 
+    [SerializeField] private int totalPoolGarbageCount = 500;
+
     [SerializeField] private float spawnInterval = 3.0f;
     [SerializeField] private float minSpawnHeight = 0.1f;
     [Tooltip("Make sure the grappling distance is able to cover this")]
@@ -65,9 +67,8 @@ public class GarbageSpawner : MonoBehaviour
     private Vector3 CheckAreaForClearance()
     {
         var spawnPosition = Vector3.zero;
-        var attempts = 20;
 
-        while (attempts > 0)
+        while (totalPoolGarbageCount > 0)
         {
             var randomX = Random.Range(-maxSpawnDistance, maxSpawnDistance);
             var randomZ = Random.Range(-maxSpawnDistance, maxSpawnDistance);
@@ -77,7 +78,6 @@ public class GarbageSpawner : MonoBehaviour
 
             if (Vector3.Distance(spawnPosition, player.transform.position) < minSpawnDistance)
             {
-                attempts--;
                 continue;
             }
 
@@ -89,7 +89,7 @@ public class GarbageSpawner : MonoBehaviour
                 return spawnPosition;
             }
 
-            attempts--;
+            totalPoolGarbageCount--;
         }
 
         return Vector3.zero;
