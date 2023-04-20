@@ -2538,7 +2538,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &937062273
 Transform:
   m_ObjectHideFlags: 0
@@ -2587,6 +2587,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 991062788}
+  - component: {fileID: 991062789}
   m_Layer: 0
   m_Name: GarbageSpawner
   m_TagString: Untagged
@@ -2609,6 +2610,30 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &991062789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 991062787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac555200e1e6a4e4ca16eac64d65bc13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  garbagePrefabs:
+  - {fileID: 595628637087241789}
+  - {fileID: 8627680889433343463}
+  - {fileID: 8321136964215376205}
+  player: {fileID: 2101865840}
+  spawnInterval: 3
+  minSpawnHeight: 0.5
+  maxSpawnHeight: 5
+  minSpawnDistance: 0.5
+  maxSpawnDistance: 10
+  maxGarbageCount: 100
+  minGarbageCount: 20
 --- !u!1001 &1025561400
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11006,6 +11031,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Small Garbage Example
       objectReference: {fileID: 0}
+    - target: {fileID: 5362782647961197160, guid: d9e4ed722ed885c488b76d5f3441daab, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7844570389921710283, guid: d9e4ed722ed885c488b76d5f3441daab, type: 3}
       propertyPath: retractSpeed
       value: 3
@@ -11016,6 +11045,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d9e4ed722ed885c488b76d5f3441daab, type: 3}
+--- !u!1 &595628637087241789 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5362782647961197160, guid: d9e4ed722ed885c488b76d5f3441daab, type: 3}
+  m_PrefabInstance: {fileID: 595628637087241788}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2095774709066491501
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11264,6 +11298,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Large Garbage Example
       objectReference: {fileID: 0}
+    - target: {fileID: 2723824293561186720, guid: 71dcbf71b9460b44593df87cb33050fd, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7744452960465159631, guid: 71dcbf71b9460b44593df87cb33050fd, type: 3}
       propertyPath: m_RootOrder
       value: 14
@@ -11318,6 +11356,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 71dcbf71b9460b44593df87cb33050fd, type: 3}
+--- !u!1 &8321136964215376205 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2723824293561186720, guid: 71dcbf71b9460b44593df87cb33050fd, type: 3}
+  m_PrefabInstance: {fileID: 8321136964215376204}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8627680889433343462
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11328,6 +11371,10 @@ PrefabInstance:
     - target: {fileID: 622710188037809952, guid: 62a359c69785fca458f7f23b55729dc9, type: 3}
       propertyPath: m_Name
       value: Medium Garbage Example
+      objectReference: {fileID: 0}
+    - target: {fileID: 622710188037809952, guid: 62a359c69785fca458f7f23b55729dc9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1833145133320729526, guid: 62a359c69785fca458f7f23b55729dc9, type: 3}
       propertyPath: retractSpeed
@@ -11383,6 +11430,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 62a359c69785fca458f7f23b55729dc9, type: 3}
+--- !u!1 &8627680889433343463 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 622710188037809952, guid: 62a359c69785fca458f7f23b55729dc9, type: 3}
+  m_PrefabInstance: {fileID: 8627680889433343462}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8991035118312086234
 PrefabInstance:
   m_ObjectHideFlags: 0

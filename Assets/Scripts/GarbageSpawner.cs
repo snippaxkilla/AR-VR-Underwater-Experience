@@ -10,7 +10,7 @@ public class GarbageSpawner : MonoBehaviour
     [SerializeField] private float minSpawnHeight = 0.5f;
     [SerializeField] private float maxSpawnHeight = 5f;
 
-    [SerializeField] private float minSpawnDistance = 1f;
+    [SerializeField] private float minSpawnDistance = 0.5f;
     [SerializeField] private float maxSpawnDistance = 10f;
 
     [SerializeField] private int maxGarbageCount = 100;
@@ -27,6 +27,8 @@ public class GarbageSpawner : MonoBehaviour
     private void Start()
     {
         timeSinceLastSpawn = 0;
+
+        InitialSpawn();
     }
 
     // Updates on intervals
@@ -45,11 +47,24 @@ public class GarbageSpawner : MonoBehaviour
         }
     }
 
+    private void InitialSpawn()
+    {
+        var garbageCount = Random.Range(minGarbageCount, maxGarbageCount);
+        for (var i = 0; i < garbageCount; i++)
+        {
+            var spawnPosition = CheckAreaForClearance();
+            if (spawnPosition != Vector3.zero)
+            {
+                SpawnGarbage(spawnPosition);
+            }
+        }
+    }
+
     // Don't spawn garbage if it's too close to the player or if there's already garbage in the area
     private Vector3 CheckAreaForClearance()
     {
         var spawnPosition = Vector3.zero;
-        var attempts = 10;
+        var attempts = 20;
 
         while (attempts > 0)
         {
