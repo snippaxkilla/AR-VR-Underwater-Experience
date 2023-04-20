@@ -8,12 +8,13 @@ public class GarbageSpawner : MonoBehaviour
 
     [SerializeField] private float spawnInterval = 3.0f;
     [SerializeField] private float minSpawnHeight = 0.5f;
-    [SerializeField] private float maxSpawnHeight = 5f;
+    [Tooltip("Make sure the grappling distance is able to cover this")]
+    [SerializeField] private float maxSpawnHeight = 3f;
+    [SerializeField] private float minSpawnDistance = 0.1f;
+    [Tooltip("Make sure the grappling distance is able to cover this")]
+    [SerializeField] private float maxSpawnDistance = 4f;
 
-    [SerializeField] private float minSpawnDistance = 0.5f;
-    [SerializeField] private float maxSpawnDistance = 10f;
-
-    [SerializeField] private int maxGarbageCount = 100;
+    [SerializeField] private int maxGarbageCount = 50;
     [SerializeField] private int minGarbageCount = 20;
 
     private int currentGarbageCount;

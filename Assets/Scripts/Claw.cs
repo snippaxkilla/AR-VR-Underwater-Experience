@@ -126,14 +126,13 @@ public class Claw : MonoBehaviour
 
     private void GarbageDestroyer()
     {
-        Garbage garbage = hookedGarbage.GetComponent<Garbage>();
-
         if (clawLeft && isLeftHooked && leftState == GrapplingHook.ClawState.Idle)
         {
             Destroy(GetComponent<FixedJoint>());
             Destroy(hookedGarbage);
 
             isLeftHooked = false;
+            Garbage garbage = hookedGarbage.GetComponent<Garbage>();
             garbageCollector.IncrementGarbageCount(garbage.GetPoints());
         }
 
@@ -143,6 +142,7 @@ public class Claw : MonoBehaviour
             Destroy(hookedGarbage);
 
             isRightHooked = false;
+            Garbage garbage = hookedGarbage.GetComponent<Garbage>();
             garbageCollector.IncrementGarbageCount(garbage.GetPoints());
         }
     }

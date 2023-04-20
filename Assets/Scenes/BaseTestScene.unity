@@ -2640,10 +2640,10 @@ MonoBehaviour:
   player: {fileID: 2101865840}
   spawnInterval: 3
   minSpawnHeight: 0.5
-  maxSpawnHeight: 5
-  minSpawnDistance: 0.5
-  maxSpawnDistance: 10
-  maxGarbageCount: 100
+  maxSpawnHeight: 3
+  minSpawnDistance: 0.1
+  maxSpawnDistance: 4
+  maxGarbageCount: 50
   minGarbageCount: 20
 --- !u!1001 &1025561400
 PrefabInstance:
@@ -11642,6 +11642,10 @@ PrefabInstance:
     - target: {fileID: 6951516469666537339, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
       propertyPath: m_Layer
       value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 7265665762759749328, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
+      propertyPath: maxDistance
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7265665762759749329, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
       propertyPath: m_RootOrder
