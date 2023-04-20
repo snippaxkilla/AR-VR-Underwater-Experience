@@ -4,6 +4,7 @@ public class Claw : MonoBehaviour
 {
     [SerializeField] private GrapplingHook GrapplingHookGun;
     [SerializeField] private GarbageCollector garbageCollector;
+    [SerializeField] private GarbageSpawner garbageSpawner;
 
     private Vector3 leftRetractOrigin;
     private Vector3 rightRetractOrigin;
@@ -133,6 +134,7 @@ public class Claw : MonoBehaviour
             Destroy(GetComponent<FixedJoint>());
             Destroy(hookedGarbage);
 
+            garbageSpawner.currentGarbageCount--;
             isLeftHooked = false;
             Garbage garbage = hookedGarbage.GetComponent<Garbage>();
             garbageCollector.IncrementGarbageCount(garbage.GetPoints());
@@ -143,6 +145,7 @@ public class Claw : MonoBehaviour
             Destroy(GetComponent<FixedJoint>());
             Destroy(hookedGarbage);
 
+            garbageSpawner.currentGarbageCount--;
             isRightHooked = false;
             Garbage garbage = hookedGarbage.GetComponent<Garbage>();
             garbageCollector.IncrementGarbageCount(garbage.GetPoints());

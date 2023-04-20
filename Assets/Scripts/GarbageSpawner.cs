@@ -19,7 +19,7 @@ public class GarbageSpawner : MonoBehaviour
     [SerializeField] private int maxGarbageCount = 50;
     [SerializeField] private int minGarbageCount = 20;
 
-    private int currentGarbageCount;
+    public int currentGarbageCount;
 
     private int smallGarbageCount;
     private int mediumGarbageCount;
@@ -40,12 +40,12 @@ public class GarbageSpawner : MonoBehaviour
         timeSinceLastSpawn += Time.deltaTime;
         if (timeSinceLastSpawn >= spawnInterval && currentGarbageCount < maxGarbageCount)
         {
-            timeSinceLastSpawn = 0;
             var spawnPosition = CheckAreaForClearance();
 
             if (spawnPosition != Vector3.zero)
             {
                 SpawnGarbage(spawnPosition);
+                timeSinceLastSpawn = 0;
             }
         }
     }
@@ -56,6 +56,7 @@ public class GarbageSpawner : MonoBehaviour
         for (var i = 0; i < garbageCount; i++)
         {
             var spawnPosition = CheckAreaForClearance();
+
             if (spawnPosition != Vector3.zero)
             {
                 SpawnGarbage(spawnPosition);
