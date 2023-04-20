@@ -2639,7 +2639,7 @@ MonoBehaviour:
   - {fileID: 2723824293561186720, guid: 71dcbf71b9460b44593df87cb33050fd, type: 3}
   player: {fileID: 2101865840}
   totalPoolGarbageCount: 500
-  spawnInterval: 1
+  spawnInterval: 0.5
   minSpawnHeight: 0.1
   maxSpawnHeight: 2
   minSpawnDistance: 0.1
