@@ -104,22 +104,24 @@ public class Claw : MonoBehaviour
     private void HookGarbage(GameObject garbageObject)
     {
         hookedGarbage = garbageObject;
-        GetComponent<Rigidbody>().isKinematic = true;
-        FixedJoint fixedJoint = CreateFixedJoint(gameObject, garbageObject);
-        Garbage garbage = garbageObject.GetComponent<Garbage>();
 
         if (clawLeft && leftState == GrapplingHook.ClawState.Launching && !isLeftHooked)
         {
-        
+            FixedJoint fixedJoint = CreateFixedJoint(gameObject, garbageObject);
+            GetComponent<Rigidbody>().isKinematic = true;
             isLeftHooked = true;
             GrapplingHookGun.SetLeftState(GrapplingHook.ClawState.Retracting);
+            Garbage garbage = garbageObject.GetComponent<Garbage>();
             GrapplingHookGun.SetLeftRetractSpeed(garbage.GetRetractSpeed());
         }
 
         if (clawRight && rightState == GrapplingHook.ClawState.Launching && !isRightHooked)
         {
+            FixedJoint fixedJoint = CreateFixedJoint(gameObject, garbageObject);
+            GetComponent<Rigidbody>().isKinematic = true;
             isRightHooked = true;
             GrapplingHookGun.SetRightState(GrapplingHook.ClawState.Retracting);
+            Garbage garbage = garbageObject.GetComponent<Garbage>();
             GrapplingHookGun.SetRightRetractSpeed(garbage.GetRetractSpeed());
         }
     }
