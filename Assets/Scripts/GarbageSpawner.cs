@@ -82,9 +82,9 @@ public class GarbageSpawner : MonoBehaviour
             }
 
             Collider[] colliders = Physics.OverlapSphere(spawnPosition, minSpawnDistance);
-            var foundGarbage = colliders.Any(collider => collider.CompareTag("Garbage"));
+            var foundObstacle = colliders.Any();
 
-            if (!foundGarbage)
+            if (!foundObstacle)
             {
                 return spawnPosition;
             }
