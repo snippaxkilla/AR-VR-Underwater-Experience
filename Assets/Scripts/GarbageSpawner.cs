@@ -1,5 +1,7 @@
+using System;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class GarbageSpawner : MonoBehaviour
 {
@@ -142,5 +144,25 @@ public class GarbageSpawner : MonoBehaviour
             return minValueIndex;
         }
         return Random.Range(0, garbagePrefabs.Length);
+    }
+
+    public void GarbageDestroyed(Garbage garbage)
+    {
+        int garbageIndex = Array.IndexOf(garbagePrefabs, garbage);
+
+        switch (garbageIndex)
+        {
+            case 0:
+                smallGarbageCount--;
+                break;
+            case 1:
+                mediumGarbageCount--;
+                break;
+            case 2:
+                largeGarbageCount--;
+                break;
+        }
+
+        currentGarbageCount--;
     }
 }

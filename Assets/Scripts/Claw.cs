@@ -134,9 +134,9 @@ public class Claw : MonoBehaviour
             Destroy(GetComponent<FixedJoint>());
             Destroy(hookedGarbage);
 
-            garbageSpawner.currentGarbageCount--;
             isLeftHooked = false;
             Garbage garbage = hookedGarbage.GetComponent<Garbage>();
+            garbageSpawner.GarbageDestroyed(garbage);
             garbageCollector.IncrementGarbageCount(garbage.GetPoints());
         }
 
@@ -145,9 +145,9 @@ public class Claw : MonoBehaviour
             Destroy(GetComponent<FixedJoint>());
             Destroy(hookedGarbage);
 
-            garbageSpawner.currentGarbageCount--;
             isRightHooked = false;
             Garbage garbage = hookedGarbage.GetComponent<Garbage>();
+            garbageSpawner.GarbageDestroyed(garbage);
             garbageCollector.IncrementGarbageCount(garbage.GetPoints());
         }
     }
