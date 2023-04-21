@@ -21,7 +21,7 @@ public class GarbageSpawner : MonoBehaviour
     [SerializeField] private int maxGarbageCount = 50;
     [SerializeField] private int minGarbageCount = 20;
 
-    public int currentGarbageCount;
+    private int currentGarbageCount;
 
     private int smallGarbageCount;
     private int mediumGarbageCount;
@@ -105,18 +105,20 @@ public class GarbageSpawner : MonoBehaviour
 
         Quaternion randomRotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
 
-        GameObject garbage = Instantiate(garbagePrefabs[garbageIndex], spawnPosition, randomRotation);
-        garbage.transform.SetParent(transform);
+        GameObject garbageObject = Instantiate(garbagePrefabs[garbageIndex], spawnPosition, randomRotation);
+        garbageObject.transform.SetParent(transform);
 
-        switch (garbageIndex)
+        Garbage garbage = garbageObject.GetComponent<Garbage>();
+
+        switch (garbage.GetSize())
         {
-            case 0:
+            case Garbage.GarbageSize.Small:
                 smallGarbageCount++;
                 break;
-            case 1:
+            case Garbage.GarbageSize.Medium:
                 mediumGarbageCount++;
                 break;
-            case 2:
+            case Garbage.GarbageSize.Large:
                 largeGarbageCount++;
                 break;
         }
@@ -138,27 +140,29 @@ public class GarbageSpawner : MonoBehaviour
             }
         }
 
+        Garbage.GarbageSize leastGarbageSize = (Garbage.GarbageSize)minValueIndex;
+
         var randomValue = Random.value;
         if (randomValue < 0.6f)
         {
-            return minValueIndex;
+            return Array.FindIndex(garbagePrefabs, g => g.GetComponent<Garbage>().GetSize() == leastGarbageSize);
         }
         return Random.Range(0, garbagePrefabs.Length);
     }
 
     public void GarbageDestroyed(Garbage garbage)
     {
-        int garbageIndex = Array.IndexOf(garbagePrefabs, garbage);
+        Garbage.GarbageSize garbageSize = garbage.GetSize();
 
-        switch (garbageIndex)
+        switch (garbageSize)
         {
-            case 0:
+            case Garbage.GarbageSize.Small:
                 smallGarbageCount--;
                 break;
-            case 1:
+            case Garbage.GarbageSize.Medium:
                 mediumGarbageCount--;
                 break;
-            case 2:
+            case Garbage.GarbageSize.Large:
                 largeGarbageCount--;
                 break;
         }
