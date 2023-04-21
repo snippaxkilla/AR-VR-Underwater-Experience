@@ -38,6 +38,9 @@
         },
         {
             "m_Id": "29759d40e32c40c28ee96a7aa2810484"
+        },
+        {
+            "m_Id": "bb0c66962b304cefaf696f6f2080c0c4"
         }
     ],
     "m_Keywords": [],
@@ -176,6 +179,9 @@
         },
         {
             "m_Id": "e343dbc3c0714c14853ef6a32354e3de"
+        },
+        {
+            "m_Id": "fc780e61befe46c0bbf9075f6d9bf7cc"
         }
     ],
     "m_GroupDatas": [],
@@ -669,6 +675,20 @@
                     "m_Id": "728efe6a94b445588451836958037bc1"
                 },
                 "m_SlotId": 0
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "fc780e61befe46c0bbf9075f6d9bf7cc"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "140c867066a44b98bf81f5fab7a7d988"
+                },
+                "m_SlotId": 1
             }
         }
     ],
@@ -2754,6 +2774,9 @@
         },
         {
             "m_Id": "76fbac359d6e4d31a128e44dc00cbe5e"
+        },
+        {
+            "m_Id": "bb0c66962b304cefaf696f6f2080c0c4"
         }
     ]
 }
@@ -4393,6 +4416,35 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.Texture2DShaderProperty",
+    "m_ObjectId": "bb0c66962b304cefaf696f6f2080c0c4",
+    "m_Guid": {
+        "m_GuidSerialized": "c7dba32d-f630-4415-9107-119a77d27864"
+    },
+    "m_Name": "Caustic Texture",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "Caustic Texture",
+    "m_DefaultReferenceName": "_Caustic_Texture",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": {
+        "m_SerializedTexture": "{\"texture\":{\"fileID\":2800000,\"guid\":\"d04ed5386e90a4665b3fd15d4ae27b0b\",\"type\":3}}",
+        "m_Guid": ""
+    },
+    "isMainTexture": false,
+    "useTilingAndOffset": false,
+    "m_Modifiable": true,
+    "m_DefaultType": 0
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.Vector2MaterialSlot",
     "m_ObjectId": "bdfcdfeb0d6a4fe3ae42a98010c9e196",
     "m_Id": 2,
@@ -5637,5 +5689,53 @@
     "m_Value": 0.0,
     "m_DefaultValue": 0.0,
     "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
+    "m_ObjectId": "fc780e61befe46c0bbf9075f6d9bf7cc",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Property",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": -809.865966796875,
+            "y": 325.46722412109377,
+            "width": 0.0,
+            "height": 0.0
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "fe53d9688cb7413eadb3dcc201b3ec0c"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_Property": {
+        "m_Id": "bb0c66962b304cefaf696f6f2080c0c4"
+    }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Texture2DMaterialSlot",
+    "m_ObjectId": "fe53d9688cb7413eadb3dcc201b3ec0c",
+    "m_Id": 0,
+    "m_DisplayName": "Caustic Texture",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_BareResource": false
 }
 
