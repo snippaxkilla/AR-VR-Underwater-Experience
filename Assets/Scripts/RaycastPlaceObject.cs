@@ -168,7 +168,6 @@ public class RaycastPlaceObject : MonoBehaviour
     }
 
     private bool isPinching;
-    private bool pinchStarted;
 
     private (HandRayCastResult, Vector3) HandRayCast(OVRHand.Hand hand, Transform targetIcon)
     {
@@ -194,31 +193,26 @@ public class RaycastPlaceObject : MonoBehaviour
 
         if (isIndexFingerPinching && !isPinching)
         {
-            if (!pinchStarted)
+            isPinching = true;
+
+            //  If enabled anchor all the objects so we don't spawn any new objects, thus not being able to move the objects
+            if (isAnchored && maxObjects == placedObjects.Count)
             {
-                pinchStarted = true;
-                isPinching = true;
-
-                //  If enabled anchor all the objects so we don't spawn any new objects, thus not being able to move the objects
-                if (isAnchored && maxObjects == placedObjects.Count)
-                {
-                    return (returnValue, position);
-                }
-
-                // Not necessary for the object to have the right rotation since that happens in another script
-                placedObjects.Enqueue(Instantiate(objectToPlace, position, Quaternion.identity));
-                if (maxObjects > 0 && placedObjects.Count > maxObjects)
-                {
-                    Destroy(placedObjects.Dequeue());
-                }
                 return (returnValue, position);
             }
+
+            // Not necessary for the object to have the right rotation since that happens in another script
+            placedObjects.Enqueue(Instantiate(objectToPlace, position, Quaternion.identity));
+            if (maxObjects > 0 && placedObjects.Count > maxObjects)
+            {
+                Destroy(placedObjects.Dequeue());
+            }
+            return (returnValue, position);
         }
         // Only allow pinching to spawn objects once per pinch
-        else if (!isIndexFingerPinching)
+        if (!isIndexFingerPinching && isPinching)
         {
             isPinching = false;
-            pinchStarted = false;
         }
 
         targetIcon.localScale = Vector3.one * 0.6f;

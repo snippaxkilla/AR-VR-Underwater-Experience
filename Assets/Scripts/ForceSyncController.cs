@@ -8,16 +8,7 @@ public class ForceSyncController : MonoBehaviour
     public OVRInput.Controller leftController;
     public OVRInput.Controller rightController;
 
-    private List<InputDevice> devices = new List<InputDevice>();
-    private InputDevice leftDevice;
-    private InputDevice rightDevice;
-
-    private void Start()
-    {
-        GetDevices();
-    }
-
-    private void Update()
+    void Update()
     {
         OVRInput.Update();
 
@@ -27,56 +18,28 @@ public class ForceSyncController : MonoBehaviour
         }
     }
 
-    private void GetDevices()
+    IEnumerator ForceSyncControllers()
     {
-        InputDeviceCharacteristics leftTrackedControllerCharacteristics = InputDeviceCharacteristics.Left | InputDeviceCharacteristics.Controller;
-        InputDeviceCharacteristics rightTrackedControllerCharacteristics = InputDeviceCharacteristics.Right | InputDeviceCharacteristics.Controller;
+        XRInputSubsystem inputSubsystem = null;
+        List<XRInputSubsystem> inputSubsystems = new List<XRInputSubsystem>();
+        SubsystemManager.GetInstances(inputSubsystems);
 
-        InputDevices.GetDevicesWithCharacteristics(leftTrackedControllerCharacteristics, devices);
-        if (devices.Count > 0)
+        if (inputSubsystems.Count > 0)
         {
-            leftDevice = devices[0];
+            inputSubsystem = inputSubsystems[0];
         }
 
-        InputDevices.GetDevicesWithCharacteristics(rightTrackedControllerCharacteristics, devices);
-        if (devices.Count > 0)
+        if (inputSubsystem != null)
         {
-            rightDevice = devices[0];
-        }
-    }
+            inputSubsystem.TryRecenter();
 
-    private IEnumerator ForceSyncControllers()
-    {
-        if (leftDevice.isValid && rightDevice.isValid)
-        {
-            HapticCapabilities capabilities;
-            if (leftDevice.TryGetHapticCapabilities(out capabilities) && capabilities.supportsImpulse)
-            {
-                uint channel = 0;
-                var amplitude = 0.5f;
-                var duration = 0.1f;
-                leftDevice.SendHapticImpulse(channel, amplitude, duration);
-            }
-
-            if (rightDevice.TryGetHapticCapabilities(out capabilities) && capabilities.supportsImpulse)
-            {
-                uint channel = 0;
-                var amplitude = 0.5f;
-                var duration = 0.1f;
-                rightDevice.SendHapticImpulse(channel, amplitude, duration);
-            }
-
-            List<XRInputSubsystem> subsystems = new List<XRInputSubsystem>();
-            SubsystemManager.GetInstances(subsystems);
-            if (subsystems.Count > 0)
-            {
-                foreach (XRInputSubsystem subsystem in subsystems)
-                {
-                    subsystem.TryRecenter();
-                }
-            }
+            OVRInput.SetControllerVibration(0.5f, 0.5f, leftController);
+            OVRInput.SetControllerVibration(0.5f, 0.5f, rightController);
 
             yield return new WaitForSeconds(0.1f);
+
+            OVRInput.SetControllerVibration(0, 0, leftController);
+            OVRInput.SetControllerVibration(0, 0, rightController);
         }
     }
 }

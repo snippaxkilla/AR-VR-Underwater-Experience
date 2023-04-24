@@ -7,7 +7,6 @@ TagManager:
   - FX
   - PlaceableObject
   - OtherWorldObject
-  - Garbage
   layers:
   - Default
   - TransparentFX
@@ -22,10 +21,10 @@ TagManager:
   - Passthrough
   - Floor
   - Terrain
-  - 
-  - 
-  - 
-  - Claw
+  - Oppy
+  - Balls
+  - BallDebris
+  - NavMeshCollision
   - PortalRendererMask
   - InsidePortal
   - GroundMask

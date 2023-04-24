@@ -9,8 +9,8 @@ public class GarbageCollector : MonoBehaviour
         return garbageCollectedCount;
     }
 
-    public void IncrementGarbageCount(int points)
+    public void IncrementGarbageCount()
     {
-        garbageCollectedCount += points;
+        garbageCollectedCount++;
     }
 }
