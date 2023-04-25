@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1240916286977991697}
   - component: {fileID: 2780767558903458740}
   - component: {fileID: 104623021725982590}
-  - component: {fileID: 3972764267847181194}
   m_Layer: 0
   m_Name: SeaWeed (6)
   m_TagString: Untagged
@@ -27,9 +26,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1905953264279600811}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0, y: 0.01, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -41,7 +40,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1905953264279600811}
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 8728882236517261160, guid: 8c810a214a8798d4aa8bad39f409ff8e, type: 3}
 --- !u!23 &104623021725982590
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -84,65 +83,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &3972764267847181194
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1905953264279600811}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bd5e5ddd242bd64581fb5ed9c0e0507, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_PolyMesh:
-    name: plant_template
-    vertices:
-    - {x: 0.01, y: 0, z: 3.5527136e-17}
-    - {x: 0.01, y: 0.02, z: 3.5527136e-17}
-    - {x: -0.01, y: 0.02, z: 3.5527136e-17}
-    - {x: -0.01, y: 0, z: 3.5527136e-17}
-    - {x: -4.3711385e-10, y: -4.3711387e-10, z: -0.01}
-    - {x: 4.3711398e-10, y: 0.02, z: -0.010000001}
-    - {x: 0.0000000013113417, y: 0.02, z: 0.009999999}
-    - {x: 4.371139e-10, y: 4.3711387e-10, z: 0.01}
-    normals:
-    - {x: 0, y: 0, z: 1}
-    - {x: 0, y: 0, z: 1}
-    - {x: 0, y: 0, z: 1}
-    - {x: 0, y: 0, z: 1}
-    - {x: 1, y: 0, z: 0}
-    - {x: 1, y: 0, z: 0}
-    - {x: 1, y: 0, z: 0}
-    - {x: 1, y: 0, z: 0}
-    colors: []
-    tangents:
-    - {x: -1, y: 0, z: 0, w: -1}
-    - {x: -1, y: 0, z: 0, w: -1}
-    - {x: -1, y: 0, z: 0, w: -1}
-    - {x: -1, y: 0, z: 0, w: -1}
-    - {x: 0, y: 0, z: 1, w: -1}
-    - {x: 0, y: 0, z: 1, w: -1}
-    - {x: 0, y: 0, z: 1, w: -1}
-    - {x: 0, y: 0, z: 1, w: -1}
-    uv0:
-    - {x: 0, y: 0, z: 0, w: 0}
-    - {x: 0, y: 1, z: 0, w: 0}
-    - {x: 1, y: 1, z: 0, w: 0}
-    - {x: 1, y: 0, z: 0, w: 0}
-    - {x: 0, y: 0, z: 0, w: 0}
-    - {x: 0, y: 1, z: 0, w: 0}
-    - {x: 1, y: 1, z: 0, w: 0}
-    - {x: 1, y: 0, z: 0, w: 0}
-    uv1: []
-    uv2: []
-    uv3: []
-    m_Triangles: 000000000100000002000000000000000200000003000000040000000500000006000000040000000600000007000000
-    m_SubMeshes:
-    - m_Indexes: 000000000100000002000000000000000200000003000000040000000500000006000000040000000600000007000000
-      m_Topology: 0
-    m_Mesh: {fileID: 0}
-  m_SkinMeshRef: {fileID: 0}
-  m_OriginalMeshObject: {fileID: 8728882236517261160, guid: 8c810a214a8798d4aa8bad39f409ff8e, type: 3}
-  m_Mode: 0
