@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: New Material
+  m_Name: Anchor material
   m_Shader: {fileID: -6465566751694194690, guid: 0b86c59076f2e4d07bebedbb065fdf8e, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
