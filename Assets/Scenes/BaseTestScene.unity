@@ -4411,7 +4411,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1834628720}
-  - component: {fileID: 1834628719}
   m_Layer: 0
   m_Name: GarbageCollector
   m_TagString: Untagged
@@ -4419,18 +4418,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1834628719
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1834628718}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 933ff63c02b4d2b4185b88958df156a3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1834628720
 Transform:
   m_ObjectHideFlags: 0
@@ -5848,7 +5835,7 @@ PrefabInstance:
     - target: {fileID: 2750689206454579391, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
       propertyPath: garbageCollector
       value: 
-      objectReference: {fileID: 1834628719}
+      objectReference: {fileID: 0}
     - target: {fileID: 7265665762759749329, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
       propertyPath: m_RootOrder
       value: 10
@@ -5908,7 +5895,7 @@ PrefabInstance:
     - target: {fileID: 8384999903482440150, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
       propertyPath: garbageCollector
       value: 
-      objectReference: {fileID: 1834628719}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
 --- !u!1001 &7947443326735936681
