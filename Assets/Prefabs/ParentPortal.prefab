@@ -46,8 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c3fda29f299d42468ebb76722480cc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  riseSpeed: 2
-  offset: -395
+  riseSpeed: 3
+  offset: -490
   currentHeight: 0
   isRising: 1
 --- !u!114 &1010749613710910785
