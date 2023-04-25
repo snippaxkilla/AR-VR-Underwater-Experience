@@ -2,10 +2,9 @@ using UnityEngine;
 
 public class Claw : MonoBehaviour
 {
-    [SerializeField] private GameObject GroupedGarbage;
-
     [SerializeField] private GrapplingHook GrapplingHookGun;
     [SerializeField] private GarbageCollector garbageCollector;
+    [SerializeField] private GarbageSpawner garbageSpawner;
 
     private Vector3 leftRetractOrigin;
     private Vector3 rightRetractOrigin;
@@ -15,10 +14,16 @@ public class Claw : MonoBehaviour
 
     private bool isLeftHooked;
     private bool isRightHooked;
+
     private GameObject hookedGarbage;
 
     private GameObject clawLeft;
     private GameObject clawRight;
+
+    private class GarbageHitInfo
+    {
+        public Collider HitCollider { get; set; }
+    }
 
     private void Start()
     {
@@ -33,35 +38,19 @@ public class Claw : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.transform.parent != null && other.transform.parent.gameObject == GroupedGarbage)
-        {
-            hookedGarbage = other.gameObject;
-
-            if (clawLeft && leftState == GrapplingHook.ClawState.Launching && !isLeftHooked)
-            {
-                GetComponent<Rigidbody>().isKinematic = true;
-                FixedJoint fixedJoint = CreateFixedJoint(gameObject, hookedGarbage);
-                isLeftHooked = true;
-                GrapplingHookGun.SetLeftState(GrapplingHook.ClawState.Retracting);
-            }
-
-            if (clawRight && rightState == GrapplingHook.ClawState.Launching && !isRightHooked)
-            {
-                GetComponent<Rigidbody>().isKinematic = true;
-                FixedJoint fixedJoint = CreateFixedJoint(gameObject, hookedGarbage);
-                isRightHooked = true;
-                GrapplingHookGun.SetRightState(GrapplingHook.ClawState.Retracting);
-            }
-        }
-    }
-
     private void FixedUpdate()
     {
         leftState = GrapplingHookGun.GetLeftState();
         rightState = GrapplingHookGun.GetRightState();
-        
+
+        if (PredictCollision(out var hitInfo))
+        {
+            if (hitInfo.HitCollider.CompareTag("Garbage"))
+            {
+                HookGarbage(hitInfo.HitCollider.gameObject);
+            }
+        }
+
         GarbageDestroyer();
 
         if (clawLeft && leftState == GrapplingHook.ClawState.Retracting)
@@ -75,6 +64,69 @@ public class Claw : MonoBehaviour
         }
     }
 
+    private bool PredictCollision(out GarbageHitInfo hitInfo)
+    {
+        hitInfo = null;
+        var prediction = transform.position + GetComponent<Rigidbody>().velocity * Time.fixedDeltaTime;
+
+        // Calculate the castRadius based on the Renderer's bounding box
+        Bounds bounds = GetComponent<Renderer>().bounds;
+        var castRadius = (bounds.extents.x + bounds.extents.y + bounds.extents.z) / 3f;
+
+        // Only checking this mask for more efficient raycasting
+        var layerMask = ~LayerMask.GetMask("Claw");
+
+        // Check if the claw is already intersecting with the garbage object
+        Collider[] intersectingColliders = Physics.OverlapSphere(transform.position, castRadius, layerMask);
+        if (intersectingColliders.Length > 0)
+        {
+            foreach (Collider intersectingCollider in intersectingColliders)
+            {
+                if (intersectingCollider.CompareTag("Garbage"))
+                {
+                    hitInfo = new GarbageHitInfo { HitCollider = intersectingCollider };
+                    return true;
+                }
+            }
+        }
+
+        if (Physics.SphereCast(transform.position, castRadius, (prediction - transform.position).normalized, out var hit, Vector3.Distance(transform.position, prediction), layerMask))
+        {
+            if (hit.collider.CompareTag("Garbage"))
+            {
+                hitInfo = new GarbageHitInfo { HitCollider = hit.collider };
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private void HookGarbage(GameObject garbageObject)
+    {
+        hookedGarbage = garbageObject;
+
+        if (clawLeft && leftState == GrapplingHook.ClawState.Launching && !isLeftHooked)
+        {
+            FixedJoint fixedJoint = CreateFixedJoint(gameObject, garbageObject);
+            GetComponent<Rigidbody>().isKinematic = true;
+            isLeftHooked = true;
+            GrapplingHookGun.SetLeftState(GrapplingHook.ClawState.Retracting);
+            Garbage garbage = garbageObject.GetComponent<Garbage>();
+            GrapplingHookGun.SetLeftRetractSpeed(garbage.GetRetractSpeed());
+        }
+
+        if (clawRight && rightState == GrapplingHook.ClawState.Launching && !isRightHooked)
+        {
+            FixedJoint fixedJoint = CreateFixedJoint(gameObject, garbageObject);
+            GetComponent<Rigidbody>().isKinematic = true;
+            isRightHooked = true;
+            GrapplingHookGun.SetRightState(GrapplingHook.ClawState.Retracting);
+            Garbage garbage = garbageObject.GetComponent<Garbage>();
+            GrapplingHookGun.SetRightRetractSpeed(garbage.GetRetractSpeed());
+        }
+    }
+
     private void GarbageDestroyer()
     {
         if (clawLeft && isLeftHooked && leftState == GrapplingHook.ClawState.Idle)
@@ -83,16 +135,20 @@ public class Claw : MonoBehaviour
             Destroy(hookedGarbage);
 
             isLeftHooked = false;
-            garbageCollector.IncrementGarbageCount();
+            Garbage garbage = hookedGarbage.GetComponent<Garbage>();
+            garbageSpawner.GarbageDestroyed(garbage);
+            garbageCollector.IncrementGarbageCount(garbage.GetPoints());
         }
 
         if (clawRight && isRightHooked && rightState == GrapplingHook.ClawState.Idle)
-        { 
+        {
             Destroy(GetComponent<FixedJoint>());
             Destroy(hookedGarbage);
 
             isRightHooked = false;
-            garbageCollector.IncrementGarbageCount();
+            Garbage garbage = hookedGarbage.GetComponent<Garbage>();
+            garbageSpawner.GarbageDestroyed(garbage);
+            garbageCollector.IncrementGarbageCount(garbage.GetPoints());
         }
     }
 
