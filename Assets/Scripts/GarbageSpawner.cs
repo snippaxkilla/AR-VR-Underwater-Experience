@@ -69,13 +69,14 @@ public class GarbageSpawner : MonoBehaviour
     // Don't spawn garbage if it's too close to the player or if there's already garbage in the area
     private Vector3 CheckAreaForClearance()
     {
-        var spawnPosition = Vector3.zero;
+        Vector3 spawnPosition = Vector3.zero;
+        int layerMask = 1 << LayerMask.NameToLayer("Garbage"); // Replace "Garbage" with the name of the layer you created
 
         while (totalPoolGarbageCount > 0)
         {
-            var randomX = Random.Range(-maxSpawnDistance, maxSpawnDistance);
-            var randomZ = Random.Range(-maxSpawnDistance, maxSpawnDistance);
-            var randomY = Random.Range(minSpawnHeight, maxSpawnHeight);
+            float randomX = Random.Range(-maxSpawnDistance, maxSpawnDistance);
+            float randomZ = Random.Range(-maxSpawnDistance, maxSpawnDistance);
+            float randomY = Random.Range(minSpawnHeight, maxSpawnHeight);
 
             spawnPosition = new Vector3(randomX, randomY, randomZ);
 
@@ -84,8 +85,9 @@ public class GarbageSpawner : MonoBehaviour
                 continue;
             }
 
-            Collider[] colliders = Physics.OverlapSphere(spawnPosition, minSpawnDistance);
-            var foundObstacle = colliders.Any();
+            Vector3 sphereCastOrigin = spawnPosition - new Vector3(0, minSpawnHeight, 0);
+            Vector3 sphereCastDirection = Vector3.up;
+            bool foundObstacle = Physics.SphereCast(sphereCastOrigin, minSpawnDistance, sphereCastDirection, out RaycastHit hit, minSpawnHeight * 2, layerMask);
 
             if (!foundObstacle)
             {
@@ -97,6 +99,7 @@ public class GarbageSpawner : MonoBehaviour
 
         return Vector3.zero;
     }
+
 
     // Give the transform of the garbage to the GarbageManager and it's size
     private void SpawnGarbage(Vector3 spawnPosition)
