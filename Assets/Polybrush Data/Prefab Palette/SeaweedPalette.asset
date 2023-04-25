@@ -20,7 +20,7 @@ MonoBehaviour:
       m_RotationRangeMax: {x: 0, y: 360, z: 0}
       m_ScaleRangeMin: {x: 1, y: 1, z: 1}
       m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 1, y: 1}
+      m_UniformScale: {x: 0.8, y: 1.5}
       m_UniformBool: 1
       m_XRotationBool: 0
       m_YRotationBool: 1
@@ -36,7 +36,7 @@ MonoBehaviour:
       m_RotationRangeMax: {x: 0, y: 360, z: 0}
       m_ScaleRangeMin: {x: 1, y: 1, z: 1}
       m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 1, y: 1}
+      m_UniformScale: {x: 0.8, y: 1.5}
       m_UniformBool: 1
       m_XRotationBool: 0
       m_YRotationBool: 1
@@ -52,7 +52,7 @@ MonoBehaviour:
       m_RotationRangeMax: {x: 0, y: 360, z: 0}
       m_ScaleRangeMin: {x: 1, y: 1, z: 1}
       m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 1, y: 1}
+      m_UniformScale: {x: 0.8, y: 1.5}
       m_UniformBool: 1
       m_XRotationBool: 0
       m_YRotationBool: 1
@@ -63,12 +63,12 @@ MonoBehaviour:
     name: SeaWeed (2)
   - gameObject: {fileID: 2836411291931481224, guid: 3577514d85bdded478353d8b642fd326, type: 3}
     settings:
-      m_Strength: 50
+      m_Strength: 50.499977
       m_RotationRangeMin: {x: 0, y: 0, z: 0}
       m_RotationRangeMax: {x: 0, y: 360, z: 0}
       m_ScaleRangeMin: {x: 1, y: 1, z: 1}
       m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 1, y: 1}
+      m_UniformScale: {x: 0.8, y: 1.5}
       m_UniformBool: 1
       m_XRotationBool: 0
       m_YRotationBool: 1
@@ -84,7 +84,7 @@ MonoBehaviour:
       m_RotationRangeMax: {x: 0, y: 360, z: 0}
       m_ScaleRangeMin: {x: 1, y: 1, z: 1}
       m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 1, y: 1}
+      m_UniformScale: {x: 0.8, y: 1.5}
       m_UniformBool: 1
       m_XRotationBool: 0
       m_YRotationBool: 1
@@ -100,7 +100,7 @@ MonoBehaviour:
       m_RotationRangeMax: {x: 0, y: 360, z: 0}
       m_ScaleRangeMin: {x: 1, y: 1, z: 1}
       m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 1, y: 1}
+      m_UniformScale: {x: 0.8, y: 1.5}
       m_UniformBool: 1
       m_XRotationBool: 0
       m_YRotationBool: 1
@@ -116,7 +116,7 @@ MonoBehaviour:
       m_RotationRangeMax: {x: 0, y: 360, z: 0}
       m_ScaleRangeMin: {x: 1, y: 1, z: 1}
       m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 1, y: 1}
+      m_UniformScale: {x: 0.8, y: 1.5}
       m_UniformBool: 1
       m_XRotationBool: 0
       m_YRotationBool: 1
@@ -132,7 +132,7 @@ MonoBehaviour:
       m_RotationRangeMax: {x: 0, y: 360, z: 0}
       m_ScaleRangeMin: {x: 1, y: 1, z: 1}
       m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 1, y: 1}
+      m_UniformScale: {x: 0.8, y: 1.5}
       m_UniformBool: 1
       m_XRotationBool: 0
       m_YRotationBool: 1
@@ -143,12 +143,12 @@ MonoBehaviour:
     name: SeaWeed (7)
   - gameObject: {fileID: 8178250395460514653, guid: 5e80dcc174a955043a2e164be846db96, type: 3}
     settings:
-      m_Strength: 50.084034
+      m_Strength: 50
       m_RotationRangeMin: {x: 0, y: 0, z: 0}
       m_RotationRangeMax: {x: 0, y: 360, z: 0}
       m_ScaleRangeMin: {x: 1, y: 1, z: 1}
       m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 1, y: 1}
+      m_UniformScale: {x: 0.8, y: 1.5}
       m_UniformBool: 1
       m_XRotationBool: 0
       m_YRotationBool: 1
@@ -164,7 +164,7 @@ MonoBehaviour:
       m_RotationRangeMax: {x: 0, y: 360, z: 0}
       m_ScaleRangeMin: {x: 1, y: 1, z: 1}
       m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 1, y: 1}
+      m_UniformScale: {x: 0.8, y: 1.5}
       m_UniformBool: 1
       m_XRotationBool: 0
       m_YRotationBool: 1
@@ -180,7 +180,7 @@ MonoBehaviour:
       m_RotationRangeMax: {x: 0, y: 360, z: 0}
       m_ScaleRangeMin: {x: 1, y: 1, z: 1}
       m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 1, y: 1}
+      m_UniformScale: {x: 0.8, y: 1.5}
       m_UniformBool: 1
       m_XRotationBool: 0
       m_YRotationBool: 1
@@ -191,12 +191,12 @@ MonoBehaviour:
     name: SeaWeed (10)
   - gameObject: {fileID: 975307989244409453, guid: aefb5e7ea487c6449af247caed065b7b, type: 3}
     settings:
-      m_Strength: 50
+      m_Strength: 65.0588
       m_RotationRangeMin: {x: 0, y: 0, z: 0}
       m_RotationRangeMax: {x: 0, y: 360, z: 0}
       m_ScaleRangeMin: {x: 1, y: 1, z: 1}
       m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 1, y: 1}
+      m_UniformScale: {x: 0.8, y: 1.5}
       m_UniformBool: 1
       m_XRotationBool: 0
       m_YRotationBool: 1
@@ -212,7 +212,7 @@ MonoBehaviour:
       m_RotationRangeMax: {x: 0, y: 360, z: 0}
       m_ScaleRangeMin: {x: 1, y: 1, z: 1}
       m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 1, y: 1}
+      m_UniformScale: {x: 0.8, y: 1.5}
       m_UniformBool: 1
       m_XRotationBool: 0
       m_YRotationBool: 1
@@ -228,7 +228,7 @@ MonoBehaviour:
       m_RotationRangeMax: {x: 0, y: 360, z: 0}
       m_ScaleRangeMin: {x: 1, y: 1, z: 1}
       m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 1, y: 1}
+      m_UniformScale: {x: 0.8, y: 1.5}
       m_UniformBool: 1
       m_XRotationBool: 0
       m_YRotationBool: 1
