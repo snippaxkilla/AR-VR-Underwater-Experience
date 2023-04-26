@@ -8,6 +8,7 @@ TagManager:
   - PlaceableObject
   - OtherWorldObject
   - Garbage
+  - SkyBox
   layers:
   - Default
   - TransparentFX
@@ -16,7 +17,7 @@ TagManager:
   - Water
   - UI
   - 
-  - 
+  - Claw
   - RoomBox
   - Furniture
   - Passthrough
