@@ -3433,6 +3433,10 @@ PrefabInstance:
       propertyPath: garbageCollector
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 7265665762759749328, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
+      propertyPath: maxDistance
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 7265665762759749329, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
       propertyPath: m_RootOrder
       value: 9
@@ -3635,6 +3639,10 @@ PrefabInstance:
     - target: {fileID: 1960821270076201673, guid: b0943aafa66076e47a542294c3c5a759, type: 3}
       propertyPath: m_Name
       value: ControllerSyncManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 1960821270076201673, guid: b0943aafa66076e47a542294c3c5a759, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7092937388870448557, guid: b0943aafa66076e47a542294c3c5a759, type: 3}
       propertyPath: m_RootOrder
