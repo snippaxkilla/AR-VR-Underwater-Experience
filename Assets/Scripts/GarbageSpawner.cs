@@ -37,7 +37,8 @@ public class GarbageSpawner : MonoBehaviour
         Resume
     }
 
-    public GarbageSpawnerState garbageSpawnerState;
+    // Call from another script to start spawning
+    public GarbageSpawnerState garbageSpawnerState = GarbageSpawnerState.Pause;
 
     private void Update()
     {
