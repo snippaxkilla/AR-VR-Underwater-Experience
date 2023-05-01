@@ -64,6 +64,7 @@ public class Claw : MonoBehaviour
         }
     }
 
+    // Only use this for garbage objects
     private bool PredictCollision(out GarbageHitInfo hitInfo)
     {
         hitInfo = null;

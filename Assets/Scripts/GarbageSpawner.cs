@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -12,10 +11,11 @@ public class GarbageSpawner : MonoBehaviour
 
     [SerializeField] private float spawnInterval = 3.0f;
     [SerializeField] private float minSpawnHeight = 0.1f;
-    [Tooltip("Make sure the grappling distance is able to cover this")]
+
+    [Tooltip("Make sure the grappling distance is able to cover this")] 
     [SerializeField] private float maxSpawnHeight = 2f;
     [SerializeField] private float minSpawnDistance = 0.1f;
-    [Tooltip("Make sure the grappling distance is able to cover this")]
+    [Tooltip("Make sure the grappling distance is able to cover this")] 
     [SerializeField] private float maxSpawnDistance = 4f;
 
     [SerializeField] private int maxGarbageCount = 50;
@@ -29,31 +29,57 @@ public class GarbageSpawner : MonoBehaviour
 
     private float timeSinceLastSpawn;
 
-    private void Start()
+    public enum GarbageSpawnerState
     {
-        timeSinceLastSpawn = 0;
-
-        InitialSpawn();
+        On,
+        Off,
+        Pause,
+        Resume
     }
 
-    // Updates on intervals
+    public GarbageSpawnerState garbageSpawnerState;
+
     private void Update()
     {
-        timeSinceLastSpawn += Time.deltaTime;
-        if (timeSinceLastSpawn >= spawnInterval && currentGarbageCount < maxGarbageCount)
+        switch (garbageSpawnerState)
         {
-            var spawnPosition = CheckAreaForClearance();
+            case GarbageSpawnerState.On:
+                InitialSpawn();
+                break;
+            case GarbageSpawnerState.Off:
+                HandleOffState();
+                break;
+            case GarbageSpawnerState.Pause:
+                return;
+            case GarbageSpawnerState.Resume:
+                HandleResumeState();
+                break;
+        }
+    }
 
-            if (spawnPosition != Vector3.zero)
-            {
-                SpawnGarbage(spawnPosition);
-                timeSinceLastSpawn = 0;
-            }
+    private void HandleResumeState()
+    {
+        timeSinceLastSpawn += Time.deltaTime;
+        if (!(timeSinceLastSpawn >= spawnInterval) || currentGarbageCount >= maxGarbageCount) return;
+        var spawnPosition = CheckAreaForClearance();
+
+        if (spawnPosition == Vector3.zero) return;
+        SpawnGarbage(spawnPosition);
+        timeSinceLastSpawn = 0;
+    }
+
+    private void HandleOffState()
+    {
+        if (currentGarbageCount == 0 && garbageSpawnerState != GarbageSpawnerState.Off)
+        {
+            garbageSpawnerState = GarbageSpawnerState.Off;
         }
     }
 
     private void InitialSpawn()
     {
+        garbageSpawnerState = GarbageSpawnerState.On;
+
         var garbageCount = Random.Range(minGarbageCount, maxGarbageCount);
         for (var i = 0; i < garbageCount; i++)
         {
@@ -64,6 +90,8 @@ public class GarbageSpawner : MonoBehaviour
                 SpawnGarbage(spawnPosition);
             }
         }
+
+        garbageSpawnerState = GarbageSpawnerState.Resume;
     }
 
     // Don't spawn garbage if it's too close to the player or if there's already garbage in the area
@@ -88,7 +116,8 @@ public class GarbageSpawner : MonoBehaviour
             var sphereCastOrigin = spawnPosition - new Vector3(0, minSpawnHeight, 0);
             var sphereCastDirection = Vector3.up;
 
-            var foundObstacle = Physics.SphereCast(sphereCastOrigin, minSpawnDistance, sphereCastDirection, out RaycastHit hit, minSpawnHeight * 2, layerMask);
+            var foundObstacle = Physics.SphereCast(sphereCastOrigin, minSpawnDistance, sphereCastDirection,
+                out RaycastHit hit, minSpawnHeight * 2, layerMask);
 
             if (!foundObstacle)
             {
@@ -150,6 +179,7 @@ public class GarbageSpawner : MonoBehaviour
         {
             return Array.FindIndex(garbagePrefabs, g => g.GetComponent<Garbage>().GetSize() == leastGarbageSize);
         }
+
         return Random.Range(0, garbagePrefabs.Length);
     }
 
@@ -171,5 +201,15 @@ public class GarbageSpawner : MonoBehaviour
         }
 
         currentGarbageCount--;
+    }
+
+    public GarbageSpawnerState GetGarbageSpawnerState()
+    {
+        return garbageSpawnerState;
+    }
+
+    public void SetGarbageSpawnerState(GarbageSpawnerState newState)
+    {
+        garbageSpawnerState = newState;
     }
 }
