@@ -38,7 +38,7 @@ public class GarbageSpawner : MonoBehaviour
     }
 
     // Call from another script to start spawning
-    public GarbageSpawnerState garbageSpawnerState = GarbageSpawnerState.Pause;
+    public GarbageSpawnerState garbageSpawnerState;
 
     private void Update()
     {
@@ -79,8 +79,6 @@ public class GarbageSpawner : MonoBehaviour
 
     private void InitialSpawn()
     {
-        garbageSpawnerState = GarbageSpawnerState.On;
-
         var garbageCount = Random.Range(minGarbageCount, maxGarbageCount);
         for (var i = 0; i < garbageCount; i++)
         {
