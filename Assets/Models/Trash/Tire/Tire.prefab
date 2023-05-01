@@ -11,9 +11,11 @@ GameObject:
   - component: {fileID: 4984462764469154982}
   - component: {fileID: 8251586195198802691}
   - component: {fileID: 6154013469160476617}
+  - component: {fileID: 7066623018798988208}
+  - component: {fileID: 7269354327529540324}
   m_Layer: 0
   m_Name: Tire
-  m_TagString: Untagged
+  m_TagString: Garbage
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -83,3 +85,31 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &7066623018798988208
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5649641303624396316}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.017085716, y: 0.017085716, z: 0.0051257154}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7269354327529540324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5649641303624396316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fa5e38a319618a4c96af52b2662d911, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  size: 2
+  points: 3
+  retractSpeed: 3
