@@ -57,3 +57,4 @@ MonoBehaviour:
   maxSpawnDistance: 4
   maxGarbageCount: 50
   minGarbageCount: 20
+  garbageSpawnerState: 4

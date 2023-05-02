@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -29,12 +31,15 @@ public class GarbageSpawner : MonoBehaviour
 
     private float timeSinceLastSpawn;
 
+    private bool hasInitialySpawned = false;
+
     public enum GarbageSpawnerState
     {
         On,
         Off,
         Pause,
-        Resume
+        Resume,
+        UnderGround
     }
 
     // Call from another script to start spawning
@@ -55,6 +60,9 @@ public class GarbageSpawner : MonoBehaviour
             case GarbageSpawnerState.Resume:
                 HandleResumeState();
                 break;
+            case GarbageSpawnerState.UnderGround:
+                DevelopmentalFunction();
+                break;
         }
     }
 
@@ -71,7 +79,7 @@ public class GarbageSpawner : MonoBehaviour
 
     private void HandleOffState()
     {
-        if (currentGarbageCount == 0 && garbageSpawnerState != GarbageSpawnerState.Off)
+        if (totalPoolGarbageCount == 0 && garbageSpawnerState != GarbageSpawnerState.Off)
         {
             garbageSpawnerState = GarbageSpawnerState.Off;
         }
@@ -79,14 +87,18 @@ public class GarbageSpawner : MonoBehaviour
 
     private void InitialSpawn()
     {
-        var garbageCount = Random.Range(minGarbageCount, maxGarbageCount);
-        for (var i = 0; i < garbageCount; i++)
+        if (!hasInitialySpawned)
         {
-            var spawnPosition = CheckAreaForClearance();
-
-            if (spawnPosition != Vector3.zero)
+            var garbageCount = Random.Range(minGarbageCount, maxGarbageCount);
+            for (var i = 0; i < garbageCount; i++)
             {
-                SpawnGarbage(spawnPosition);
+                var spawnPosition = CheckAreaForClearance();
+
+                if (spawnPosition != Vector3.zero)
+                {
+                    SpawnGarbage(spawnPosition);
+                    hasInitialySpawned = true;
+                }
             }
         }
 
@@ -200,6 +212,18 @@ public class GarbageSpawner : MonoBehaviour
         }
 
         currentGarbageCount--;
+    }
+
+    private void DevelopmentalFunction()
+    {
+        if(hasInitialySpawned) return;
+        StartCoroutine(DelaySpawn());
+    }
+
+    private IEnumerator DelaySpawn()
+    {
+        yield return new WaitForSeconds(5);
+        garbageSpawnerState = GarbageSpawnerState.On;
     }
 
     public GarbageSpawnerState GetGarbageSpawnerState()
