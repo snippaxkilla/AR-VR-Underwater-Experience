@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2066407807131765379}
   - component: {fileID: 7302110399745503376}
+  - component: {fileID: 4158016458030155893}
   m_Layer: 0
   m_Name: bottol3
   m_TagString: Garbage
@@ -49,6 +50,20 @@ MonoBehaviour:
   size: 0
   points: 1
   retractSpeed: 1
+--- !u!136 &4158016458030155893
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1722216049545220153}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.08815485
+  m_Height: 0.57940006
+  m_Direction: 1
+  m_Center: {x: 0.0027343184, y: 0.28187168, z: 0}
 --- !u!1 &5834888328654050197
 GameObject:
   m_ObjectHideFlags: 0

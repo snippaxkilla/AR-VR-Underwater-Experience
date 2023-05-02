@@ -114,3 +114,4 @@ MonoBehaviour:
   newLayerName: Default
   oldLayerName: InsidePortal
   targetObject: {fileID: 0}
+  collisionWithThisTag: MainCamera
