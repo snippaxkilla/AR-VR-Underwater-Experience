@@ -98,6 +98,22 @@ PrefabInstance:
       propertyPath: totalPoolGarbageCount
       value: 2500
       objectReference: {fileID: 0}
+    - target: {fileID: 737700668870684852, guid: 771f972ff80cf6545be5dee3e2d31814, type: 3}
+      propertyPath: garbagePrefabs.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 737700668870684852, guid: 771f972ff80cf6545be5dee3e2d31814, type: 3}
+      propertyPath: garbagePrefabs.Array.data[3]
+      value: 
+      objectReference: {fileID: 919132149155446097, guid: 221121f1bdda0ee4aa2585c23f42d95a, type: 3}
+    - target: {fileID: 737700668870684852, guid: 771f972ff80cf6545be5dee3e2d31814, type: 3}
+      propertyPath: garbagePrefabs.Array.data[4]
+      value: 
+      objectReference: {fileID: 1722216049545220153, guid: 5ba1e7c646b15494fb07d71604eac5f5, type: 3}
+    - target: {fileID: 737700668870684852, guid: 771f972ff80cf6545be5dee3e2d31814, type: 3}
+      propertyPath: garbagePrefabs.Array.data[5]
+      value: 
+      objectReference: {fileID: 5649641303624396316, guid: 4b230edc9c999694baa7604c05fa40bb, type: 3}
     - target: {fileID: 737700668870684853, guid: 771f972ff80cf6545be5dee3e2d31814, type: 3}
       propertyPath: m_Name
       value: GarbageSpawner
