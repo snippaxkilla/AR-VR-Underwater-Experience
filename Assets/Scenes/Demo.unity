@@ -1796,7 +1796,7 @@ PrefabInstance:
     - target: {fileID: 249790294128899652, guid: 3d5396f867dd61b42897e6dca3a6c943, type: 3}
       propertyPath: objectToPlace
       value: 
-      objectReference: {fileID: 8966620956792184508, guid: 1fcca0919ea80fb419bef19f1643ce6a, type: 3}
+      objectReference: {fileID: 4532452538514985083, guid: bdb7b560bbf49e6409d17a56209f6470, type: 3}
     - target: {fileID: 249790294128899652, guid: 3d5396f867dd61b42897e6dca3a6c943, type: 3}
       propertyPath: rayCastLineLeft
       value: 
