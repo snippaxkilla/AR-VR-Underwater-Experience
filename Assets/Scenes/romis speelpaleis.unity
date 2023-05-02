@@ -9712,6 +9712,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 727696838037239771}
   - {fileID: 2141594495}
   - {fileID: 714013503}
   m_Father: {fileID: 0}
@@ -13779,7 +13780,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4984462764469154982, guid: 4b230edc9c999694baa7604c05fa40bb, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4984462764469154982, guid: 4b230edc9c999694baa7604c05fa40bb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -26855,6 +26856,68 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4984462764469154982, guid: 4b230edc9c999694baa7604c05fa40bb, type: 3}
   m_PrefabInstance: {fileID: 1565501468}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &727696838037239771 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1965900397141369257, guid: a6a0bdc242c6d9d4cafec471913ed3b8, type: 3}
+  m_PrefabInstance: {fileID: 1247791310564972146}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1247791310564972146
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 817670195}
+    m_Modifications:
+    - target: {fileID: 1153932309219080979, guid: a6a0bdc242c6d9d4cafec471913ed3b8, type: 3}
+      propertyPath: m_Name
+      value: barrel
+      objectReference: {fileID: 0}
+    - target: {fileID: 1965900397141369257, guid: a6a0bdc242c6d9d4cafec471913ed3b8, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1965900397141369257, guid: a6a0bdc242c6d9d4cafec471913ed3b8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.244
+      objectReference: {fileID: 0}
+    - target: {fileID: 1965900397141369257, guid: a6a0bdc242c6d9d4cafec471913ed3b8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.521
+      objectReference: {fileID: 0}
+    - target: {fileID: 1965900397141369257, guid: a6a0bdc242c6d9d4cafec471913ed3b8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2.228966
+      objectReference: {fileID: 0}
+    - target: {fileID: 1965900397141369257, guid: a6a0bdc242c6d9d4cafec471913ed3b8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071067
+      objectReference: {fileID: 0}
+    - target: {fileID: 1965900397141369257, guid: a6a0bdc242c6d9d4cafec471913ed3b8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1965900397141369257, guid: a6a0bdc242c6d9d4cafec471913ed3b8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1965900397141369257, guid: a6a0bdc242c6d9d4cafec471913ed3b8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1965900397141369257, guid: a6a0bdc242c6d9d4cafec471913ed3b8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1965900397141369257, guid: a6a0bdc242c6d9d4cafec471913ed3b8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1965900397141369257, guid: a6a0bdc242c6d9d4cafec471913ed3b8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a6a0bdc242c6d9d4cafec471913ed3b8, type: 3}
 --- !u!1001 &2757679664056659110
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26876,7 +26939,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2066407807131765379, guid: 5ba1e7c646b15494fb07d71604eac5f5, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2066407807131765379, guid: 5ba1e7c646b15494fb07d71604eac5f5, type: 3}
       propertyPath: m_LocalPosition.x
