@@ -10,34 +10,38 @@ public class Garbage : MonoBehaviour
         Large
     }
 
-    private enum GarbageState
+    public enum GarbageState
     {
         Drowning,
         Floating,
-        Retracting
+        Retracting,
+        Stopped
     }
 
     [SerializeField] private Rigidbody garbageRigidbody;
 
-    [Header("Garbage size doesn't influence the retract speed it groups it into spawning types")]
+    [Header("Garbage size doesn't influence the retract speed, it groups it into spawning types")]
     [SerializeField] private GarbageSize size;
     [Header("The amount of points will change the environment")]
     [SerializeField] private int points;
     [Header("How fast will my garbage retract by my grappling hook")]
     [SerializeField] private float retractSpeed = 1f;
-    [Header("How fast will my garbage drown, base is 0.05 the higher you go to slower it will fall")]
+    [Header("How fast will my garbage drown, base is 0.05, the higher you go the slower it will fall")]
     [SerializeField] private float drowningSpeed = 1f;
     [Header("The time it will take to transition back to floating state")]
     [SerializeField] private float drowningTime = 2f;
+    [SerializeField] private float floatingSmoothTime = 0.5f;
 
+    private Vector3 targetVelocity;
+    private Vector3 currentVelocity;
     private GarbageState garbageState;
-
-    private bool isIdle = false;
+    private Coroutine drowningCoroutine;
 
     private void Start()
     {
         garbageState = GarbageState.Drowning;
         garbageRigidbody.angularDrag = drowningSpeed;
+        drowningCoroutine = StartCoroutine(Drowning());
     }
 
     private void Update()
@@ -51,7 +55,11 @@ public class Garbage : MonoBehaviour
                 Float();
                 break;
             case GarbageState.Retracting:
-                //Retract();
+
+                // TODO: Implement retracting
+
+                break;
+            case GarbageState.Stopped:
                 break;
         }
     }
@@ -59,28 +67,43 @@ public class Garbage : MonoBehaviour
     private IEnumerator Drowning()
     {
         yield return new WaitForSeconds(drowningTime);
-        garbageState = GarbageState.Floating;
+        SetState(GarbageState.Floating);
     }
 
     private void Drown()
     {
-        StartCoroutine(Drowning());
         garbageRigidbody.useGravity = true;
     }
 
     private void Float()
     {
-        if (isIdle) return;
         garbageRigidbody.useGravity = false;
-        garbageRigidbody.velocity = Vector3.zero;
-        isIdle = true;
+        targetVelocity = Vector3.zero;
+
+        // Smoothly damp the velocity
+        currentVelocity = Vector3.SmoothDamp(garbageRigidbody.velocity, targetVelocity, ref currentVelocity, floatingSmoothTime);
+        garbageRigidbody.velocity = currentVelocity;
+
+        // Check if the object has almost reached its target velocity
+        if (Vector3.Distance(currentVelocity, targetVelocity) < 0.01f)
+        {
+            garbageRigidbody.velocity = Vector3.zero;
+            SetState(GarbageState.Stopped);
+        }
     }
 
-    //private void Retract()
-    //{
-        
-    //    garbageState = GarbageState.Retracting;
-    //}
+    public void SetState(GarbageState newState)
+    {
+        if (garbageState == newState) return;
+
+        if (drowningCoroutine != null)
+        {
+            StopCoroutine(drowningCoroutine);
+            drowningCoroutine = null;
+        }
+
+        garbageState = newState;
+    }
 
     public GarbageSize GetSize()
     {
