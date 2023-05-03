@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 793595755258895046}
   - component: {fileID: 3365911992139504468}
   - component: {fileID: 4388199781234264756}
+  - component: {fileID: -1865379087709093470}
   m_Layer: 0
   m_Name: barrel
   m_TagString: Garbage
@@ -113,3 +114,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.004276444, y: 0.004299999, z: 0.007198622}
   m_Center: {x: 0, y: 0, z: -0.0000006885965}
+--- !u!54 &-1865379087709093470
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1153932309219080979}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
