@@ -146,7 +146,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 737700668870684852, guid: 771f972ff80cf6545be5dee3e2d31814, type: 3}
       propertyPath: maxSpawnHeight
-      value: 5
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 737700668870684852, guid: 771f972ff80cf6545be5dee3e2d31814, type: 3}
+      propertyPath: minSpawnHeight
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 737700668870684852, guid: 771f972ff80cf6545be5dee3e2d31814, type: 3}
       propertyPath: maxGarbageCount
