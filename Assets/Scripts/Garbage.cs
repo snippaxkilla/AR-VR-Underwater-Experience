@@ -34,7 +34,7 @@ public class Garbage : MonoBehaviour
 
     private Vector3 targetVelocity;
     private Vector3 currentVelocity;
-    private GarbageState garbageState;
+    public GarbageState garbageState;
     private Coroutine drowningCoroutine;
 
     private void Start()
@@ -81,16 +81,19 @@ public class Garbage : MonoBehaviour
         targetVelocity = Vector3.zero;
 
         // Smoothly damp the velocity
-        currentVelocity = Vector3.SmoothDamp(garbageRigidbody.velocity, targetVelocity, ref currentVelocity, floatingSmoothTime);
+        Vector3 velocityChange = Vector3.zero;
+        currentVelocity = Vector3.SmoothDamp(garbageRigidbody.velocity, targetVelocity, ref velocityChange, floatingSmoothTime);
         garbageRigidbody.velocity = currentVelocity;
+        Debug.Log(currentVelocity);
 
         // Check if the object has almost reached its target velocity
-        if (Vector3.Distance(currentVelocity, targetVelocity) < 0.01f)
+        if (Vector3.Distance(currentVelocity, targetVelocity) <= 0.1f)
         {
             garbageRigidbody.velocity = Vector3.zero;
             SetState(GarbageState.Stopped);
         }
     }
+
 
     public void SetState(GarbageState newState)
     {
