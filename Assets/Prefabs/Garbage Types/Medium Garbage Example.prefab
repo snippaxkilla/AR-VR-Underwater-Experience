@@ -112,9 +112,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fa5e38a319618a4c96af52b2662d911, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  garbageRigidbody: {fileID: 8362515751285660250}
   size: 1
-  points: 2
-  retractSpeed: 4
+  points: 0
+  retractSpeed: 1
+  drowningSpeed: 50
+  drowningTime: 0.5
+  floatingSmoothTime: 0.05
+  garbageState: 0
 --- !u!54 &8362515751285660250
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -2491,6 +2491,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0511d3dab6aacb4d89b7832e5c7adf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SandParticle: {fileID: 67780926360494682, guid: 0fee2e6492d7dbe4d99dc2f7d85fe03e, type: 3}
 --- !u!4 &9222144729846727808 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 500038713385705352, guid: 3260592a69a77a749906a45c981c815a, type: 3}

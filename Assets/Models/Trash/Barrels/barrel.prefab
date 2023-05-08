@@ -98,9 +98,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fa5e38a319618a4c96af52b2662d911, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  garbageRigidbody: {fileID: -1865379087709093470}
   size: 2
   points: 3
   retractSpeed: 3
+  drowningSpeed: 1
+  drowningTime: 2
+  floatingSmoothTime: 0.5
+  garbageState: 0
 --- !u!65 &4388199781234264756
 BoxCollider:
   m_ObjectHideFlags: 0

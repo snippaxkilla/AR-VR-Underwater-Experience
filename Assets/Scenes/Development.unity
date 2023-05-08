@@ -764,7 +764,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 233076225610733526, guid: b586c7f00dea0ab469f0ee7a58bf02fa, type: 3}
       propertyPath: drowningSpeed
-      value: 10
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 233076225610733526, guid: b586c7f00dea0ab469f0ee7a58bf02fa, type: 3}
       propertyPath: garbageRigidbody
@@ -772,7 +772,7 @@ PrefabInstance:
       objectReference: {fileID: 285699864}
     - target: {fileID: 233076225610733526, guid: b586c7f00dea0ab469f0ee7a58bf02fa, type: 3}
       propertyPath: floatingSmoothTime
-      value: 0.08
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 233076225610733527, guid: b586c7f00dea0ab469f0ee7a58bf02fa, type: 3}
       propertyPath: m_Name

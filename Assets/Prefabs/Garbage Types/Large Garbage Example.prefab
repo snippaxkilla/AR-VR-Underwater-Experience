@@ -114,10 +114,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   garbageRigidbody: {fileID: -7035475921625892630}
   size: 2
-  points: 3
-  retractSpeed: 3
-  drowningSpeed: 1
-  drowningTime: 2
+  points: 0
+  retractSpeed: 1
+  drowningSpeed: 50
+  drowningTime: 0.5
+  floatingSmoothTime: 0.05
+  garbageState: 0
 --- !u!54 &-7035475921625892630
 Rigidbody:
   m_ObjectHideFlags: 0

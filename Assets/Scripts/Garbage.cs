@@ -27,10 +27,10 @@ public class Garbage : MonoBehaviour
     [Header("How fast will my garbage retract by my grappling hook")]
     [SerializeField] private float retractSpeed = 1f;
     [Header("How fast will my garbage drown, base is 0.05, the higher you go the slower it will fall")]
-    [SerializeField] private float drowningSpeed = 1f;
+    [SerializeField] private float drowningSpeed = 50f;
     [Header("The time it will take to transition back to floating state")]
     [SerializeField] private float drowningTime = 0.5f;
-    [SerializeField] private float floatingSmoothTime = 0.1f;
+    [SerializeField] private float floatingSmoothTime = 0.05f;
 
     private Vector3 targetVelocity;
     private Vector3 currentVelocity;
