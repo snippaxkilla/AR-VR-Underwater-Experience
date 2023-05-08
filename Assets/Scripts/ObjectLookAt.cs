@@ -2,19 +2,20 @@ using UnityEngine;
 
 public class ObjectLookAt : MonoBehaviour
 {
-    [SerializeField] private GameObject target;
+    [SerializeField] private Transform _toRotate;
+    [SerializeField] private GameObject _target;
 
     private void Start()
     {
-        // Set the target's position to be at the same height as the current object
-        var targetPosition = target.transform.position;
-        targetPosition.y = transform.position.y;
+        _target = GameObject.FindGameObjectWithTag("MainCamera");
 
-        // Calculate the direction to the target without taking into account the height difference
-        var direction = targetPosition - transform.position;
-        direction.y = 0;
+        Vector3 targetPosition = new Vector3(_target.transform.position.x, _toRotate.position.y, _target.transform.position.z);
+        Vector3 dirToTarget = (targetPosition - _toRotate.position).normalized;
 
-        // Rotate the object around its y-axis towards the target
-        transform.rotation = Quaternion.LookRotation(direction);
+        // Create a custom 'up' vector with only the Y component from the original up vector.
+        Vector3 customUp = new Vector3(0, _toRotate.up.y, 0);
+
+        Quaternion targetRotation = Quaternion.LookRotation(dirToTarget, customUp);
+        _toRotate.rotation = targetRotation;
     }
 }
