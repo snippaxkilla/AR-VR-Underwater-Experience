@@ -325,6 +325,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 9222144730243736771}
     m_Modifications:
+    - target: {fileID: 4856313439960253268, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
+      propertyPath: m_TagString
+      value: Claw
+      objectReference: {fileID: 0}
+    - target: {fileID: 6951516469666537339, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
+      propertyPath: m_TagString
+      value: Claw
+      objectReference: {fileID: 0}
     - target: {fileID: 7265665762759749328, guid: 4d1699f035108234f8304d35d43f41f2, type: 3}
       propertyPath: maxDistance
       value: 20
@@ -2466,6 +2474,23 @@ PrefabInstance:
     - {fileID: 6231654969334699375, guid: 3260592a69a77a749906a45c981c815a, type: 3}
     - {fileID: 6360440645338193132, guid: 3260592a69a77a749906a45c981c815a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 3260592a69a77a749906a45c981c815a, type: 3}
+--- !u!1 &3527157484623601736 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5330333695747603264, guid: 3260592a69a77a749906a45c981c815a, type: 3}
+  m_PrefabInstance: {fileID: 8722308413977860872}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5098400779724139735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3527157484623601736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0511d3dab6aacb4d89b7832e5c7adf9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &9222144729846727808 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 500038713385705352, guid: 3260592a69a77a749906a45c981c815a, type: 3}

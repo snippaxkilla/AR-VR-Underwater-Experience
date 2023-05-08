@@ -770,6 +770,10 @@ PrefabInstance:
       propertyPath: garbageRigidbody
       value: 
       objectReference: {fileID: 285699864}
+    - target: {fileID: 233076225610733526, guid: b586c7f00dea0ab469f0ee7a58bf02fa, type: 3}
+      propertyPath: floatingSmoothTime
+      value: 0.08
+      objectReference: {fileID: 0}
     - target: {fileID: 233076225610733527, guid: b586c7f00dea0ab469f0ee7a58bf02fa, type: 3}
       propertyPath: m_Name
       value: Small Garbage Example
