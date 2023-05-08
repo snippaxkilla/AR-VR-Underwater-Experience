@@ -18,8 +18,10 @@ public class SpawnParticles : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
+        Collider other = collision.collider;
+
         if (other.CompareTag("Claw"))
         {
             if (!clawCooldowns.ContainsKey(other))
@@ -35,8 +37,10 @@ public class SpawnParticles : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    private void OnCollisionExit(Collision collision)
     {
+        Collider other = collision.collider;
+
         if (other.CompareTag("Claw") && clawCooldowns.ContainsKey(other))
         {
             clawCooldowns.Remove(other);
