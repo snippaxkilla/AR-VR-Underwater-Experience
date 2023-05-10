@@ -700,6 +700,7 @@ PlayerSettings:
   scriptingDefineSymbols:
     1: 
     7: 
+    Android: 
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:
