@@ -53,7 +53,7 @@ MonoBehaviour:
   points: 1
   retractSpeed: 1
   drowningSpeed: 1
-  drowningTime: 2
+  drowningTime: 0.5
   floatingSmoothTime: 0.5
   garbageState: 0
 --- !u!136 &4158016458030155893
@@ -64,7 +64,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1722216049545220153}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.08815485
   m_Height: 0.57940006

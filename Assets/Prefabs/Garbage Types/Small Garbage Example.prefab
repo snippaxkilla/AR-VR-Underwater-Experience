@@ -94,7 +94,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 233076225610733527}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
   m_Height: 2
@@ -112,9 +112,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fa5e38a319618a4c96af52b2662d911, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  garbageRigidbody: {fileID: 0}
   size: 0
   points: 1
   retractSpeed: 5
+  drowningSpeed: 50
+  drowningTime: 0.5
+  floatingSmoothTime: 0.05
+  garbageState: 0
 --- !u!54 &-7138536303475488503
 Rigidbody:
   m_ObjectHideFlags: 0
