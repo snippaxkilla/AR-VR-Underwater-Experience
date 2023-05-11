@@ -30,7 +30,7 @@ TagManager:
   - NavMeshCollision
   - PortalRendererMask
   - InsidePortal
-  - GroundMask
+  - PortalDoor
   - 
   - 
   - 

@@ -1668,7 +1668,7 @@ PrefabInstance:
     - target: {fileID: 249790294128899652, guid: 3d5396f867dd61b42897e6dca3a6c943, type: 3}
       propertyPath: objectToPlace
       value: 
-      objectReference: {fileID: 6854471369763119193, guid: 3260592a69a77a749906a45c981c815a, type: 3}
+      objectReference: {fileID: 6303471224579342417, guid: 0406298fb67eb214d90d26f80254f7cd, type: 3}
     - target: {fileID: 249790294128899652, guid: 3d5396f867dd61b42897e6dca3a6c943, type: 3}
       propertyPath: rayCastLineLeft
       value: 
@@ -2180,7 +2180,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b2e012a3ddd28d47b1ba61e9a726d01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectToPlace: {fileID: 4532452538514985083, guid: bdb7b560bbf49e6409d17a56209f6470, type: 3}
+  objectToPlace: {fileID: 6303471224579342417, guid: 0406298fb67eb214d90d26f80254f7cd, type: 3}
 --- !u!4 &2045052283
 Transform:
   m_ObjectHideFlags: 0
