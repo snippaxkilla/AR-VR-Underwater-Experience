@@ -74,11 +74,8 @@ public class Claw : MonoBehaviour
         Bounds bounds = GetComponent<Renderer>().bounds;
         var castRadius = (bounds.extents.x + bounds.extents.y + bounds.extents.z) / 3f;
 
-        // Only checking this mask for more efficient raycasting
-        var layerMask = ~(LayerMask.GetMask("Claw"));
-
         // Check if the claw is already intersecting with the garbage object
-        Collider[] intersectingColliders = Physics.OverlapSphere(transform.position, castRadius, layerMask);
+        Collider[] intersectingColliders = Physics.OverlapSphere(transform.position, castRadius);
         if (intersectingColliders.Length > 0)
         {
             foreach (Collider intersectingCollider in intersectingColliders)
@@ -91,7 +88,7 @@ public class Claw : MonoBehaviour
             }
         }
 
-        if (Physics.SphereCast(transform.position, castRadius, (prediction - transform.position).normalized, out var hit, Vector3.Distance(transform.position, prediction), layerMask))
+        if (Physics.SphereCast(transform.position, castRadius, (prediction - transform.position).normalized, out var hit, Vector3.Distance(transform.position, prediction)))
         {
             if (hit.collider.CompareTag("Garbage"))
             {

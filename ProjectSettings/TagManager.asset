@@ -10,6 +10,10 @@ TagManager:
   - Garbage
   - SkyBox
   - Claw
+  - Obstacle
+  - Forager
+  - Food
+  - Leader
   layers:
   - Default
   - TransparentFX
@@ -17,12 +21,12 @@ TagManager:
   - 
   - Water
   - UI
-  - 
   - Claw
   - Passthrough
   - PortalRendererMask
   - InsidePortal
   - PortalDoor
+  - 
   - 
   - 
   - 
