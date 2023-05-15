@@ -19,18 +19,18 @@ TagManager:
   - UI
   - 
   - Claw
-  - RoomBox
-  - Furniture
   - Passthrough
-  - Floor
-  - Terrain
-  - Oppy
-  - Balls
-  - BallDebris
-  - NavMeshCollision
   - PortalRendererMask
   - InsidePortal
   - PortalDoor
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
   - 
   - 
   - 
