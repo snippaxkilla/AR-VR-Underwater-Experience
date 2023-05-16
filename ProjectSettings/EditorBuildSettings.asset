@@ -8,12 +8,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Demo.unity
     guid: 5557737791aa67a479d7b84e937b353c
-  - enabled: 0
-    path: Assets/Scenes/BaseTestScene.unity
-    guid: 201e3e597f8b54264b2ba97ba45dd5c9
-  - enabled: 0
-    path: Assets/Scenes/Glenn Playground.unity
-    guid: b28bdbf1df0494dec9dd0c31e353a20f
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 868607f3c8adc5640be127ed88803c8a, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: b92733aa954264d489ecd59547a9c0ff, type: 2}

@@ -9,6 +9,11 @@ public class ChangeMaterialPortal : MonoBehaviour
 
     private Vector3 colliderNormal = Vector3.forward;
 
+    private void Update()
+    {
+        colliderNormal = transform.forward;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag(collisionWithThisTag)) return;

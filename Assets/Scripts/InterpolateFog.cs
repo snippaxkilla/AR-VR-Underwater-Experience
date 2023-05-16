@@ -1,88 +1,65 @@
 using UnityEngine;
 using System.Collections;
-
+using System.Collections.Generic;
 
 public class InterpolateFog : MonoBehaviour
 {
-    public Color startColor; // the starting color of the fog
-    public Color endColor; // the ending color of the fog
-    public float duration; // the duration of the interpolation, in seconds
+    [SerializeField] private Color startColor;
+    [SerializeField] private float duration;
 
-    
-    public enum FogStates // fog states, starting from dark fog to light blue clear fog
+    public enum FogStates
     {
-        s100, // max fog color
-        s75,
-        s50,
-        s25,
-        s0 // clear fog color
+        S100,
+        S75,
+        S50,
+        S25,
+        S0
     }
 
-   // public FogStates currentState;
+    //TODO: change the colors here to match the colors in the fogStateColors dictionary
+    private Dictionary<FogStates, Color> fogStateColors = new()
+    {
+        {FogStates.S100, Color.blue},
+        {FogStates.S75, Color.gray},
+        {FogStates.S50, Color.gray},
+        {FogStates.S25, Color.red},
+        {FogStates.S0, Color.clear}
+    };
 
     private void Update()
     {
-        if (Input.GetKeyDown("space"))
+        if (!Input.GetKeyDown("space")) return;
+        FogChange(FogStates.S0);
+        Debug.Log("Space key pressed, changing fog to s0 state");
+    }
+
+    public void FogChange(FogStates currentState)
+    {
+        if (fogStateColors.ContainsKey(currentState))
         {
-           // currentState = FogStates.s0;
-            fogChange(FogStates.s0);
-            Debug.Log("");
+            startColor = RenderSettings.fogColor;
+            Color endColor = fogStateColors[currentState];
+            StartCoroutine(InterpolateFogColor(endColor));
+        }
+        else
+        {
+            Debug.LogError("Invalid FogState: " + currentState);
         }
     }
 
-    public void fogChange(FogStates currentState)
+    private IEnumerator InterpolateFogColor(Color endColor)
     {
-        switch (currentState)
-        {
-            case FogStates.s100:
-                // startColor = Color.black;
-                endColor = Color.blue;
-                StartCoroutine(InterpolateFogColor()); // start the coroutine to interpolate the fog color
-
-                break;
-            case FogStates.s75:
-                startColor = RenderSettings.fogColor;
-                endColor = Color.gray;
-                StartCoroutine(InterpolateFogColor()); // start the coroutine to interpolate the fog color
-
-                break;
-            case FogStates.s50:
-                startColor = RenderSettings.fogColor;
-                endColor = Color.gray;
-                StartCoroutine(InterpolateFogColor()); // start the coroutine to interpolate the fog color
-
-                break;
-            case FogStates.s25:
-                startColor = RenderSettings.fogColor;
-                endColor = Color.red;
-                StartCoroutine(InterpolateFogColor()); // start the coroutine to interpolate the fog color
-
-                break;
-            case FogStates.s0:
-                startColor = RenderSettings.fogColor;
-                endColor = Color.clear;
-                StartCoroutine(InterpolateFogColor()); // start the coroutine to interpolate the fog color
-
-                break;
-        }
-    }
-
-
-    IEnumerator InterpolateFogColor()
-    {
-        float timeElapsed = 0f; // initialize the time elapsed
-        RenderSettings.fogColor = startColor; // set the starting color of the fog
+        var timeElapsed = 0f;
+        RenderSettings.fogColor = startColor;
 
         while (timeElapsed < duration)
         {
-            timeElapsed += Time.deltaTime; // increase the time elapsed by the amount of time since the last frame
-            float t = timeElapsed / duration; // calculate the interpolation factor
-            RenderSettings.fogColor = Color.Lerp(startColor, endColor, t); // interpolate the fog color between the start and end colors
-            yield return null; // wait for the next frame before continuing the loop
+            timeElapsed += Time.deltaTime;
+            var t = timeElapsed / duration;
+            RenderSettings.fogColor = Color.Lerp(startColor, endColor, t);
+            yield return null;
         }
 
-        RenderSettings.fogColor = endColor; // set the final color of the fog
+        RenderSettings.fogColor = endColor;
     }
-
-    
 }
