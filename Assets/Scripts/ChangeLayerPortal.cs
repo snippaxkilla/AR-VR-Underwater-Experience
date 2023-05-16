@@ -27,6 +27,12 @@ public class ChangeLayerPortal : MonoBehaviour
         targetObjectTransform = targetObject.transform;
     }
 
+    private void Update()
+    {
+        colliderNormal = transform.forward;
+    }
+
+
     // Only when entering the portal from the frontal direction we go into the if statement
     private void OnTriggerEnter(Collider other)
     {
