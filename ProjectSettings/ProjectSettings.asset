@@ -701,6 +701,7 @@ PlayerSettings:
     1: 
     7: 
     Android: 
+    Standalone: 
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:
