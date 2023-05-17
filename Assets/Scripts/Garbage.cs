@@ -84,7 +84,6 @@ public class Garbage : MonoBehaviour
         Vector3 velocityChange = Vector3.zero;
         currentVelocity = Vector3.SmoothDamp(garbageRigidbody.velocity, targetVelocity, ref velocityChange, floatingSmoothTime);
         garbageRigidbody.velocity = currentVelocity;
-        Debug.Log(currentVelocity);
 
         // Check if the object has almost reached its target velocity
         if (Vector3.Distance(currentVelocity, targetVelocity) <= 0.1f)

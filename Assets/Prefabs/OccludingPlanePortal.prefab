@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7079812174438500755}
   - component: {fileID: 5449038881129474109}
   - component: {fileID: 2015477345962545930}
-  m_Layer: 19
+  m_Layer: 0
   m_Name: OccludingPlanePortal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
