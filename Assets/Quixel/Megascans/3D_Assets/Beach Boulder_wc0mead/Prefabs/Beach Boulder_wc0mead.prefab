@@ -73,6 +73,7 @@ GameObject:
   - component: {fileID: 6920368117859552112}
   - component: {fileID: 9214821972162715001}
   - component: {fileID: 6859744966131293102}
+  - component: {fileID: 1437945772487005396}
   m_Layer: 0
   m_Name: Aset_nature_rock_M_wc0mead_00_LOD0
   m_TagString: Untagged
@@ -145,6 +146,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &1437945772487005396
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3390219335831176466}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 334622219797310967, guid: 35a8b46fbff9c443ab41347d199478ff, type: 3}
 --- !u!1 &4029335607806136882
 GameObject:
   m_ObjectHideFlags: 0
@@ -156,6 +171,7 @@ GameObject:
   - component: {fileID: 6506472959747131555}
   - component: {fileID: 5581920945974145944}
   - component: {fileID: 3080570233417816869}
+  - component: {fileID: 2290638457725236611}
   m_Layer: 0
   m_Name: Aset_nature_rock_M_wc0mead_00_LOD2
   m_TagString: Untagged
@@ -228,6 +244,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &2290638457725236611
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4029335607806136882}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7748339586773590828, guid: af642f04327ea44c690fb5205f1e0c29, type: 3}
 --- !u!1 &4517918519456006025
 GameObject:
   m_ObjectHideFlags: 0
@@ -239,6 +269,7 @@ GameObject:
   - component: {fileID: 8479895879126815292}
   - component: {fileID: 1137789213703713285}
   - component: {fileID: 8653804144012932809}
+  - component: {fileID: 5344729156125973820}
   m_Layer: 0
   m_Name: Aset_nature_rock_M_wc0mead_00_LOD4
   m_TagString: Untagged
@@ -311,3 +342,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &5344729156125973820
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4517918519456006025}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 2313285264829692181, guid: b8d1cd985b17e4377999b4539920f45c, type: 3}

@@ -3,36 +3,48 @@ using UnityEngine;
 
 public class SpawnParticles : MonoBehaviour
 {
-    [SerializeField] private GameObject SandParticle;
-    private float cooldownSpawn = 0.5f;
-    private Dictionary<Collider, float> clawCooldowns = new Dictionary<Collider, float>();
+    [SerializeField] private GameObject sandParticlePrefab;
+    [SerializeField] private float spawnCooldown = 0.5f;
+    private Dictionary<Collider, float> objectCooldowns = new();
 
     private void Update()
     {
-        List<Collider> keys = new List<Collider>(clawCooldowns.Keys);
-        foreach (Collider key in keys)
-        {
-            clawCooldowns[key] += Time.deltaTime;
+        var keysToRemove = new List<Collider>();
 
-            // If the cooldown is greater than the set cooldownSpawn, reset it back to cooldownSpawn
-            if (clawCooldowns[key] > cooldownSpawn)
+        foreach (var pair in objectCooldowns)
+        {
+            var newCooldown = pair.Value + Time.deltaTime;
+            if (newCooldown >= spawnCooldown)
             {
-                clawCooldowns[key] = cooldownSpawn;
+                keysToRemove.Add(pair.Key);
             }
+            else
+            {
+                objectCooldowns[pair.Key] = newCooldown;
+            }
+        }
+
+        // Remove any object that has reached the cooldown
+        foreach (var key in keysToRemove)
+        {
+            objectCooldowns.Remove(key);
         }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        Collider other = collision.collider;
-
-        if (other.CompareTag("Claw"))
+        if (collision.collider.CompareTag("Claw") || collision.collider.CompareTag("Garbage"))
         {
-            if (!clawCooldowns.ContainsKey(other) || clawCooldowns[other] >= cooldownSpawn)
-            {
-                Instantiate(SandParticle, transform.position, Quaternion.identity);
-                clawCooldowns[other] = 0f;
-            }
+            SpawnSandParticles(collision.collider);
+        }
+    }
+
+    private void SpawnSandParticles(Collider collider)
+    {
+        if (!objectCooldowns.ContainsKey(collider))
+        {
+            Instantiate(sandParticlePrefab, transform.position, Quaternion.identity);
+            objectCooldowns.Add(collider, 0f);
         }
     }
 }
