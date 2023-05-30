@@ -39,10 +39,13 @@ public class BoatManager : MonoBehaviour
 
     private void BoatMovement()
     {
-        var a = new Vector3(centralPivotPoint.x - mapSize, boatHeightPosition, centralPivotPoint.z);
+        float angle = Random.Range(0f, 360f);
 
+        centralPivotPoint = Quaternion.Euler(0, angle, 0) * centralPivotPoint;
 
-        
+        Vector3 a = centralPivotPoint - new Vector3(mapSize, boatHeightPosition, mapSize);
+        Vector3 b = centralPivotPoint + new Vector3(mapSize, boatHeightPosition, mapSize);
+
 
         boatRigidbody.MovePosition(Vector3.Lerp(a, b, Time.deltaTime * speed));
     }
