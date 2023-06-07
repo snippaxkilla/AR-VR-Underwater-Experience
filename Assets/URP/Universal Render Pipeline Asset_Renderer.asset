@@ -78,7 +78,7 @@ MonoBehaviour:
       restoreCamera: 1
       offset: {x: 0, y: 0, z: 0, w: 0}
       cameraFieldOfView: 60
---- !u!114 &-175022546471156650
+--- !u!114 &-5080559249529457960
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -92,7 +92,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Active: 1
   m_Settings:
-    technique: 0
+    technique: 1
     maxDrawDistance: 1000
     dBufferSettings:
       surfaceData: 2
@@ -119,8 +119,8 @@ MonoBehaviour:
   - {fileID: -5638237402054985802}
   - {fileID: 4750925073862293049}
   - {fileID: -9201172841035148783}
-  - {fileID: -175022546471156650}
-  m_RendererFeatureMap: b6f7309bf4f4c0b139f60ee62eadee4111d2200d0dde4e805604e7d9eb3192fd
+  - {fileID: -5080559249529457960}
+  m_RendererFeatureMap: b6f7309bf4f4c0b139f60ee62eadee4111d2200d0dde4e80d8b278cf473a7eb9
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
