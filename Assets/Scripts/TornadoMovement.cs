@@ -1,18 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TornadoMovement : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private float rotationSpeed = 14f;
+
+    private float bobMin = -1f, bobMax = 1f;
+    private float bobSpeed = 0.05f;
+
+    private void Update()
     {
-        
+        RotateTornado();
     }
 
-    // Update is called once per frame
-    void Update()
+    // the tornado rotates around the y axis, but we also rotate the x and z axis between 2 values
+    private void RotateTornado()
     {
-        
+        transform.Rotate(0, rotationSpeed, 0);
+
+        transform.rotation = Quaternion.Euler(Mathf.Lerp(bobMin, bobMax, Mathf.PingPong(Time.time * bobSpeed, 1)), 
+            transform.rotation.eulerAngles.y, Mathf.Lerp(bobMin, bobMax, Mathf.PingPong(Time.time * bobSpeed, 1)));
     }
 }
