@@ -20,13 +20,12 @@ public class Tornado : MonoBehaviour
     [Tooltip("Tornado pull force")]
     [SerializeField] private float tornadoStrength = 2;
 
-    Rigidbody r;
+    private Rigidbody r;
 
-    List<Caught> caughtObject = new();
+    private HashSet<Caught> caughtObjects = new HashSet<Caught>();
 
     private void Start()
     {
-        //Normalize the rotation axis given by the user
         rotationAxis.Normalize();
 
         r = GetComponent<Rigidbody>();
@@ -35,57 +34,49 @@ public class Tornado : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //Apply force to caught objects
-        for (int i = 0; i < caughtObject.Count; i++)
+        // Apply force to caught objects
+        foreach (var caughtObject in caughtObjects)
         {
-            if (caughtObject[i] != null)
+            if (caughtObject != null && caughtObject.enabled)
             {
-                Vector3 pull = transform.position - caughtObject[i].transform.position;
+                Vector3 pull = transform.position - caughtObject.transform.position;
                 if (pull.magnitude > maxDistance)
                 {
-                    caughtObject[i].rigid.AddForce(pull.normalized * pull.magnitude, ForceMode.Force);
-                    caughtObject[i].enabled = false;
+                    caughtObject.rigidBody.AddForce(pull.normalized * pull.magnitude, ForceMode.Force);
+                    caughtObject.enabled = false;
                 }
                 else
                 {
-                    caughtObject[i].enabled = true;
+                    caughtObject.enabled = true;
                 }
             }
         }
+
+        // Cleanup: Remove null or destroyed objects from the list.
+        caughtObjects.RemoveWhere(caughtObject => caughtObject == null);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.attachedRigidbody) return;
-        if (other.attachedRigidbody.isKinematic) return;
+        if (!other.attachedRigidbody || other.attachedRigidbody.isKinematic) return;
 
-        //Add caught object to the list
         Caught caught = other.GetComponent<Caught>();
         if (!caught)
         {
             caught = other.gameObject.AddComponent<Caught>();
+            caught.Init(this, r, tornadoStrength);
         }
 
-        caught.Init(this, r, tornadoStrength);
-
-        if (!caughtObject.Contains(caught))
-        {
-            caughtObject.Add(caught);
-        }
+        caughtObjects.Add(caught);
     }
 
     private void OnTriggerExit(Collider other)
     {
-        //Release caught object
         Caught caught = other.GetComponent<Caught>();
         if (caught)
         {
             caught.Release();
-
-            if (caughtObject.Contains(caught))
-            {
-                caughtObject.Remove(caught);
-            }
+            caughtObjects.Remove(caught);
         }
     }
 
@@ -94,27 +85,23 @@ public class Tornado : MonoBehaviour
         return rotationStrength;
     }
 
-    //The axis the caught objects rotate around
+    // The axis the caught objects rotate around
     public Vector3 GetRotationAxis()
     {
         return rotationAxis;
     }
 
-    //Draw tornado radius circle in Editor
+    // Draw tornado radius circle in Editor
     private void OnDrawGizmosSelected()
     {
         Vector3[] positions = new Vector3[30];
         Vector3 centrePos = transform.position;
         for (int pointNum = 0; pointNum < positions.Length; pointNum++)
         {
-            // "i" now represents the progress around the circle from 0-1
-            // we multiply by 1.0 to ensure we get a fraction as a result.
             var i = (float)(pointNum * 2) / positions.Length;
 
-            // get the angle for this step (in radians, not degrees)
             var angle = i * Mathf.PI * 2;
 
-            // the X & Y position for this angle are calculated using Sin & Cos
             var x = Mathf.Sin(angle) * maxDistance;
             var z = Mathf.Cos(angle) * maxDistance;
 
