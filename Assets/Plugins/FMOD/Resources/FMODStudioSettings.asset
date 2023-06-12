@@ -418,7 +418,11 @@ MonoBehaviour:
   HasSourceProject: 0
   HasPlatforms: 0
   sourceProjectPath: ../../FMOD Studio/examples/Examples.fspro
+<<<<<<< Updated upstream
   sourceBankPath: ../../FMOD Studio/examples/Build
+=======
+  sourceBankPath: Assets/Audio/Desktop
+>>>>>>> Stashed changes
   sourceBankPathUnformatted: 
   BankRefreshCooldown: 5
   ShowBankRefreshWindow: 1
