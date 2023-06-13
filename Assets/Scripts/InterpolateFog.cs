@@ -7,7 +7,8 @@ public class InterpolateFog : MonoBehaviour
     [SerializeField] private Color startColor;
     [SerializeField] private float duration;
 
-    //S100 is clear S0 is a lot of fog
+    private Coroutine fogCoroutine; // Hold a reference to the running coroutine
+
     public enum FogStates
     {
         S100,
@@ -17,59 +18,56 @@ public class InterpolateFog : MonoBehaviour
         S0
     }
 
-    private Dictionary<FogStates, Color> fogStateColors = new()
+    private Dictionary<FogStates, (Color, int, int)> fogStateSettings = new()
     {
-        {FogStates.S100, Color.clear},
-        {FogStates.S75, Color.blue},
-        {FogStates.S50, Color.cyan},
-        {FogStates.S25, Color.gray},
-        {FogStates.S0, Color.black}
+        {FogStates.S100, (Color.clear, 0, 100)},
+        {FogStates.S75, (Color.blue, 8, 20)},
+        {FogStates.S50, (Color.cyan, 6, 40)},
+        {FogStates.S25, (Color.gray, 4, 60)},
+        {FogStates.S0, (Color.black, 2, 80)}
     };
 
     private void Update()
     {
         var playerScore = GarbageCollector.Instance.GetGarbageCollectedCount();
 
+        FogStates currentState;
         switch (playerScore)
         {
             case >= 100:
-                FogChange(FogStates.S100);
-                RenderSettings.fogStartDistance = 0;
-                RenderSettings.fogEndDistance = 100;
+                currentState = FogStates.S100;
                 break;
             case >= 75:
-                FogChange(FogStates.S75);
-                RenderSettings.fogStartDistance = 8;
-                RenderSettings.fogEndDistance = 20;
+                currentState = FogStates.S75;
                 break;
             case >= 50:
-                FogChange(FogStates.S50);
-                RenderSettings.fogStartDistance = 6;
-                RenderSettings.fogEndDistance = 40;
+                currentState = FogStates.S50;
                 break;
             case >= 25:
-                FogChange(FogStates.S25);
-                RenderSettings.fogStartDistance = 4;
-                RenderSettings.fogEndDistance = 60;
+                currentState = FogStates.S25;
                 break;
             default:
-                FogChange(FogStates.S0);
-                RenderSettings.fogStartDistance = 2;
-                RenderSettings.fogEndDistance = 80;
+                currentState = FogStates.S0;
                 break;
         }
-        //if (!Input.GetKeyDown("space")) return;
-        //FogChange(FogStates.S0);
-        //Debug.Log("Space key pressed, changing fog to s0 state");
+
+        FogChange(currentState);
     }
 
     public void FogChange(FogStates currentState)
     {
-        if (fogStateColors.ContainsKey(currentState))
+        if (fogStateSettings.ContainsKey(currentState))
         {
+            var settings = fogStateSettings[currentState];
             startColor = RenderSettings.fogColor;
-            Color endColor = fogStateColors[currentState];
-            StartCoroutine(InterpolateFogColor(endColor));
+            RenderSettings.fogStartDistance = settings.Item2;
+            RenderSettings.fogEndDistance = settings.Item3;
+
+            if (fogCoroutine != null)
+            {
+                StopCoroutine(fogCoroutine); 
+            }
+            fogCoroutine = StartCoroutine(InterpolateFogColor(settings.Item1));
         }
         else
         {
