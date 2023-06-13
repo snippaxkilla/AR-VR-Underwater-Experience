@@ -17,14 +17,13 @@ public class InterpolateFog : MonoBehaviour
         S0
     }
 
-    //TODO: change the colors here to match the colors in the fogStateColors dictionary
     private Dictionary<FogStates, Color> fogStateColors = new()
     {
-        {FogStates.S100, Color.blue},
-        {FogStates.S75, Color.gray},
-        {FogStates.S50, Color.gray},
-        {FogStates.S25, Color.red},
-        {FogStates.S0, Color.clear}
+        {FogStates.S100, Color.clear},
+        {FogStates.S75, Color.blue},
+        {FogStates.S50, Color.cyan},
+        {FogStates.S25, Color.gray},
+        {FogStates.S0, Color.black}
     };
 
     private void Update()
@@ -36,7 +35,7 @@ public class InterpolateFog : MonoBehaviour
             case >= 100:
                 FogChange(FogStates.S100);
                 RenderSettings.fogStartDistance = 0;
-                RenderSettings.fogEndDistance = 0;
+                RenderSettings.fogEndDistance = 100;
                 break;
             case >= 75:
                 FogChange(FogStates.S75);

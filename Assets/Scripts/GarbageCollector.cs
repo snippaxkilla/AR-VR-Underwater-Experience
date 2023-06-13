@@ -4,7 +4,7 @@ public class GarbageCollector : MonoBehaviour
 {
     public static GarbageCollector Instance { get; private set; }
 
-    private int garbageCollectedCount = 0;
+    [SerializeField] private int garbageCollectedCount = 0;
 
     private void Awake()
     {
