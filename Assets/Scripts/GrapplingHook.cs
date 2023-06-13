@@ -227,4 +227,9 @@ public class GrapplingHook : MonoBehaviour
     {
         return clawRight;
     }
+
+    public float GetMaxDistance()
+    {
+        return maxDistance;
+    }
 }
