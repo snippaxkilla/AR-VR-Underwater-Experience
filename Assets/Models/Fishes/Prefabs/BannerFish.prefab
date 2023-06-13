@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 7828704145259353717}
   - component: {fileID: 5422848217716826815}
   - component: {fileID: -6591330761752089327}
-  - component: {fileID: -7252673530246860958}
   m_Layer: 0
   m_Name: BannerFish
   m_TagString: Untagged
@@ -104,22 +103,3 @@ MonoBehaviour:
   debugDrawShape: 0
   tagSearchableOutsideBounds: 0
   activeSettings: {fileID: 11400000, guid: 27ebc342c0b31ed44b89b4bb3930e31b, type: 2}
---- !u!114 &-7252673530246860958
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5782955935805768554}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cca30d25de2ecd7488f81da0eaebe811, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _flockBox: {fileID: 0}
-  shape:
-    type: 0
-    radius: 1
-  debugDrawShape: 0
-  tagSearchableOutsideBounds: 0
-  activeSettings: {fileID: 0}
