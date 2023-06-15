@@ -1,0 +1,93 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8135847532019644251
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8135847532019644249}
+  - component: {fileID: 8135847532019644248}
+  - component: {fileID: 8135847532019644254}
+  m_Layer: 0
+  m_Name: FlockBox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8135847532019644249
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8135847532019644251}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -11.71, y: 0, z: -4.06}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8135847532019644248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8135847532019644251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 327ff1812ac0af74d975a4bc65c3be66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dimensions_x: 2
+  dimensions_y: 1.2373999
+  dimensions_z: 2
+  cellSize: 10
+  wrapEdges: 0
+  useWorldSpace: 0
+  boundaryBuffer: 0.5
+  sleepChance: 0
+  maxCellCapacity: 10
+  capCellCapacity: 0
+  startingPopulations:
+  - prefab: {fileID: -6591330761752089327, guid: dfb38f945b07b1f4db6c4e3b1dd2d963, type: 3}
+    population: 20
+  - prefab: {fileID: -5595997247687820840, guid: be08e4fcfebe48c43aff8b3f94828326, type: 3}
+    population: 20
+  - prefab: {fileID: -7428571758652835788, guid: 3af50b8ed1c24104993a2940eaafc74f, type: 3}
+    population: 20
+  - prefab: {fileID: -4604871731750742015, guid: 39e97ed53ab9a9247b093819ec8d8fbc, type: 3}
+    population: 20
+  - prefab: {fileID: -4091932195917958719, guid: 712a385123e34574383e537769c062f3, type: 3}
+    population: 20
+  - prefab: {fileID: 2688195838734151262, guid: 54e412aec9bb8ac4d89c2cd71d54ffc5, type: 3}
+    population: 20
+  drawBoundary: 1
+  drawOccupiedCells: 0
+--- !u!114 &8135847532019644254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8135847532019644251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77e43b3f2f6636c45bdb2b086cc156f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fishPrefabs:
+  - {fileID: 5782955935805768554, guid: dfb38f945b07b1f4db6c4e3b1dd2d963, type: 3}
+  - {fileID: 4231451581136613129, guid: be08e4fcfebe48c43aff8b3f94828326, type: 3}
+  - {fileID: 3639928735823763286, guid: 3af50b8ed1c24104993a2940eaafc74f, type: 3}
+  - {fileID: 6797686507731286974, guid: 39e97ed53ab9a9247b093819ec8d8fbc, type: 3}
+  - {fileID: 7764267848000596946, guid: 712a385123e34574383e537769c062f3, type: 3}
+  - {fileID: 6554744012747884758, guid: 54e412aec9bb8ac4d89c2cd71d54ffc5, type: 3}
+  scoreStages: 19000000320000004b00000064000000
+  fishPerStage: 5
