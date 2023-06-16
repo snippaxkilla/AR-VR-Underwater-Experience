@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: OculusProjectConfig
   m_EditorClassIdentifier: 
   targetDeviceTypes: 0100000002000000
-  allowOptional3DofHeadTracking: 0
+  allowOptional3DofHeadTracking: 1
   handTrackingSupport: 1
   handTrackingFrequency: 2
   handTrackingVersion: 2
