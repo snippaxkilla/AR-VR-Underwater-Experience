@@ -10,6 +10,7 @@ public class GarbageSpawner : MonoBehaviour
 
     [SerializeField] private int totalPoolGarbageCount = 500;
 
+    [Tooltip("Lower the spawnInterval significantly when batchSpawning")]
     [SerializeField] private float spawnInterval = 3.0f;
     [SerializeField] private float minSpawnHeight = 0.1f;
 
@@ -38,6 +39,7 @@ public class GarbageSpawner : MonoBehaviour
         Off,
         Pause,
         Resume,
+        Batch,
         UnderGround
     }
 
@@ -61,6 +63,9 @@ public class GarbageSpawner : MonoBehaviour
                 break;
             case GarbageSpawnerState.UnderGround:
                 DevelopmentalFunction();
+                break;
+            case GarbageSpawnerState.Batch:
+                BatchSpawning();
                 break;
         }
     }
@@ -102,6 +107,22 @@ public class GarbageSpawner : MonoBehaviour
         }
 
         garbageSpawnerState = GarbageSpawnerState.Resume;
+    }
+
+    // For spawning in through non regular means for example boat dumps a lot of garbage
+    private void BatchSpawning()
+    {
+        var garbageCount = Random.Range(minGarbageCount, maxGarbageCount);
+        for (var i = 0; i < garbageCount; i++)
+        {
+            var spawnPosition = CheckAreaForClearance();
+
+            if (spawnPosition != Vector3.zero)
+            {
+                SpawnGarbage(spawnPosition);
+                garbageSpawnerState = GarbageSpawnerState.Pause;
+            }
+        }
     }
 
     // Don't spawn garbage if it's too close to the player or if there's already garbage in the area
