@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class FishManager : MonoBehaviour
@@ -5,13 +6,20 @@ public class FishManager : MonoBehaviour
     [SerializeField] private GameObject[] fishPrefabs;
 
     [SerializeField] private int[] scoreStages = { 25, 50, 75, 100 };
-    [SerializeField] private int fishPerStage = 5; 
+    [SerializeField] private int fishPerStage = 5;
 
     private int currentStage = 0;
-    private int fishTypeIndex = 0; 
+    private int fishTypeIndex = 0;
 
     private void Start()
     {
+        StartCoroutine(DisableFishOnStart());
+    }
+
+    private IEnumerator DisableFishOnStart()
+    {
+        yield return new WaitForSeconds(0.02f);
+
         foreach (Transform child in transform)
         {
             child.gameObject.SetActive(false);
