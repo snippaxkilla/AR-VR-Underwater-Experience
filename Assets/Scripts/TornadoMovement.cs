@@ -4,8 +4,8 @@ public class TornadoMovement : MonoBehaviour
 {
     [SerializeField] private float rotationSpeed = 14f;
 
-    private float bobMin = -1f, bobMax = 1f;
-    private float bobSpeed = 0.05f;
+    private float bobMin = -0.5f, bobMax = 0.5f;
+    private float bobSpeed = 0.01f;
 
     private void Update()
     {
