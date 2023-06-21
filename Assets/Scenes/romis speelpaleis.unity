@@ -1035,7 +1035,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 239422733973337656, guid: 4a461f7912337f545b314d65c4ef5a68, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 239422733973337662, guid: 4a461f7912337f545b314d65c4ef5a68, type: 3}
       propertyPath: m_RootOrder
@@ -8914,15 +8914,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6318748200260858742, guid: 930dd303c169ef34abafbc2c210b7110, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.034
+      value: -0.62
       objectReference: {fileID: 0}
     - target: {fileID: 6318748200260858742, guid: 930dd303c169ef34abafbc2c210b7110, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.03
+      value: 1.09
       objectReference: {fileID: 0}
     - target: {fileID: 6318748200260858742, guid: 930dd303c169ef34abafbc2c210b7110, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.652
+      value: 3.98
       objectReference: {fileID: 0}
     - target: {fileID: 6318748200260858742, guid: 930dd303c169ef34abafbc2c210b7110, type: 3}
       propertyPath: m_LocalRotation.w
@@ -27069,7 +27069,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &2039696734
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27505,11 +27505,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1965900397141369257, guid: a6a0bdc242c6d9d4cafec471913ed3b8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.521
+      value: 1.52
       objectReference: {fileID: 0}
     - target: {fileID: 1965900397141369257, guid: a6a0bdc242c6d9d4cafec471913ed3b8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.228966
+      value: 4.98
       objectReference: {fileID: 0}
     - target: {fileID: 1965900397141369257, guid: a6a0bdc242c6d9d4cafec471913ed3b8, type: 3}
       propertyPath: m_LocalRotation.w
@@ -28056,6 +28056,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4518617537807053078, guid: ff00619d7ed27d3438785b85a98087e6, type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6049906493205687810, guid: ff00619d7ed27d3438785b85a98087e6, type: 3}
       propertyPath: m_Name
       value: barrel
