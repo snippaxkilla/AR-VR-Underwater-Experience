@@ -11,9 +11,15 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Glenn Playground.unity
     guid: b28bdbf1df0494dec9dd0c31e353a20f
+<<<<<<< Updated upstream
   - enabled: 1
     path: Assets/Scenes/romis speelpaleis.unity
     guid: b15140d6253c216428083fe335be8610
+=======
+  - enabled: 0
+    path: Assets/Scenes/Development.unity
+    guid: 4440d79733c79b042bb1cdf0720afe09
+>>>>>>> Stashed changes
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 868607f3c8adc5640be127ed88803c8a, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: b92733aa954264d489ecd59547a9c0ff, type: 2}
