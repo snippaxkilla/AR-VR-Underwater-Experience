@@ -131,15 +131,15 @@ MonoBehaviour:
     HasValue: 0
   displaySortOrder: 0
   childIdentifiers:
-  - 2fea114e74ecf3c4f920e1d5cc1c4c40
-  - 2c5177b11d81d824dbb064f9ac8527da
-  - fd7c55dab0fce234b8c25f6ffca523c1
-  - 46fbfdf3fc43db0458918377fd40293e
-  - 0f8eb3f400726694eb47beb1a9f94ce8
-  - 52eb9df5db46521439908db3a29a1bbb
   - c88d16e5272a4e241b0ef0ac2e53b73d
-  - b7716510a1f36934c87976f3a81dbf3d
+  - 0f8eb3f400726694eb47beb1a9f94ce8
+  - fd7c55dab0fce234b8c25f6ffca523c1
   - e7a046c753c3c3d4aacc91f6597f310d
+  - b7716510a1f36934c87976f3a81dbf3d
+  - 46fbfdf3fc43db0458918377fd40293e
+  - 2c5177b11d81d824dbb064f9ac8527da
+  - 2fea114e74ecf3c4f920e1d5cc1c4c40
+  - 52eb9df5db46521439908db3a29a1bbb
   codecChannels:
     Value: []
     HasValue: 0
@@ -516,14 +516,14 @@ MonoBehaviour:
   RealChannelSettings: []
   Plugins: []
   MasterBanks:
-  - Master
+  - Desktop/Master
   Banks:
-  - Character
+  - Desktop/Character
   BanksToLoad: []
   LiveUpdatePort: 9264
   EnableMemoryTracking: 0
   AndroidUseOBB: 0
-  AndroidPatchBuild: 0
+  AndroidPatchBuild: 1
   MeterChannelOrdering: 0
   StopEventsOutsideMaxDistance: 0
   BoltUnitOptionsBuildPending: 0
@@ -536,15 +536,15 @@ MonoBehaviour:
   Platforms:
   - {fileID: -7225416300028026872}
   - {fileID: -6117299551863469402}
-  - {fileID: 4679204770719866592}
-  - {fileID: 2848171667856441235}
-  - {fileID: -3463918608714340893}
-  - {fileID: 366667602739684028}
-  - {fileID: -3539159803546152048}
-  - {fileID: 4982489872582114350}
   - {fileID: -4009979620749482934}
-  - {fileID: -1966704357016038044}
+  - {fileID: -3539159803546152048}
+  - {fileID: -3463918608714340893}
   - {fileID: -3037570599065954349}
+  - {fileID: -1966704357016038044}
+  - {fileID: 366667602739684028}
+  - {fileID: 2848171667856441235}
+  - {fileID: 4679204770719866592}
+  - {fileID: 4982489872582114350}
   MigratedPlatforms: 120000000a00000006000000090000000b0000001500000005000000080000000c0000000200000001000000
 --- !u!114 &366667602739684028
 MonoBehaviour:
