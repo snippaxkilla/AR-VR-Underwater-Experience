@@ -782,6 +782,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1485917842}
+    - target: {fileID: 737700668870684852, guid: 771f972ff80cf6545be5dee3e2d31814, type: 3}
+      propertyPath: garbageSpawnerState
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 737700668870684853, guid: 771f972ff80cf6545be5dee3e2d31814, type: 3}
       propertyPath: m_Name
       value: GarbageSpawner
