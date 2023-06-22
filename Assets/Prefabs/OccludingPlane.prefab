@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4909361998922403513}
   - component: {fileID: 4192131775074448735}
   - component: {fileID: 7909090585794881581}
-  m_Layer: 9
+  m_Layer: 7
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 670190173264333139}
   - component: {fileID: 102490448831091297}
   - component: {fileID: 451294194964736692}
-  m_Layer: 9
+  m_Layer: 7
   m_Name: OccludingPlane
   m_TagString: OtherWorldObject
   m_Icon: {fileID: 0}

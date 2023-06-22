@@ -55,9 +55,6 @@ public class Garbage : MonoBehaviour
                 Float();
                 break;
             case GarbageState.Retracting:
-
-                // TODO: Implement retracting
-
                 break;
             case GarbageState.Stopped:
                 break;
@@ -98,13 +95,18 @@ public class Garbage : MonoBehaviour
     {
         if (garbageState == newState) return;
 
-        if (drowningCoroutine != null)
+        if (garbageState == GarbageState.Drowning && drowningCoroutine != null)
         {
             StopCoroutine(drowningCoroutine);
             drowningCoroutine = null;
         }
 
         garbageState = newState;
+
+        if (newState == GarbageState.Drowning)
+        {
+            drowningCoroutine = StartCoroutine(Drowning());
+        }
     }
 
     public GarbageSize GetSize()
