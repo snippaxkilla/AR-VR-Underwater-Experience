@@ -49,10 +49,10 @@ MonoBehaviour:
   clawLeft: {fileID: 1698912239411195153}
   clawRight: {fileID: 6906662718765571972}
   clawOffset: 0.15
-  maxDistance: 2
-  retractSpeedEmpty: 4
-  autoRetractAfterDelay: 3
-  forceMagnitude: 15
+  maxDistance: 10
+  retractSpeedEmpty: 15
+  autoRetractAfterDelay: 4
+  forceMagnitude: 25
   cooldown: 0.1
   leftButtons: 00000020
   rightButtons: 00000008
@@ -127,7 +127,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: ClawRight
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3533269550965958600, guid: 624c48e058831e7449e268177cbb4f67, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 624c48e058831e7449e268177cbb4f67, type: 3}
 --- !u!4 &1695045799325819976 stripped
 Transform:
@@ -155,6 +156,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 1
+--- !u!135 &6074256685419245710
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4856313439960253268}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &8384999903482440150
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,19 +184,6 @@ MonoBehaviour:
   GrapplingHookGun: {fileID: 7265665762759749328}
   garbageCollector: {fileID: 0}
   garbageSpawner: {fileID: 0}
---- !u!135 &6074256685419245710
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4856313439960253268}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &2750689206454579384
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -254,7 +255,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: ClawLeft
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3533269550965958600, guid: 624c48e058831e7449e268177cbb4f67, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 624c48e058831e7449e268177cbb4f67, type: 3}
 --- !u!4 &3790811607187880039 stripped
 Transform:
@@ -282,6 +284,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 1
+--- !u!135 &4992620455912524288
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6951516469666537339}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2750689206454579391
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -297,16 +312,3 @@ MonoBehaviour:
   GrapplingHookGun: {fileID: 7265665762759749328}
   garbageCollector: {fileID: 0}
   garbageSpawner: {fileID: 0}
---- !u!135 &4992620455912524288
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6951516469666537339}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
