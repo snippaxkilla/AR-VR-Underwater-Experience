@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class OffLimit : MonoBehaviour
 {
-    public GrapplingHook grapplingHook;
+    [SerializeField] private GrapplingHook grapplingHook;
+    [SerializeField] private GarbageSpawner garbageSpawner;
 
     private void Start()
     {
@@ -20,7 +21,14 @@ public class OffLimit : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Garbage"))
         {
+            UpdateGarbageCount(other.gameObject);
             Destroy(other.gameObject);
         }
+    }
+
+    private void UpdateGarbageCount(GameObject garbageObject)
+    {
+        Garbage garbage = garbageObject.GetComponent<Garbage>();
+        garbageSpawner.GarbageDestroyed(garbage);
     }
 }
