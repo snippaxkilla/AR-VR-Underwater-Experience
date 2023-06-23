@@ -45,16 +45,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   garbagePrefabs:
-  - {fileID: 233076225610733527, guid: b586c7f00dea0ab469f0ee7a58bf02fa, type: 3}
-  - {fileID: 4648179074782816961, guid: 4123f001a2f05474585f471e84fb5015, type: 3}
-  - {fileID: 7063667577672022504, guid: c67872b68a273c148be1c4c5c152a32b, type: 3}
+  - {fileID: 6053374256740554203, guid: 6ed0f152643856144874dc94ff274cfd, type: 3}
+  - {fileID: 7926426011442010058, guid: 1cb344d72f854e048b6ed1175cd4e17e, type: 3}
+  - {fileID: 5494898169939309811, guid: 35c722e05143eef4db5ad3b134eed70b, type: 3}
+  - {fileID: 7018633061448240043, guid: 7762645b3816ab44aba9e2f9b312dcfe, type: 3}
+  - {fileID: 8736419496198819488, guid: 4e9d7ee890caa434eb573f8b5a9c172a, type: 3}
+  - {fileID: 208964996764063195, guid: 0525359ee1ac9cf489fa3acf58abaa9c, type: 3}
   player: {fileID: 100004, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
   totalPoolGarbageCount: 500
-  spawnInterval: 3
+  spawnInterval: 2
   minSpawnHeight: 0.1
   maxSpawnHeight: 2
   minSpawnDistance: 0.1
   maxSpawnDistance: 4
-  maxGarbageCount: 50
+  maxGarbageCount: 40
   minGarbageCount: 20
-  garbageSpawnerState: 4
+  garbageSpawnerState: 2
