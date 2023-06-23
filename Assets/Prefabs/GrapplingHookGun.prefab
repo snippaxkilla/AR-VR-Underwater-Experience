@@ -49,7 +49,7 @@ MonoBehaviour:
   clawLeft: {fileID: 1698912239411195153}
   clawRight: {fileID: 6906662718765571972}
   clawOffset: 0.15
-  maxDistance: 10
+  maxDistance: 20
   retractSpeedEmpty: 15
   autoRetractAfterDelay: 4
   forceMagnitude: 25

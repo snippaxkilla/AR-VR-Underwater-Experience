@@ -114,7 +114,7 @@ MonoBehaviour:
   garbageRigidbody: {fileID: 7806455944273751859}
   size: 1
   points: 2
-  retractSpeed: 2
+  retractSpeed: 8
   drowningSpeed: 1
   drowningTime: 0.5
   floatingSmoothTime: 0.5
