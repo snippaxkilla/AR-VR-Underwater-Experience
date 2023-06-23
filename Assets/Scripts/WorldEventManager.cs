@@ -1,18 +1,33 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WorldEventManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private GameObject[] WorldEvents;
+    [SerializeField] private int[] scoreStages = { 50, 100 };
+
+    private int currentStage = 0;
+
+    private void Start()
     {
-        
+        foreach (Transform child in transform)
+        {
+            child.gameObject.SetActive(false);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        EnableEventOnScore();
+    }
+
+    private void EnableEventOnScore()
+    {
+        var playerScore = GarbageCollector.Instance.GetGarbageCollectedCount();
+
+        if (currentStage < scoreStages.Length && playerScore >= scoreStages[currentStage])
+        {
+            WorldEvents[currentStage].SetActive(true);
+            currentStage++;
+        }
     }
 }

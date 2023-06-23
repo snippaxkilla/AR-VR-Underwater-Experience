@@ -287,6 +287,27 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &16866034 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 859655230234992977, guid: d5ac92d9a2801b84f9aca2dd359a7f74, type: 3}
+  m_PrefabInstance: {fileID: 1611781031}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &16866036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16866034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79690afdd43a47a4a83b7d8ab566d31c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WorldEvents:
+  - {fileID: 1037431367}
+  - {fileID: 751961928}
+  scoreStages: 3200000064000000
 --- !u!1001 &38186618
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -380,7 +401,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 239422733973337656, guid: 4a461f7912337f545b314d65c4ef5a68, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 239422733973337662, guid: 4a461f7912337f545b314d65c4ef5a68, type: 3}
       propertyPath: m_RootOrder
@@ -859,6 +880,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9067480af55f5874d8f613b16812f968, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &751961928 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2301702370620403999, guid: d5ac92d9a2801b84f9aca2dd359a7f74, type: 3}
+  m_PrefabInstance: {fileID: 1611781031}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &757006519
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1104,6 +1130,11 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &1037431367 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8371091503400246435, guid: d5ac92d9a2801b84f9aca2dd359a7f74, type: 3}
+  m_PrefabInstance: {fileID: 1611781031}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1061978593
 GameObject:
   m_ObjectHideFlags: 0
@@ -1201,7 +1232,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100004, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 100004, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
       propertyPath: m_TagString
@@ -1572,7 +1603,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 747806495401477014, guid: c813208e672e3074bbe118e1a9ee94fd, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 747806495401477014, guid: c813208e672e3074bbe118e1a9ee94fd, type: 3}
       propertyPath: m_TagString
@@ -2098,7 +2129,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 249790294128899707, guid: 3d5396f867dd61b42897e6dca3a6c943, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 249790294128899707, guid: 3d5396f867dd61b42897e6dca3a6c943, type: 3}
       propertyPath: m_TagString
@@ -2263,7 +2294,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1654718339961632978, guid: d5ac92d9a2801b84f9aca2dd359a7f74, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1654718339961632990, guid: d5ac92d9a2801b84f9aca2dd359a7f74, type: 3}
       propertyPath: m_RootOrder
@@ -2967,7 +2998,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2045052282
 MonoBehaviour:
   m_ObjectHideFlags: 0
