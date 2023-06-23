@@ -9,7 +9,6 @@ public class FishManager : MonoBehaviour
     [SerializeField] private int fishPerStage = 5;
 
     private int currentStage = 0;
-    private int fishTypeIndex = 0;
 
     private void Start()
     {

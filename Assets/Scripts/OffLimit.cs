@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class OffLimit : MonoBehaviour
 {
-    // Assuming you have a reference to the GrapplingHook script
     public GrapplingHook grapplingHook;
 
     private void Start()

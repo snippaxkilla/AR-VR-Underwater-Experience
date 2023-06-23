@@ -23,7 +23,7 @@ public class GarbageSpawner : MonoBehaviour
     [SerializeField] private int maxGarbageCount = 50;
     [SerializeField] private int minGarbageCount = 20;
 
-    private int currentGarbageCount;
+    [SerializeField] private int currentGarbageCount;
 
     private int smallGarbageCount;
     private int mediumGarbageCount;
