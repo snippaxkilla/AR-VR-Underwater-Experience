@@ -15,6 +15,7 @@ public class OffLimit : MonoBehaviour
 
         sc.isTrigger = true;
         sc.radius = grapplingHook.GetMaxDistance();
+        sc.radius *= 0.8f;
     }
 
     private void OnTriggerExit(Collider other)
